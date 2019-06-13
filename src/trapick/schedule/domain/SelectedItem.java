@@ -1,6 +1,6 @@
 package trapick.schedule.domain;
 
-public class SelectedLandItem {
+public class SelectedItem {
 	int land_idx;
 	int schd_idx;
 	String name;
@@ -16,11 +16,11 @@ public class SelectedLandItem {
 	int rating;
 	String memo;
 
-	public SelectedLandItem() {
+	public SelectedItem() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public SelectedLandItem(int land_idx, int schd_idx, String name, double latitude, double longitude, String detail,
+	public SelectedItem(int land_idx, int schd_idx, String name, double latitude, double longitude, String detail,
 			String city_name, int time_defference, String country_name, int price, String start_time, String endItme,
 			int rating, String memo) {
 		super();
