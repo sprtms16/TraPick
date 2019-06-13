@@ -9,14 +9,14 @@ public class Schedule {
 	String schd_end;
 	int user_idx;
 	List<SelectedLandMark> selectedLandmarkds;
-	List<SelectedLandItem> selectedItems;
+	List<SelectedItem> selectedItems;
 
 	public Schedule() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Schedule(int schd_idx, String title, String schd_start, String schd_end, int user_idx,
-			List<SelectedLandMark> selectedLandmarkds, List<SelectedLandItem> selectedItems) {
+			List<SelectedLandMark> selectedLandmarkds, List<SelectedItem> selectedItems) {
 		super();
 		this.schd_idx = schd_idx;
 		this.title = title;
@@ -75,11 +75,11 @@ public class Schedule {
 		this.selectedLandmarkds = selectedLandmarkds;
 	}
 
-	public List<SelectedLandItem> getSelectedItems() {
+	public List<SelectedItem> getSelectedItems() {
 		return selectedItems;
 	}
 
-	public void setSelectedItems(List<SelectedLandItem> selectedItems) {
+	public void setSelectedItems(List<SelectedItem> selectedItems) {
 		this.selectedItems = selectedItems;
 	}
 
