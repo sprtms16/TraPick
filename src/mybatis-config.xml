@@ -25,8 +25,7 @@
 				<property name="username" value="trapick" />
 				<property name="password" value="1234" />
 			</dataSource>
-			<!-- <dataSource type="JNDI"> <property name="data_source" value="java:comp/env/jdbc/oracle" 
-				/> </dataSource> -->
+			<!-- <dataSource type="JNDI"> <property name="data_source" value="java:comp/env/jdbc/oracle" /> </dataSource> -->
 		</environment>
 	</environments>
 
