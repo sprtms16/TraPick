@@ -13,6 +13,8 @@
 		<typeAlias type="trapick.schedule.domain.SelectedItem" alias="SelectedItem" />
 		<typeAlias type="trapick.schedule.domain.SelectedLandMark" alias="SelectedLandMark" />
 		<typeAlias type="trapick.schedule.domain.Schedule" alias="Schedule" />
+		<typeAlias type="trapick.schedule.domain.Country" alias="Country" />
+		
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -31,14 +33,14 @@
 	</environments>
 
 	<mappers>
-		<mapper resource="trapic/feed/mapper/Feed.xml" />
-		<mapper resource="trapic/feed/mapper/Reply.xml" />
-		<mapper resource="trapic/mypage/mapper/User.xml" />
-		<mapper resource="trapic/recommend/mapper/Item.xml" />
-		<mapper resource="trapic/recommend/mapper/LandMark.xml" />
-		<mapper resource="trapic/schedule/mapper/Schedule.xml" />
-		<mapper resource="trapic/schedule/mapper/SelectedItem.xml" />
-		<mapper resource="trapic/schedule/mapper/SelectedItem.xml" />
+ 		<mapper resource="trapick/feed/mapper/Feed.xml" />
+		<mapper resource="trapick/feed/mapper/Reply.xml" />
+		<mapper resource="trapick/mypage/mapper/User.xml" />
+		<mapper resource="trapick/recommend/mapper/Item.xml" />
+		<mapper resource="trapick/recommend/mapper/LandMark.xml" /> 
+		<mapper resource="trapick/schedule/mapper/Schedule.xml" />
+ 		<mapper resource="trapick/schedule/mapper/SelectedItem.xml" />
+		<mapper resource="trapick/schedule/mapper/SelectedItem.xml" /> 
 	</mappers>
 
 </configuration>
