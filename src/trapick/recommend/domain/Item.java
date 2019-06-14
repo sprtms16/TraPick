@@ -1,7 +1,8 @@
 package trapick.recommend.domain;
 
 public class Item {
-	int land_idx;
+	
+	int item_idx;
 	String name;
 	double latitude;
 	double longitude;
@@ -10,15 +11,16 @@ public class Item {
 	int time_defference;
 	String country_name;
 	int price;
+	String img;
 
 	public Item() {
 		
 	}
 
-	public Item(int land_idx, String name, double latitude, double longitude, String detail, String city_name,
-			int time_defference, String country_name, int price) {
+	public Item(int item_idx, String name, double latitude, double longitude, String detail, String city_name,
+			int time_defference, String country_name, int price, String img) {
 		super();
-		this.land_idx = land_idx;
+		this.item_idx = item_idx;
 		this.name = name;
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -27,14 +29,15 @@ public class Item {
 		this.time_defference = time_defference;
 		this.country_name = country_name;
 		this.price = price;
+		this.img = img;
 	}
 
-	public int getLand_idx() {
-		return land_idx;
+	public int getItem_idx() {
+		return item_idx;
 	}
 
-	public void setLand_idx(int land_idx) {
-		this.land_idx = land_idx;
+	public void setItem_idx(int item_idx) {
+		this.item_idx = item_idx;
 	}
 
 	public String getName() {
@@ -101,11 +104,19 @@ public class Item {
 		this.price = price;
 	}
 
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
 	@Override
 	public String toString() {
-		return "Item [land_idx=" + land_idx + ", name=" + name + ", latitude=" + latitude + ", longitude=" + longitude
+		return "Item [item_idx=" + item_idx + ", name=" + name + ", latitude=" + latitude + ", longitude=" + longitude
 				+ ", detail=" + detail + ", city_name=" + city_name + ", time_defference=" + time_defference
-				+ ", country_name=" + country_name + ", price=" + price + "]";
+				+ ", country_name=" + country_name + ", price=" + price + ", img=" + img + "]";
 	}
 
 }
