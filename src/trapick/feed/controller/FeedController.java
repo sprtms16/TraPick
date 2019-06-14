@@ -11,7 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import trapick.feed.action.Action;
 import trapick.feed.action.ActionForward;
+import trapick.feed.action.InsertAction;
 import trapick.feed.action.InsertFormAction;
+import trapick.feed.action.insertActionReply;
+import trapick.feed.action.listAction;
+import trapick.feed.action.updateFormAction;
 
 @WebServlet("/feed/*")
 public class FeedController extends HttpServlet {
@@ -30,17 +34,25 @@ public class FeedController extends HttpServlet {
 
 		Action action = null;
 		ActionForward forward = null;
-		
-		
-		if(commend.equals("feedInsertForm")){
+		System.out.println(commend);
+		if (commend.equals("feed/feedInsertForm")) {
 			action = new InsertFormAction();
-			try {
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		} else if (commend.equals("feed/insertAction")) {
+			action = new InsertAction();
+		}else if(commend.equals("feed/list")){
+			action =  new listAction();
+		}else if(commend.equals("feed/updateForm")){
+			action = new updateFormAction();
+		}else if(commend.equals("feed/insertActionReply")){
+			action = new insertActionReply();
 		}
 		
+
+		try {
+			forward = action.execute(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 
 		if (forward != null) {
@@ -55,14 +67,14 @@ public class FeedController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doProcess(request, response);
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		doGet(request, response);
+		doProcess(request, response);
+		
 	}
 
 }

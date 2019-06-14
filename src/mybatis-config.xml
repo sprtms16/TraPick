@@ -8,11 +8,6 @@
 		<typeAlias type="trapick.feed.domain.Feed" alias="Feed" />
 		<typeAlias type="trapick.feed.domain.Reply" alias="Reply" />
 		<typeAlias type="trapick.mypage.domain.User" alias="User" />
-		<typeAlias type="trapick.recommend.domain.LandMark" alias="LandMark" />
-		<typeAlias type="trapick.recommend.domain.Item" alias="Item" />
-		<typeAlias type="trapick.schedule.domain.SelectedItem" alias="SelectedItem" />
-		<typeAlias type="trapick.schedule.domain.SelectedLandMark" alias="SelectedLandMark" />
-		<typeAlias type="trapick.schedule.domain.Schedule" alias="Schedule" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -30,14 +25,9 @@
 	</environments>
 
 	<mappers>
-		<mapper resource="trapic/feed/mapper/Feed.xml" />
-		<mapper resource="trapic/feed/mapper/Reply.xml" />
-		<mapper resource="trapic/mypage/mapper/User.xml" />
-		<mapper resource="trapic/recommend/mapper/Item.xml" />
-		<mapper resource="trapic/recommend/mapper/LandMark.xml" />
-		<mapper resource="trapic/schedule/mapper/Schedule.xml" />
-		<mapper resource="trapic/schedule/mapper/SelectedItem.xml" />
-		<mapper resource="trapic/schedule/mapper/SelectedItem.xml" />
+		<mapper resource="trapick/feed/mapper/Feed.xml" />
+		<mapper resource="trapick/feed/mapper/Reply.xml" />
+		<mapper resource="trapick/mypage/mapper/User.xml" />
 	</mappers>
 
 </configuration>
