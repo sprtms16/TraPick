@@ -18,8 +18,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/LTM/Desktop/jsoup-1.12.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/LTM/Desktop/jsoup-1.12.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/LTM/Desktop/jsoup-1.12.1-sources.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
