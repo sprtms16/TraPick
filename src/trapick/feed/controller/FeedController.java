@@ -1,6 +1,5 @@
 package trapick.feed.controller;
 
-import java.awt.Desktop.Action;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -10,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import trapick.feed.action.Action;
 import trapick.feed.action.ActionForward;
+import trapick.feed.action.InsertFormAction;
 
 @WebServlet("/feed/*")
 public class FeedController extends HttpServlet {
