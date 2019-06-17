@@ -17,9 +17,14 @@
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
 <script type="text/javascript">
 	$(function() {
+		//날짜 선택기능
 		$(".datepicker").datepicker();
+		//
 		var availableTags = [];
 		var uniqueAvailableTags = [];
 		$.getJSON('country', function(data) {
@@ -31,39 +36,78 @@
 					uniqueAvailableTags.push(el);
 			});
 		});
-
-		$("#target").autocomplete({
-			source : uniqueAvailableTags
-		});
-		
-		
-		$(".datepicker").datepicker();
 		var availableTags2 = [];
 		var uniqueAvailableTags2 = [];
-		$.getJSON('country', function(data) {
-			$.each(data, function(index, item) {
-				availableTags2.push(item.name);
-			});
-			$.each(availableTags2, function(i, el) {
-				if ($.inArray(el, uniqueAvailableTags2) === -1)
-					uniqueAvailableTags2.push(el);
-			});
+		
+		$("#target").autocomplete({
+			source : uniqueAvailableTags,
+			select : function(e, ui) {
+				$.getJSON('city?country_name='+$(this).val(), function(data) {
+					$.each(data, function(index, item) {
+						availableTags2.push(item);
+					});
+					$.each(availableTags2, function(i, el) {
+						if ($.inArray(el, uniqueAvailableTags2) === -1)
+							uniqueAvailableTags2.push(el);
+					});
+				});
+			}
+			
 		});
-
 		$("#target2").autocomplete({
 			source : uniqueAvailableTags2
 		});
+
+		
+		
+		$("#today").text(new Date().toLocaleDateString());
+		$.datepicker.setDefaults($.datepicker.regional['ko']);
+		
+		$('#start_time').datepicker({
+			showOn: "both",
+			dateFormat: "yy-mm-dd",
+			changeMonth: true,
+			onClose: function(selectDate) {
+				var stxt = selectDate.split("-");
+				stxt[1] = stxt[1] - 1;
+				var sdate = new Date(stxt[0], stxt[1], stxt[2]);
+				var mdate = new Date(stxt[0], stxt[1], stxt[2]);
+				mdate.setDate(sdate.getDate()+5);
+				$("#end_time").datepicker("option", "minDate", sdate);
+				$("#end_time").datepicker("option", "maxDate", mdate);
+			}
+		});
+		
+		$('#end_time').datepicker({
+			showOn: "both",
+			dateFormat: "yy-mm-dd",
+			changeMonth: true,
+			onClose: function(selectDate) {
+				var stxt = selectDate.split("-");
+				stxt[1] = stxt[1] - 1;
+				var sdate = new Date(stxt[0], stxt[1], stxt[2]);
+				var mdate = new Date(stxt[0], stxt[1], stxt[2]);
+				mdate.setDate(sdate.getDate()-5);
+				$("#start_time").datepicker("option", "maxDate", sdate);
+				$("#start_time").datepicker("option", "minDate", mdate); 
+			}
+		});
+		
 	});
 </script>
 </head>
 <body>
-	<form>
+	<form action="#" method="post">
 		<div>
 			<input id="target" type="text" name="country"> 
-			<input id="target2" type="text" name="city"> 
-			<input type="date" name="start_time" value="출발일"> 
-			<input type="date" name="end_time" value="도착일"> 
-			<input type="submit" value="확인">
+			<input id="target2" type="text" name="city">
+			<br> 
+			오늘날짜 : <span id="today"></span><br>
+			<label for="sta	rt_time">출발</label>
+			<input type="text"	name="start_time" id="start_time"  autocomplete=off>
+			~
+			<label for="end_time">귀국</label>
+			<input type="text"	name="end_time" id="end_time"  autocomplete=off> 
 		</div>
 	</form>
 </body>

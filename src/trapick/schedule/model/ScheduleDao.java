@@ -14,6 +14,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import trapick.schedule.domain.Country;
+import trapick.schedule.mapper.ScheduleMapper;
 
 public class ScheduleDao {
 	private static ScheduleDao dao = new ScheduleDao();
@@ -50,30 +51,55 @@ public class ScheduleDao {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		List<Country> list = null;
 		try {
-			list = sqlSession.selectList("trapick.schedule.mapper.selectCountry");
+			// list =
+			// sqlSession.selectList("trapick.schedule.mapper.selectCountry");
+			list = sqlSession.getMapper(ScheduleMapper.class).selectCountry();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (sqlSession != null) {
-				sqlSession.clearCache();
+				sqlSession.close();
 			}
 		}
 		return list;
 	}
-	
-	public List<String> listCity(){
+
+	public List<String> listCity(String country_name) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		List<String> list = null;
 		try {
-			list = sqlSession.selectList("trapick.schedule.mapper.selectCity");
+			// list =
+			// sqlSession.selectList("trapick.schedule.mapper.selectCity",
+			// country_name);
+			list = sqlSession.getMapper(ScheduleMapper.class).selectCity(country_name);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
-			if(sqlSession != null){
-				sqlSession.clearCache();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
 			}
 		}
 		return list;
+	}
+
+	public String startDate(String idx) {
+		// TODO Auto-generated method stub
+		
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		String date = null;
+		try {
+			// list =
+			// sqlSession.selectList("trapick.schedule.mapper.selectCity",
+			// country_name);
+			date = sqlSession.getMapper(ScheduleMapper.class).selectStartDate(idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+		return date;
 	}
 
 }
