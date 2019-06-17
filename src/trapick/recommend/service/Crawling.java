@@ -153,10 +153,10 @@ public class Crawling {
 				String url_rocation = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + name
 						+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-				Document doc_rocation = Jsoup.connect(url_rocation).get();
+				Document doc_location = Jsoup.connect(url_rocation).get();
 
-				lat = doc_rocation.select("location").select("lat").text();
-				lng = doc_rocation.select("location").select("lng").text();
+				lat = doc_location.select("location").select("lat").text();
+				lng = doc_location.select("location").select("lng").text();
 
 				if (lat.length() < 10) {
 					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
@@ -248,8 +248,69 @@ public class Crawling {
         }         
      });
      for(Item item : list) {
-        System.out.println(item);
      }
   }
+  
+//거리 순 정렬
+  public List<Item> distanceSort(String city_name, List<Item> list){
+	  
+	try {
+		
+		String url = "https://maps.googleapis.com/maps/api/geocode/xml?address=" +city_name+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+		Document doc;
+		int distance = 0;
+		
+		doc = Jsoup.connect(url).get();
+		
+		String latitude = doc.select("location").select("lat").text();
+		String longitude = doc.select("location").select("lng").text();
+		  
+		double lat1 = Double.valueOf(latitude);
+		double lon1 = Double.valueOf(longitude);
+		
+		double lat2 = 0;
+		double lon2 = 0;
+		
+		for(int i=0; i<list.size(); i++) {
+			lat2 = Double.valueOf(list.get(i).getLatitude());
+			lon2 = Double.valueOf(list.get(i).getLongitude());
+			
+			double theta = lon1 - lon2;
+			
+		}
+		
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+	
+	  
+	  
+	  
+	  
+	  return list;
+  }
+  
+  private static double deg2rad(double deg) {
+      return (deg * Math.PI / 180.0);
+  }
+   
+  private static double rad2deg(double rad) {
+      return (rad * 180 / Math.PI);
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
 }

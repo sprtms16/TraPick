@@ -15,6 +15,9 @@
 	$(function() {
 		$("input").checkboxradio();
 	});
+
+	
+	
 </script>
 <title>여행상품</title>
 </head>
@@ -22,13 +25,20 @@
 	<div class="items">
 		<h1>여행상품 보기</h1>
 
-		<div id="checkbox">
-			<legend>정렬 기준: </legend>
-			<label for="checkbox-1">가격순</label> <input type="checkbox"
-				name="checkbox-1" id="checkbox-1"> <label for="checkbox-2">판매량순</label>
-			<input type="checkbox" name="checkbox-2" id="checkbox-2"> <label
-				for="checkbox-3">인기순</label> <input type="checkbox"
-				name="checkbox-3" id="checkbox-3">
+<div id="radiobox">
+          <legend>정렬 기준: </legend>
+             <label for="radio-1">가격순</label>
+                <input type="radio" name="radio-1" id="radio-1">
+             <label for="radio-2">판매량순</label>
+                <input type="radio" name="radio-2" id="radio-2">
+             <label for="radio-3">인기순</label>
+                <input type="radio" name="radio-3" id="radio-3">
+             <label for="radio-4">거리순</label>
+                <input type="radio" name="radio-4" id="radio-4">
+			<form action="Recommend/sortDistance">
+			<input type="text" name = "locationText" id="locationText">
+			<input type="submit" value="확인">
+			</form>
 		</div>
 		<div id="ajaxReturn">
 			<table>
@@ -41,11 +51,10 @@
 							<td>${list.city_name }</td>
 						</tr>
 					</c:forEach>
-
 				</tbody>
 			</table>
 		</div>
-
 	</div>
+	
 </body>
 </html>
