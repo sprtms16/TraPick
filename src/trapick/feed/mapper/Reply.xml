@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="trapick.feed.domain.Reply">
+<mapper namespace="trapick.feed.mapper.ReplyMapper">
 	<cache />
-	
+	<insert id="insertReply" parameterType="Reply">
+		insert into reply
+		values(reply_idx.nextval, #{feed_idx}, #{contents}, sysdate,
+		#{user_idx})
+	</insert>
+
+	<select id="listReply" parameterType="int" resultType="Reply">
+		select *
+		from reply where feed_idx = #{feed_idx}
+	</select>
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
