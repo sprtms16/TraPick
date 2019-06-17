@@ -4,8 +4,8 @@ public class Item {
 	
 	int item_idx;
 	String name;
-	double latitude;
-	double longitude;
+	String latitude;
+	String longitude;
 	String detail;
 	String city_name;
 	int time_defference;
@@ -17,7 +17,7 @@ public class Item {
 		
 	}
 
-	public Item(int item_idx, String name, double latitude, double longitude, String detail, String city_name,
+	public Item(int item_idx, String name, String latitude, String longitude, String detail, String city_name,
 			int time_defference, String country_name, int price, String img) {
 		super();
 		this.item_idx = item_idx;
@@ -48,19 +48,19 @@ public class Item {
 		this.name = name;
 	}
 
-	public double getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
 
-	public double getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
 
@@ -118,5 +118,7 @@ public class Item {
 				+ ", detail=" + detail + ", city_name=" + city_name + ", time_defference=" + time_defference
 				+ ", country_name=" + country_name + ", price=" + price + ", img=" + img + "]";
 	}
+
+	
 
 }
