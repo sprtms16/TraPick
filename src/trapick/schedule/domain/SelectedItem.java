@@ -11,6 +11,7 @@ public class SelectedItem {
 	int time_defference;
 	String country_name;
 	int price;
+	String payed;
 	String start_time;
 	String endItme;
 	int rating;
