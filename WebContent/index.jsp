@@ -26,7 +26,7 @@
 				<td>Schedule/city</td>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody>	
 			<tr>
 				<td><button onclick="location.href = 'feed/feedInsertForm'">feed/feedInsertForm</button></td>
 				<td><button onclick="location.href = 'feed/insertAction'">feed/insertAction</button></td>

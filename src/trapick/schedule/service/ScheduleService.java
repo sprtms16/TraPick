@@ -19,10 +19,16 @@ public class ScheduleService {
 	public List<Country> listCountryService(HttpServletRequest request) {
 		return dao.listCountry();
 	}
-	
-	public List<String> listCityService(HttpServletRequest request){
-		return dao.listCity();
+
+	public List<String> listCityService(HttpServletRequest request) {
+		String country_name = request.getParameter("country_name");
+		return dao.listCity(country_name);
 	}
-	
-	
+
+	public String getStartDateService(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		String idx = request.getParameter("idx");
+		return dao.startDate(idx);
+	}
+
 }

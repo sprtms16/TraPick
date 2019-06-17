@@ -5,7 +5,16 @@ public class ActionForward {
 	private boolean isRedirect;
 	private String path;
 	
+	public ActionForward() {
+		// TODO Auto-generated constructor stub
+	}
 	
+	public ActionForward(boolean isRedirect, String path) {
+		super();
+		this.isRedirect = isRedirect;
+		this.path = path;
+	}
+
 	public boolean isRedirect() {
 		return isRedirect;
 	}
