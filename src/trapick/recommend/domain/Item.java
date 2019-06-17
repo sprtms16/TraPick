@@ -12,13 +12,14 @@ public class Item {
 	String country_name;
 	int price;
 	String img;
-
+	int sales;
+	int hits;
 	public Item() {
 		
 	}
-
+	
 	public Item(int item_idx, String name, String latitude, String longitude, String detail, String city_name,
-			int time_defference, String country_name, int price, String img) {
+			int time_defference, String country_name, int price, String img, int sales, int hits) {
 		super();
 		this.item_idx = item_idx;
 		this.name = name;
@@ -30,6 +31,8 @@ public class Item {
 		this.country_name = country_name;
 		this.price = price;
 		this.img = img;
+		this.sales = sales;
+		this.hits = hits;
 	}
 
 	public int getItem_idx() {
@@ -112,13 +115,28 @@ public class Item {
 		this.img = img;
 	}
 
+	public int getSales() {
+		return sales;
+	}
+
+	public void setSales(int sales) {
+		this.sales = sales;
+	}
+
+	public int getHits() {
+		return hits;
+	}
+
+	public void setHits(int hits) {
+		this.hits = hits;
+	}
+
 	@Override
 	public String toString() {
 		return "Item [item_idx=" + item_idx + ", name=" + name + ", latitude=" + latitude + ", longitude=" + longitude
 				+ ", detail=" + detail + ", city_name=" + city_name + ", time_defference=" + time_defference
-				+ ", country_name=" + country_name + ", price=" + price + ", img=" + img + "]";
+				+ ", country_name=" + country_name + ", price=" + price + ", img=" + img + ", sales=" + sales
+				+ ", hits=" + hits + "]";
 	}
-
 	
-
 }

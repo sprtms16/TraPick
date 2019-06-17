@@ -15,8 +15,8 @@
 <body>
 	<article>
 		<div class="container" role="main">
-			<h2>글쓰기</h2>
-			<form action="insertAction.do" method="post">
+			<h2>게시물 업로드</h2>
+			<form action="insertAction" method="post">
 				<div class="mb-3">
 					<label for="title">제목</label> <input type="text"
 						class="form-control" name="title" id="title"

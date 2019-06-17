@@ -1,4 +1,4 @@
-package trapick.feed.controller;
+package trapick.schedule.controller;
 
 import java.io.IOException;
 
@@ -9,51 +9,53 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import trapick.feed.action.Action;
-import trapick.feed.action.ActionForward;
-import trapick.feed.action.InsertAction;
-import trapick.feed.action.InsertFormAction;
-import trapick.feed.action.insertActionReply;
-import trapick.feed.action.listAction;
-import trapick.feed.action.updateFormAction;
+import trapick.schedule.action.Action;
+import trapick.schedule.action.ActionForward;
+import trapick.schedule.action.CityListAction;
+import trapick.schedule.action.CountryListAction;
+import trapick.schedule.action.SelectCountryAction;
 
-@WebServlet("/feed/*")
-public class FeedController extends HttpServlet {
+@WebServlet("/Schedule/*")
+public class ScheduleController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public FeedController() {
+	public ScheduleController() {
 		super();
-
 	}
 
 	public void doProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String requestURI = request.getRequestURI();
+
+		String requestURL = request.getRequestURI();
 		String contextPath = request.getContextPath();
-		String commend = requestURI.substring(contextPath.length() + 1);
+		String command = requestURL.substring(contextPath.length() + 1);
 
 		Action action = null;
 		ActionForward forward = null;
-		System.out.println(commend);
-		if (commend.equals("feed/feedInsertForm")) {
-			action = new InsertFormAction();
-		} else if (commend.equals("feed/insertAction")) {
-			action = new InsertAction();
-		}else if(commend.equals("feed/list")){
-			action =  new listAction();
-		}else if(commend.equals("feed/updateForm")){
-			action = new updateFormAction();
-		}else if(commend.equals("feed/insertActionReply")){
-			action = new insertActionReply();
-		}
-		
+		System.out.println(command);
+		if (command.equals("Schedule/main")) {
+			action = new SelectCountryAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
-		try {
-			forward = action.execute(request, response);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} else if (command.equals("Schedule/country")) {
+			action = new CountryListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("Schedule/city")) {
+			action = new CityListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		
 
 		if (forward != null) {
 			if (forward.isRedirect()) {
@@ -68,13 +70,11 @@ public class FeedController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doProcess(request, response);
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doProcess(request, response);
-		
 	}
 
 }

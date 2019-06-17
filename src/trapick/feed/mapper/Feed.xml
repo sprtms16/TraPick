@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="trapick.feed.domain.Feed">
+<mapper namespace="trapick.feed.mapper.FeedMapper">
 	<cache />
 	
+	<insert id = "insertFeed" parameterType="Feed">
+		insert into feed values(feed_idx.nextval, sysdate,#{title},0,#{contents},1,1)
+	</insert>
+	
+	<select id = "feedList" resultType="Feed">
+		select * from feed order by feed_idx desc
+	</select>
+	
+	<select id="getFeed" parameterType="int" resultType="Feed">
+		select * from feed where feed_idx = #{feed_idx}
+	</select>
 </mapper>
 
 
