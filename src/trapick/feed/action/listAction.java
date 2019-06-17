@@ -18,7 +18,7 @@ public class listAction implements Action {
 		FeedService service = FeedService.getInstance();
 		ReplyService replyService = ReplyService.getInstance();
 		ActionForward forward = new ActionForward();
-		System.out.println("af");
+		
 		List<Feed> feedList = service.FeedListService(request, response);
 		for (Feed feed : feedList)
 			feed.setReplys(replyService.listReplyService(feed.getFeed_idx()));

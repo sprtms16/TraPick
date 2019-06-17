@@ -14,8 +14,11 @@ import trapick.feed.action.ActionForward;
 import trapick.feed.action.ErrorAction;
 import trapick.feed.action.InsertAction;
 import trapick.feed.action.InsertFormAction;
+import trapick.feed.action.heartAction;
 import trapick.feed.action.insertActionReply;
 import trapick.feed.action.listAction;
+import trapick.feed.action.replyDislikeAction;
+import trapick.feed.action.replyLikeAction;
 import trapick.feed.action.updateFormAction;
 
 @WebServlet("/feed/*")
@@ -31,22 +34,29 @@ public class FeedController extends HttpServlet {
 			throws ServletException, IOException {
 		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
-		String commend = requestURI.substring(contextPath.length() + 1);
+		String command = requestURI.substring(contextPath.length() + 1);
 
 		Action action = null;
 		ActionForward forward = null;
-		System.out.println(commend);
-		if (commend.equals("feed/feedInsertForm")) {
+		System.out.println(command);
+		if (command.equals("feed/feedInsertForm")) {
 			action = new InsertFormAction();
-		} else if (commend.equals("feed/insertAction")) {
+		} else if (command.equals("feed/insertAction")) {
 			action = new InsertAction();
-		} else if (commend.equals("feed/list")) {
+		} else if (command.equals("feed/list")) {
 			action = new listAction();
-		} else if (commend.equals("feed/updateForm")) {
+		} else if (command.equals("feed/updateForm")) {
 			action = new updateFormAction();
-		} else if (commend.equals("feed/insertActionReply")) {
+		} else if (command.equals("feed/insertActionReply")) {
 			action = new insertActionReply();
+		} else if (command.equals("feed/replyLikeAction")) {
+			action = new replyLikeAction();
+		} else if (command.equals("feed/replyDislikeAction")) {
+			action = new replyDislikeAction();
+		} else if (command.equals("feed/hearAction")) {
+			action = new heartAction();
 		} else {
+
 			action = new ErrorAction();
 		}
 
