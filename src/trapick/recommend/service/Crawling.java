@@ -17,7 +17,6 @@ import trapick.recommend.domain.Item;
 public class Crawling {
 
 	private static Crawling crawling = new Crawling();
-	private static RecommendService service3 = new RecommendService();
 
 	public static Crawling getInstance() {
 		return crawling;
