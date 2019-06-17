@@ -13,12 +13,21 @@ import trapick.recommend.domain.Item;
 
 public class Crawling {
 
-	public static void main(String[] args) {
+	private static Crawling crawling = new Crawling();
 
+	public static Crawling getInstance() {
+		return crawling;
+	}
+
+	public Crawling() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public List<Item> list() {
 		List<Item> list = new ArrayList<>();
 		Item item;
 
-		int item_idx = 0;
+		int item_idx = 1;
 		String name = null;
 		double latitude = 33.2332;
 		double longitude = 33.22;
@@ -42,7 +51,6 @@ public class Crawling {
 			for (Element el : deal) {
 
 				// idx
-				item_idx += 1;
 				// name
 				name = el.select(".detail_area").select(".tit").select("a").attr("title");
 				// detail > 여행사로 함
@@ -54,27 +62,20 @@ public class Crawling {
 				// img
 				img = el.select(".thumb_area").select("img").attr("src");
 
-				item = new Item(item_idx, name, latitude, longitude, detail, city_name, time_defference, country_name,
+				item = new Item(item_idx++, name, latitude, longitude, detail, city_name, time_defference, country_name,
 						price, img);
-
-				System.out.println(item_idx);
-				System.out.println(latitude);
-				System.out.println(longitude);
-				System.out.println(detail);
-				System.out.println(city_name);
-				System.out.println(time_defference);
-				System.out.println(country_name);
-				System.out.println(price);
-				System.out.println(img);
 
 				System.out.println(item);
 
 				list.add(item);
 //	        	 
+				return list;
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return list;
 	}
+
 }

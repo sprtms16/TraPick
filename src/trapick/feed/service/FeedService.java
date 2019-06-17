@@ -9,25 +9,24 @@ import trapick.feed.domain.Feed;
 import trapick.feed.model.FeedDao;
 
 public class FeedService {
-	
+
 	private static FeedService service = new FeedService();
 	private static FeedDao dao;
-	
-	public static FeedService getInstance(){
+
+	public static FeedService getInstance() {
 		dao = FeedDao.getInstance();
 		return service;
 	}
 
 	public int insertFeedService(HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
-		
-	Feed feed = new Feed();
-	feed.setTitle(request.getParameter("title"));
-	feed.setContents(request.getParameter("contents"));
 
+		Feed feed = new Feed();
+		feed.setTitle(request.getParameter("title"));
+		feed.setContents(request.getParameter("contents"));
 
 		return dao.insertFeed(feed);
-		
+
 	}
 
 	public List<Feed> FeedListService(HttpServletRequest request, HttpServletResponse response) {
@@ -39,8 +38,5 @@ public class FeedService {
 		Feed feed = dao.feedUpdate(feed_idx);
 		return feed;
 	}
-	
-	
-
 
 }
