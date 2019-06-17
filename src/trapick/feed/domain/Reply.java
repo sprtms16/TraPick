@@ -1,6 +1,8 @@
 package trapick.feed.domain;
 
-public class Reply {
+import java.io.Serializable;
+
+public class Reply implements Serializable{
 	int reply_idx;
 	int feed_idx;
 	int user_idx;

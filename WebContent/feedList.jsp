@@ -21,6 +21,7 @@
 	<div class="container-fluid"
 		style="display: inline-block; text-align: center;">
 		<c:forEach var="feed" items="${feedList}">
+<<<<<<< HEAD
 			<div class="col-md-6 mt-5 ">
 				<div class="card text-center">
 					<img class="card-img-top"
@@ -35,12 +36,22 @@
 								href="#collapseExample" role="button" aria-expanded="false"
 								aria-controls="collapseExample"> <i class="fas fa-map"></i>
 								Maps
+							</a> <a class="btn btn-primary" data-toggle="collapse"
+								href="hearAction?feed_idx=${feed.feed_idx}" role="button"
+								aria-expanded="false" aria-controls="collapseExample"> <i
+								class="fas fa-map"></i> 하트
+							</a> <a class="btn btn-primary" data-toggle="collapse"
+								href="#collapseExample" role="button" aria-expanded="false"
+								aria-controls="collapseExample"> <i class="fas fa-map"></i>
+								Maps
 							</a>
+
 						</p>
 						<div class="container" role="main">
 							<h2>댓글입력</h2>
-							<form action="insertAction" method="post">
+							<form action="insertActionReply" method="post">
 								<div class="mb-3">
+									<input type="hidden" name="feed_idx" value="${feed.feed_idx}" />
 									<label for="content">내용</label>
 									<textarea class="form-control" rows="5" name="contents"
 										id="contents" placeholder="내용을 입력해 주세요"></textarea>
@@ -55,10 +66,21 @@
 						</div>
 						<div class="collapse" id="collapseExample">
 							<div class="card card-body">
-								<iframe
+								<c:forEach var="reply" items="${feed.replys}">
+
+									<div>${reply.contents}<button
+											onclick="location.href = 'replyLikeAction?feed_idx=${reply.feed_idx}&reply_idx=${reply.reply_idx}'">좋아요</button>
+										<button
+											onclick="location.href = 'replyDislikeAction?feed_idx=${reply.feed_idx}&reply_idx=${reply.reply_idx}'">싫어요</button>
+									</div>
+
+
+
+								</c:forEach>
+								<!-- 	<iframe
 									src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d11880.492291371422!2d12.4922309!3d41.8902102!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x28f1c82e908503c4!2sColosseo!5e0!3m2!1sit!2sit!4v1524815927977"
 									width="100%" height="200" frameborder="0" style="border: 0"
-									allowfullscreen></iframe>
+									allowfullscreen></iframe> -->
 							</div>
 						</div>
 					</div>

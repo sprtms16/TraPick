@@ -9,7 +9,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import trapick.feed.domain.Feed;
+import trapick.feed.domain.Heart;
 import trapick.feed.mapper.FeedMapper;
+import trapick.feed.mapper.ReplyMapper;
 
 public class FeedDao {
 	private static FeedDao dao = new FeedDao();
@@ -68,6 +70,24 @@ public class FeedDao {
 			e.printStackTrace();
 		}
 		return feed;
+	}
+
+	public int updateFeedHeart(Heart heart) {
+		int re = -1;
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+
+		try {
+			re = sqlSession.getMapper(FeedMapper.class).updateFeedHeart(heart);
+			if (re > 0) {
+				sqlSession.commit();
+			} else {
+				sqlSession.rollback();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return re;
 	}
 
 	

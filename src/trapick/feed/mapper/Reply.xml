@@ -13,4 +13,30 @@
 		select *
 		from reply where feed_idx = #{feed_idx}
 	</select>
+
+	<update id="updateReplyLike" parameterType="ReplyLike">
+		merge INTO reply_like
+		USING dual ON (feed_idx = #{feed_idx} AND reply_idx = #{reply_idx} )
+		WHEN matched THEN
+		UPDATE SET liker = #{liker} WHERE liker
+		= #{liker}
+		DELETE WHERE liker = #{liker} WHEN NOT matched THEN
+		INSERT VALUES(
+		#{reply_idx}, #{feed_idx}, #{liker})
+	</update>
+
+	<update id="updateReplyDislike" parameterType="ReplyDislike">
+		merge INTO reply_dislike
+		USING dual ON (feed_idx = #{feed_idx} AND reply_idx =
+		#{reply_idx} )
+		WHEN matched THEN
+		UPDATE SET disliker = #{disliker} WHERE disliker
+		= #{disliker}
+		DELETE WHERE disliker = #{disliker} WHEN NOT matched THEN
+		INSERT
+		VALUES(
+		#{reply_idx}, #{feed_idx}, #{disliker})
+	</update>
+	
+	<update id=""></update>
 </mapper>
