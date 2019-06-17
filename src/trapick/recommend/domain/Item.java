@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package trapick.recommend.domain;
 
 public class Item {
@@ -110,3 +111,127 @@ public class Item {
 
 	
 }
+=======
+package trapick.recommend.domain;
+
+public class Item {
+	
+	int item_idx;
+	String name;
+	double latitude;
+	double longitude;
+	String detail;
+	String city_name;
+	int time_defference;
+	String country_name;
+	int price;
+	String img;
+
+	public Item() {
+		
+	}
+
+	public Item(int item_idx, String name, double latitude, double longitude, String detail, String city_name,
+			int time_defference, String country_name, int price, String img) {
+		super();
+		this.item_idx = item_idx;
+		this.name = name;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.detail = detail;
+		this.city_name = city_name;
+		this.time_defference = time_defference;
+		this.country_name = country_name;
+		this.price = price;
+		this.img = img;
+	}
+
+	public int getItem_idx() {
+		return item_idx;
+	}
+
+	public void setItem_idx(int item_idx) {
+		this.item_idx = item_idx;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
+	public String getCity_name() {
+		return city_name;
+	}
+
+	public void setCity_name(String city_name) {
+		this.city_name = city_name;
+	}
+
+	public int getTime_defference() {
+		return time_defference;
+	}
+
+	public void setTime_defference(int time_defference) {
+		this.time_defference = time_defference;
+	}
+
+	public String getCountry_name() {
+		return country_name;
+	}
+
+	public void setCountry_name(String country_name) {
+		this.country_name = country_name;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	@Override
+	public String toString() {
+		return "Item [item_idx=" + item_idx + ", name=" + name + ", latitude=" + latitude + ", longitude=" + longitude
+				+ ", detail=" + detail + ", city_name=" + city_name + ", time_defference=" + time_defference
+				+ ", country_name=" + country_name + ", price=" + price + ", img=" + img + "]";
+	}
+
+}
+>>>>>>> branch 'master' of https://github.com/sprtms16/TraPick.git

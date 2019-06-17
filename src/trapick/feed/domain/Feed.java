@@ -1,8 +1,9 @@
 package trapick.feed.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Feed {
+public class Feed implements Serializable{
 	int feed_idx;
 	int user_idx;
 	int schd_idx;
@@ -12,24 +13,10 @@ public class Feed {
 	List<String> url;
 	int heart;
 	List<Reply> replys;
+	int rating;
 	public Feed() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Feed(int feed_idx, int user_idx, int schd_idx, String regdate, String title, String contents,
-			List<String> url, int heart, List<Reply> replys) {
-		super();
-		this.feed_idx = feed_idx;
-		this.user_idx = user_idx;
-		this.schd_idx = schd_idx;
-		this.regdate = regdate;
-		this.title = title;
-		this.contents = contents;
-		this.url = url;
-		this.heart = heart;
-		this.replys = replys;
-	}
-
 	public int getFeed_idx() {
 		return feed_idx;
 	}
@@ -84,12 +71,33 @@ public class Feed {
 	public void setReplys(List<Reply> replys) {
 		this.replys = replys;
 	}
-
+	public int getRating() {
+		return rating;
+	}
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+	public Feed(int feed_idx, int user_idx, int schd_idx, String regdate, String title, String contents,
+			List<String> url, int heart, List<Reply> replys, int rating) {
+		super();
+		this.feed_idx = feed_idx;
+		this.user_idx = user_idx;
+		this.schd_idx = schd_idx;
+		this.regdate = regdate;
+		this.title = title;
+		this.contents = contents;
+		this.url = url;
+		this.heart = heart;
+		this.replys = replys;
+		this.rating = rating;
+	}
 	@Override
 	public String toString() {
 		return "Feed [feed_idx=" + feed_idx + ", user_idx=" + user_idx + ", schd_idx=" + schd_idx + ", regdate="
 				+ regdate + ", title=" + title + ", contents=" + contents + ", url=" + url + ", heart=" + heart
-				+ ", replys=" + replys + "]";
+				+ ", replys=" + replys + ", rating=" + rating + "]";
 	}
+	
+	
 	
 }
