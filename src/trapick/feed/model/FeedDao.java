@@ -90,5 +90,23 @@ public class FeedDao {
 		return re;
 	}
 
+	public int deleteFeed(int feed_idx) {
+		int re = -1;
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+
+		try {
+			re = sqlSession.getMapper(FeedMapper.class).deleteFeed(feed_idx);
+			if (re > 0) {
+				sqlSession.commit();
+			} else {
+				sqlSession.rollback();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return re;
+	}
+
 	
 }
