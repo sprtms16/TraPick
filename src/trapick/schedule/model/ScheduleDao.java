@@ -102,4 +102,41 @@ public class ScheduleDao {
 		return date;
 	}
 
+	public List<String> listCountryIso() {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		List<String> list = null;
+		try {
+			// list =
+			// sqlSession.selectList("trapick.schedule.mapper.selectCity",
+			// country_name);
+			list = sqlSession.getMapper(ScheduleMapper.class).selectcountryiso();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+		return list;
+	}
+
+	public String selectCountryISO(String country_name) {
+		// TODO Auto-generated method stub
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		String iso = null;
+		try {
+			// list =
+			// sqlSession.selectList("trapick.schedule.mapper.selectCity",
+			// country_name);
+			iso = sqlSession.getMapper(ScheduleMapper.class).selectCountryIso(country_name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+		return iso;
+	}
+
 }

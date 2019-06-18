@@ -7,7 +7,12 @@
 		select * from country
 	</select>
 	<select id="selectCity" resultType="String" parameterType="String">
-		select city.name from city JOIN country	on city.COUNTRY_IDX = country.COUNTRY_IDX where	country.NAME=#{country_name}
+		select city.name from city JOIN 
+		country	on city.COUNTRY_IDX = country.COUNTRY_IDX 
+		where country.NAME=#{country_name}
 	</select>
-
+	
+	<select id="selectCountryIso" resultType="String" parameterType="String">
+		select country_iso from country where NAME = #{country_name}
+	</select>
 </mapper>
