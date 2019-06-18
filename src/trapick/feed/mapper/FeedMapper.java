@@ -16,6 +16,8 @@ public interface FeedMapper {
 
 	int updateFeedHeart(Heart heart);
 
+	int deleteFeed(int feed_idx);
+
 	
 
 }

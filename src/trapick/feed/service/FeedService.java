@@ -52,4 +52,9 @@ public class FeedService {
 
 	}
 
+	public int deleteFeedService(HttpServletRequest request) {
+		return dao.deleteFeed(Integer.parseInt(request.getParameter("feed_idx")));
+		
+	}
+
 }

@@ -97,7 +97,7 @@
 								<a href=""><i class="fas fa-edit"></i></a>
 							</div>
 							<div class="col">
-								<a href=""><i class="fas fa-trash-alt"></i></a>
+								<a href="deleteFeedAction?feed_idx=${feed.feed_idx }"><i class="fas fa-trash-alt"></i></a>
 							</div>
 							<div class="col">
 								<a href="#"><i class="fas fa-heart"> </i> <!-- hearAction?feed_idx=${feed.feed_idx} -->

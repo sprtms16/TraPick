@@ -32,6 +32,10 @@
 		VALUES(
 		#{user_idx}, #{feed_idx})
 	</update>
+	
+	<delete id="deleteFeed" parameterType="int">
+		delete from feed where feed_idx = #{feed_idx}
+	</delete>
 </mapper>
 
 

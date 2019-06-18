@@ -14,6 +14,7 @@ import trapick.feed.action.ActionForward;
 import trapick.feed.action.ErrorAction;
 import trapick.feed.action.InsertAction;
 import trapick.feed.action.InsertFormAction;
+import trapick.feed.action.deleteFeedAction;
 import trapick.feed.action.heartAction;
 import trapick.feed.action.insertActionReply;
 import trapick.feed.action.listAction;
@@ -55,6 +56,8 @@ public class FeedController extends HttpServlet {
 			action = new replyDislikeAction();
 		} else if (command.equals("feed/hearAction")) {
 			action = new heartAction();
+		}else if (command.equals("feed/deleteFeedAction")) {
+			action = new deleteFeedAction();
 		} else {
 
 			action = new ErrorAction();
