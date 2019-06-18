@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import trapick.recommend.action.Action;
 import trapick.recommend.action.ActionForward;
 import trapick.recommend.action.ItemListAction;
+import trapick.recommend.action.ListSortAction;
 
 @WebServlet("/Recommend/*")
 public class RecommendController extends HttpServlet {
@@ -28,26 +29,39 @@ public class RecommendController extends HttpServlet {
 		String command = requestURI.substring(contextPath.length() + 1);
 
 		Action action = null;
+		
 		ActionForward forward = null;
-		System.out.println(command);
-		switch (command) {
-		case "Recommend/itemList":
+
+		if(command.equals("Recommend/itemList")) {
 			action = new ItemListAction();
-			break;
-		case "Recommend/sortDistance":
 			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("Recommend/sortList")) {
+			action = new ListSortAction();
 			
-		default:
-			break;
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("Recommend/sortDist")) {
+			action = new ListSortAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-
-		try {
-			forward = action.execute(request, response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		if (forward != null) {
+	
+		
+		
+		if(forward!=null)
+		{
 			if (forward.isRedirect()) {
 				response.sendRedirect(forward.getPath());
 			} else {
@@ -55,17 +69,16 @@ public class RecommendController extends HttpServlet {
 				dispatcher.forward(request, response);
 			}
 		}
+		}
+
+		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			doProcess(request, response);
+		}
+
+		protected void doPost(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, IOException {
+			doProcess(request, response);
+		}
+		
 	}
-
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doProcess(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doProcess(request, response);
-	}
-
-}
+	

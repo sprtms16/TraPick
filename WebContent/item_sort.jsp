@@ -15,6 +15,18 @@
 	$(function() {
 		$("input").checkboxradio();
 	});
+	
+/* 	window.onload = function() {
+		$("#popUp").hide();
+	}
+	
+	function showPopup() {
+		$("#popUp").show();
+	}
+	 */
+	function hidePopup() {
+		$("#popUp").hide();
+	}
 
 	
 	
@@ -22,39 +34,45 @@
 <title>여행상품</title>
 </head>
 <body>
-	<div class="items">
-		<h1>여행상품 보기</h1>
-
-<div id="radiobox">
-          <legend>정렬 기준: </legend>
-             <label for="radio-1">가격순</label>
-                <input type="radio" name="radio-1" id="radio-1">
-             <label for="radio-2">판매량순</label>
-                <input type="radio" name="radio-2" id="radio-2">
-             <label for="radio-3">인기순</label>
-                <input type="radio" name="radio-3" id="radio-3">
-             <label for="radio-4">거리순</label>
-                <input type="radio" name="radio-4" id="radio-4">
-			<form action="Recommend/sortDistance">
-			<input type="text" name = "locationText" id="locationText">
-			<input type="submit" value="확인">
-			</form>
-		</div>
-		<div id="ajaxReturn">
-			<table>
-				<tbody>
-					<c:forEach var="list" items="${list }">
-						<tr>
-							<td>${list.name }</td>
-							<td>${list.price }</td>
-							<td>${list.country_name }</td>
-							<td>${list.city_name }</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
+	<h2>여행상품 보기</h2>
+	
+	<form action="sortList">
+		<button value="price" name="price">가격 순</button>
+		<button value="sales" name="sales">판매량 순</button>
+		<button value="hits" name="hits">인기 순</button>
+		<button value="dist" name ="dist" onclick="showPopup();">거리순</button>
+		<input type="hidden" name = "country_name" value="<%=request.getParameter("country_name")%>">
+		<input type="hidden" name = "city_name" value="<%=request.getParameter("city_name")%>">
+	</form>
+	
+	
+	<div id="popUp">
+		<form action="sortDist">
+		위치 : <input type="text" name = "current" value="current">
+		<button value="distance" name="distance">확인</button>
+		<input type="hidden" name = "country_name" value="<%=request.getParameter("country_name")%>">
+		<input type="hidden" name = "city_name" value="<%=request.getParameter("city_name")%>">
+		</form>
 	</div>
 	
+	
+	<div id="content">
+         <div id="price" >
+            <h3>상품 목록</h3>
+            <table border="1">
+               <tbody>
+                  <c:forEach var="list" items="${list }">
+                     <tr>
+                        <td>${list.name }</td>
+                        <td>${list.price }</td>
+                        <td>${list.sales }</td>
+                        <td>${list.country_name }</td>
+                        <td>${list.city_name }</td>
+                     </tr>
+                  </c:forEach>
+               </tbody>
+            </table>
+         </div>
+	</div>
 </body>
 </html>
