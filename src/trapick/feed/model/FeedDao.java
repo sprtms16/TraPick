@@ -11,7 +11,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import trapick.feed.domain.Feed;
 import trapick.feed.domain.Heart;
 import trapick.feed.mapper.FeedMapper;
-import trapick.feed.mapper.ReplyMapper;
 
 public class FeedDao {
 	private static FeedDao dao = new FeedDao();
@@ -105,6 +104,37 @@ public class FeedDao {
 			e.printStackTrace();
 		}
 
+		return re;
+	}
+
+	public Feed updateFeed(int feed_idx) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		Feed feed = new Feed();
+		try {
+
+			feed = sqlSession.getMapper(FeedMapper.class).updateFeed(feed_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return feed;
+
+	}
+
+	public int updateFeedAction(Feed feed) {
+		int re = -1;
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			re = sqlSession.getMapper(FeedMapper.class).updateFeedAction(feed);
+			// 트랜잭션 == 하나의 작업단위 를 체크해줘야함 다 성공하든지 다 실패하든지
+			if (re > 0) {
+				sqlSession.commit();
+			} else {
+				sqlSession.rollback();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return re;
 	}
 

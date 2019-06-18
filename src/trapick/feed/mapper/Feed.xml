@@ -19,23 +19,38 @@
 		from feed where feed_idx = #{feed_idx}
 	</select>
 
-	<update id="updateFeedHeart" parameterType="int">
+	<update id="updateFeedHeart" parameterType="Heart">
 		merge INTO feed_heart
 		USING dual ON (feed_idx = #{feed_idx})
 		WHEN matched THEN
-		UPDATE SET user_idx = #{user_idx}
+		UPDATE SET
+		user_idx = #{user_idx}
 		WHERE user_idx
 		= #{user_idx}
-		DELETE WHERE user_idx = #{user_idx} WHEN
+		DELETE WHERE user_idx
+		= #{user_idx} WHEN
 		NOT matched THEN
 		INSERT
 		VALUES(
-		#{user_idx}, #{feed_idx})
+		#{user_idx},
+		#{feed_idx})
 	</update>
-	
+
 	<delete id="deleteFeed" parameterType="int">
-		delete from feed where feed_idx = #{feed_idx}
+		delete from feed where
+		feed_idx = #{feed_idx}
 	</delete>
+
+	<select id="updateFeed" parameterType="int" resultType="Feed">
+		select *
+		from feed where feed_idx = #{feed_idx}
+	</select>
+
+	<update id="updateFeedAction" parameterType="Feed">
+		update feed set title = #{title}, contents = #{contents} where feed_idx =
+		#{feed_idx}
+
+	</update>
 </mapper>
 
 

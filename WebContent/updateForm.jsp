@@ -1,39 +1,38 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
-<article>
+	<article>
 		<div class="container" role="main">
-			<h2>°Ô½Ã¹° ¾÷·Îµå</h2>
-			<form action="updateAction" method="post">
+			<h2>ê²Œì‹œë¬¼ ìˆ˜ì “</h2>
+			<form action="updateFeedAction" method="post">
+				<input type="hidden" id="feed_idx" name="feed_idx"
+					value="${feed.feed_idx }">
 				<div class="mb-3">
-					<label for="title">Á¦¸ñ</label> <input type="text"
+					<label for="title">ì œëª©</label> <input type="text"
 						class="form-control" name="title" id="title"
-						placeholder="Á¦¸ñÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä">
+						value="${feed.title }">
 				</div>
 				<div class="mb-3">
-					<label for="reg_id">ÀÛ¼ºÀÚ</label> <input type="text"
-						class="form-control" name="writer" id="writer"
-						placeholder="ÀÌ¸§À» ÀÔ·ÂÇØ ÁÖ¼¼¿ä">
-				</div>
-				<div class="mb-3">
-					<label for="file_id">ÆÄÀÏ</label> <input type="file"
-						class="form-control" name="fname" id="fname">
-				</div>
-				<div class="mb-3">
-					<label for="content">³»¿ë</label>
+					<label for="content">ë‚´ìš©</label>
 					<textarea class="form-control" rows="5" name="contents"
-						id="contents" placeholder="³»¿ëÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä"></textarea>
+						id="contents">${feed.contents }</textarea>
 				</div>
 				<div>
-					<button type="submit" class="btn btn-sm btn-primary" id="btnSave">ÀúÀå</button>
+					<button type="submit" class="btn btn-sm btn-primary" id="btnSave">ì €ì¥</button>
 					<button type="button" class="btn btn-sm btn-primary"
-						onClick="history.go(-1)">¸ñ·Ï</button>
+						onClick="history.go(-1)">ëª©ë¡</button>
 				</div>
 			</form>
 		</div>

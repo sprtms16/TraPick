@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import trapick.feed.domain.Feed;
 import trapick.feed.domain.Heart;
-import trapick.feed.domain.ReplyLike;
 import trapick.feed.model.FeedDao;
 
 public class FeedService {
@@ -34,6 +33,7 @@ public class FeedService {
 
 	public List<Feed> FeedListService(HttpServletRequest request, HttpServletResponse response) {
 		List<Feed> list = dao.feedList();
+
 		return list;
 	}
 
@@ -54,7 +54,28 @@ public class FeedService {
 
 	public int deleteFeedService(HttpServletRequest request) {
 		return dao.deleteFeed(Integer.parseInt(request.getParameter("feed_idx")));
-		
+
+	}
+
+	public List<Feed> popularFeedService(HttpServletRequest request, HttpServletResponse response) {
+
+		return null;
+	}
+
+	public Feed getFeedUpdateService(int feed_idx) {
+		Feed feed = dao.updateFeed(feed_idx);
+		return feed;
+	}
+
+	public int updateFeedActionService(HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Feed feed = new Feed();
+		feed.setFeed_idx(Integer.parseInt(request.getParameter("feed_idx")));
+		feed.setTitle(request.getParameter("title"));
+		feed.setContents(request.getParameter("contents"));
+
+		return dao.updateFeedAction(feed);
+
 	}
 
 }

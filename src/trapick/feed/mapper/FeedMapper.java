@@ -4,7 +4,6 @@ import java.util.List;
 
 import trapick.feed.domain.Feed;
 import trapick.feed.domain.Heart;
-import trapick.feed.domain.Reply;
 
 public interface FeedMapper {
 
@@ -18,6 +17,8 @@ public interface FeedMapper {
 
 	int deleteFeed(int feed_idx);
 
-	
+	Feed updateFeed(int feed_idx);
+
+	int updateFeedAction(Feed feed);
 
 }
