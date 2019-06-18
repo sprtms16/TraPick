@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import trapick.schedule.service.ScheduleService;
 
 public class SelectCityAction implements Action {
@@ -14,14 +15,14 @@ public class SelectCityAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		ScheduleService service = ScheduleService.getInstance();
 		ActionForward forward = new ActionForward();
-		
+
 		List<String> list = service.listCityService(request);
-		
+
 		request.setAttribute("list", list);
-		
-		forward.setRedirect(false);
-		forward.setPath("/main_insert_form.jsp");
-		return forward;
+		JSONArray array = JSONArray.fromObject(list);
+		response.setContentType("text/html;charset=UTF-8");
+		response.getWriter().print(array);
+		return null;
 	}
 
 }

@@ -7,6 +7,8 @@
 	<typeAliases>
 		<typeAlias type="trapick.feed.domain.Feed" alias="Feed" />
 		<typeAlias type="trapick.feed.domain.Reply" alias="Reply" />
+		<typeAlias type="trapick.feed.domain.ReplyLike" alias="ReplyLike" />
+		<typeAlias type="trapick.feed.domain.ReplyDislike" alias="ReplyDislike" />
 		<typeAlias type="trapick.mypage.domain.User" alias="User" />
 		<typeAlias type="trapick.recommend.domain.LandMark" alias="LandMark" />
 		<typeAlias type="trapick.recommend.domain.Item" alias="Item" />

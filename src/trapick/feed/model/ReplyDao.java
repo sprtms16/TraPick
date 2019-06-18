@@ -9,6 +9,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import trapick.feed.domain.Reply;
+import trapick.feed.domain.ReplyDislike;
+import trapick.feed.domain.ReplyLike;
 import trapick.feed.mapper.FeedMapper;
 import trapick.feed.mapper.ReplyMapper;
 
@@ -59,6 +61,42 @@ public class ReplyDao {
 		}
 		return list;
 	
+	}
+
+	public int updateReplyLike(ReplyLike replyLike) {
+		int re = -1;
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+
+		try {
+			re = sqlSession.getMapper(ReplyMapper.class).updateReplyLike(replyLike);
+			if (re > 0) {
+				sqlSession.commit();
+			} else {
+				sqlSession.rollback();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return re;
+	}
+
+	public int updateReplyDislike(ReplyDislike replyDislike) {
+		int re = -1;
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+
+		try {
+			re = sqlSession.getMapper(ReplyMapper.class).updateReplyDislike(replyDislike);
+			if (re > 0) {
+				sqlSession.commit();
+			} else {
+				sqlSession.rollback();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return re;
 	}
 
 }

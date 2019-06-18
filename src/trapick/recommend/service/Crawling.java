@@ -17,17 +17,34 @@ import trapick.recommend.domain.Item;
 public class Crawling {
 
 	private static Crawling crawling = new Crawling();
+<<<<<<< HEAD
 
 	public static Crawling getInstance() {
 		return crawling;
 	}
 
 	public static List<Item> Getcrawling(String country_name, String city_name) {
+=======
+>>>>>>> branch 'master' of https://github.com/sprtms16/TraPick.git
 
+	public static Crawling getInstance() {
+		return crawling;
+	}
+
+	public Crawling() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public List<Item> list() {
 		List<Item> list = new ArrayList<>();
 		Item item;
+<<<<<<< HEAD
 		
 		int item_idx = 0;
+=======
+
+		int item_idx = 1;
+>>>>>>> branch 'master' of https://github.com/sprtms16/TraPick.git
 		String name = null;
 		String latitude = "0";
 		String longitude = "0";
@@ -60,7 +77,6 @@ public class Crawling {
 			for (Element el : deal_naver) {
 
 				// idx
-				item_idx += 1;
 				// name
 				name = el.select(".detail_area").select(".tit").select("a").attr("title");
 				// detail > 여행사로 함
@@ -119,10 +135,24 @@ public class Crawling {
 				latitude = lat;
 				longitude = lng;
 
+<<<<<<< HEAD
 				item = new Item(item_idx, name, latitude, longitude, detail, city_name, time_defference, country_name,
 						price, img, sales, hits);
 				
+=======
+				item = new Item(item_idx++, name, latitude, longitude, detail, city_name, time_defference, country_name,
+						price, img);
+
+				System.out.println(item);
+
+>>>>>>> branch 'master' of https://github.com/sprtms16/TraPick.git
 				list.add(item);
+<<<<<<< HEAD
+=======
+//	        	 
+				return list;
+			}
+>>>>>>> branch 'master' of https://github.com/sprtms16/TraPick.git
 
 			}
 			// daum
@@ -197,6 +227,7 @@ public class Crawling {
 		}
 		return list;
 	}
+<<<<<<< HEAD
 	
 //  가격순 정렬
   public void priceSort(List<Item> list) {
@@ -313,4 +344,7 @@ public class Crawling {
   
   
   
+=======
+
+>>>>>>> branch 'master' of https://github.com/sprtms16/TraPick.git
 }

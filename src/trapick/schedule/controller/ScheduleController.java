@@ -14,6 +14,7 @@ import trapick.schedule.action.ActionForward;
 import trapick.schedule.action.CityListAction;
 import trapick.schedule.action.CountryListAction;
 import trapick.schedule.action.SelectCountryAction;
+import trapick.schedule.action.getStartDateAction;
 
 @WebServlet("/Schedule/*")
 public class ScheduleController extends HttpServlet {
@@ -35,28 +36,16 @@ public class ScheduleController extends HttpServlet {
 		System.out.println(command);
 		if (command.equals("Schedule/main")) {
 			action = new SelectCountryAction();
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
 		} else if (command.equals("Schedule/country")) {
 			action = new CountryListAction();
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}else if (command.equals("Schedule/city")) {
+		} else if (command.equals("Schedule/city")) {
 			action = new CityListAction();
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
-
+		try {
+			forward = action.execute(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (forward != null) {
 			if (forward.isRedirect()) {
 				response.sendRedirect(forward.getPath());
