@@ -1,6 +1,5 @@
 package trapick.recommend.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,11 +45,6 @@ public class RecommendService {
       		   list = crawling.distanceSort(request.getParameter("current"), list);
       	   }
       }
-
-
-
       return list;
-   }
-  
-   
+   }   
 }
