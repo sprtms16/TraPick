@@ -9,9 +9,12 @@
 		values(feed_idx.nextval, sysdate,#{title},0,#{contents},1,1)
 	</insert>
 
-	<select id="feedList" resultType="Feed">
-		select * from feed order by
-		feed_idx desc
+	<select id="feedList" resultType="Feed" parameterType="int">
+		select
+		f.*, nvl2(h.user_idx,1,0) as islike, (select COUNT(*) from feed_heart
+		where feed_heart.FEED_IDX = f.FEED_IDX)as heart from feed f left JOIN
+		FEED_HEART h
+		on f.feed_idx = h.feed_idx and h.user_idx = #{user_idx}
 	</select>
 
 	<select id="getFeed" parameterType="int" resultType="Feed">
@@ -19,23 +22,40 @@
 		from feed where feed_idx = #{feed_idx}
 	</select>
 
-	<update id="updateFeedHeart" parameterType="int">
+	<update id="updateFeedHeart" parameterType="Heart">
 		merge INTO feed_heart
 		USING dual ON (feed_idx = #{feed_idx})
 		WHEN matched THEN
-		UPDATE SET user_idx = #{user_idx}
+		UPDATE SET
+		user_idx = #{user_idx}
 		WHERE user_idx
 		= #{user_idx}
-		DELETE WHERE user_idx = #{user_idx} WHEN
+		DELETE WHERE user_idx
+		= #{user_idx} WHEN
 		NOT matched THEN
 		INSERT
 		VALUES(
-		#{user_idx}, #{feed_idx})
+		#{user_idx},
+		#{feed_idx})
 	</update>
-	
+
 	<delete id="deleteFeed" parameterType="int">
-		delete from feed where feed_idx = #{feed_idx}
+		delete from feed where
+		feed_idx = #{feed_idx}
 	</delete>
+
+	<select id="selectFeedHeartCount" parameterType="int"
+		resultType="int">
+		select COUNT(*)
+		from feed_heart
+		where feed_idx = #{feed_idx}
+	</select>
+	<select id="selectFeedHeartCheck" parameterType="int"
+		resultType="int">
+		select COUNT(*) from feed_heart
+		where user_idx = #{user_idx}
+	</select>
+
 </mapper>
 
 

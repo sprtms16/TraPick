@@ -14,14 +14,17 @@ public class heartAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		FeedService service = FeedService.getInstance();
-		
-		service.heartActionService(request);
-		
-		JSONArray jsonArray = new JSONArray();
-		jsonArray.add(new JSONObject().put("status", 1));
-		jsonArray.add(new JSONObject().put("message", "oK"));
-		
-		
+
+		int heartCount = service.heartActionService(request);
+		JSONObject object = new JSONObject();
+		object.put("status", 1);
+		object.put("message", "oK");
+		if (heartCount >= 0) {
+			object.put("heartCount", heartCount);
+		}
+		System.out.println(object);
+		response.getWriter().println(object);
+
 		return null;
 	}
 

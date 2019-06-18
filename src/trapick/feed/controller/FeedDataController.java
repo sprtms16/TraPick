@@ -12,23 +12,21 @@ import javax.servlet.http.HttpServletResponse;
 import trapick.feed.action.Action;
 import trapick.feed.action.ActionForward;
 import trapick.feed.action.ErrorAction;
-import trapick.feed.action.InsertAction;
 import trapick.feed.action.InsertFormAction;
-import trapick.feed.action.deleteFeedAction;
-import trapick.feed.action.heartAction;
-import trapick.feed.action.insertActionReply;
-import trapick.feed.action.listAction;
-import trapick.feed.action.replyDislikeAction;
-import trapick.feed.action.replyLikeAction;
-import trapick.feed.action.updateFormAction;
 
-@WebServlet("/feed/*")
-public class FeedController extends HttpServlet {
+/**
+ * Servlet implementation class FeedDataController
+ */
+@WebServlet("/FeedData/*")
+public class FeedDataController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public FeedController() {
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public FeedDataController() {
 		super();
-
+		// TODO Auto-generated constructor stub
 	}
 
 	public void doProcess(HttpServletRequest request, HttpServletResponse response)
@@ -40,28 +38,15 @@ public class FeedController extends HttpServlet {
 		Action action = null;
 		ActionForward forward = null;
 		System.out.println(command);
-		System.out.println(request.getSession().getAttribute("user_idx"));
-		if (command.equals("feed/feedInsertForm")) {
-			action = new InsertFormAction();
-		} else if (command.equals("feed/insertAction")) {
-			action = new InsertAction();
-		} else if (command.equals("feed/list")) {
-			action = new listAction();
-		} else if (command.equals("feed/updateForm")) {
-			action = new updateFormAction();
-		} else if (command.equals("feed/insertActionReply")) {
-			action = new insertActionReply();
-		} else if (command.equals("feed/replyLikeAction")) {
-			action = new replyLikeAction();
-		} else if (command.equals("feed/replyDislikeAction")) {
-			action = new replyDislikeAction();
-		} else if (command.equals("feed/hearAction")) {
-			action = new heartAction();
-		} else if (command.equals("feed/deleteFeedAction")) {
-			action = new deleteFeedAction();
-		} else {
 
+		switch (command) {
+		case "FeedData/feedInsertForm":
+			action = new InsertFormAction();
+			break;
+
+		default:
 			action = new ErrorAction();
+			break;
 		}
 
 		try {
@@ -80,15 +65,24 @@ public class FeedController extends HttpServlet {
 		}
 	}
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doProcess(request, response);
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doProcess(request, response);
-
 	}
 
 }

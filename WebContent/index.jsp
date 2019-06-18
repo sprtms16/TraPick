@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	session.setAttribute("user_idx", 1);
+	if (session.getAttribute("user_idx") != null) {
+		session.removeAttribute("user_idx");
+	}
+	session.setAttribute("user_idx", 2);
 %>
 <!DOCTYPE html>
 <html>
@@ -26,7 +29,7 @@
 				<td>Schedule/city</td>
 			</tr>
 		</thead>
-		<tbody>	
+		<tbody>
 			<tr>
 				<td><button onclick="location.href = 'feed/feedInsertForm'">feed/feedInsertForm</button></td>
 				<td><button onclick="location.href = 'feed/insertAction'">feed/insertAction</button></td>

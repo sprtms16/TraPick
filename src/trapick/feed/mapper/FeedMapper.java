@@ -10,13 +10,17 @@ public interface FeedMapper {
 
 	int insertFeed(Feed feed);
 
-	List<Feed> feedList();
+	List<Feed> feedList(int user_idx);
 
 	Feed getFeed(int feed_idx);
 
 	int updateFeedHeart(Heart heart);
 
 	int deleteFeed(int feed_idx);
+
+	int selectFeedHeartCount(int feed_idx);
+	
+	int selectFeedHeartCheck(int user_idx);
 
 	
 

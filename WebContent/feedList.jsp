@@ -19,19 +19,25 @@
 <script type="text/javascript">
 	$(function() {
 		$('.fa-heart').click(function() {
-			$(this).toggleClass("far");
-			$(this).toggleClass("fas");
+			var href = $(this).parents('a').attr("href");
+			$.ajax({
+				url : href,
+				dataType: "json",
+				success : function(data) {
+					$('.fa-heart').text(data.heartCount);
+					$('.fa-heart').toggleClass("far");
+					$('.fa-heart').toggleClass("fas");
+				}
+			})
 			return false;
 		});
 		$('.fa-thumbs-up').click(function() {
 			$(this).toggleClass("far");
 			$(this).toggleClass("fas");
-			return false;
 		});
 		$('.fa-thumbs-down').click(function() {
 			$(this).toggleClass("far");
 			$(this).toggleClass("fas");
-			return false;
 		});
 	})
 </script>
@@ -73,16 +79,12 @@
 								<c:forEach var="reply" items="${feed.replys}">
 
 									<div>${reply.contents}
-										<i class="fas fa-thumbs-up"></i>
-										<button
-											onclick="location.href = 'replyLikeAction?feed_idx=${reply.feed_idx}&reply_idx=${reply.reply_idx}'">좋아요</button>
-										<i class="fas fa-thumbs-down"></i>
-										<button
-											onclick="location.href = 'replyDislikeAction?feed_idx=${reply.feed_idx}&reply_idx=${reply.reply_idx}'">싫어요</button>
+										<a
+											href="replyLikeAction?feed_idx=${reply.feed_idx}&reply_idx=${reply.reply_idx}"><i
+											class="far fa-thumbs-up"></i></a> <a
+											href="replyDislikeAction?feed_idx=${reply.feed_idx}&reply_idx=${reply.reply_idx}"><i
+											class="far fa-thumbs-down"></i></a>
 									</div>
-
-
-
 								</c:forEach>
 								<!-- 	<iframe
 									src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d11880.492291371422!2d12.4922309!3d41.8902102!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x28f1c82e908503c4!2sColosseo!5e0!3m2!1sit!2sit!4v1524815927977"
@@ -97,11 +99,20 @@
 								<a href=""><i class="fas fa-edit"></i></a>
 							</div>
 							<div class="col">
-								<a href="deleteFeedAction?feed_idx=${feed.feed_idx }"><i class="fas fa-trash-alt"></i></a>
+								<a href="deleteFeedAction?feed_idx=${feed.feed_idx }"><i
+									class="fas fa-trash-alt"></i></a>
 							</div>
 							<div class="col">
-								<a href="#"><i class="fas fa-heart"> </i> <!-- hearAction?feed_idx=${feed.feed_idx} -->
-									<!-- <i class="far fa-heart"></i> --></a>
+								<a id="heart" href="hearAction?feed_idx=${feed.feed_idx}"> <c:choose>
+										<c:when test="${feed.islike eq 1}">
+											<i class="fas fa-heart">${feed.heart }</i>
+										</c:when>
+										<c:otherwise>
+											<i class="far fa-heart">${feed.heart }</i>
+										</c:otherwise>
+									</c:choose>
+
+								</a>
 							</div>
 						</div>
 					</div>
