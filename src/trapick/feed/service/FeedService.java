@@ -1,13 +1,18 @@
 package trapick.feed.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.executor.ReuseExecutor;
+
 import trapick.feed.domain.Feed;
 import trapick.feed.domain.Heart;
+import trapick.feed.domain.Reply;
 import trapick.feed.model.FeedDao;
 
 public class FeedService {
@@ -34,7 +39,15 @@ public class FeedService {
 	public List<Feed> FeedListService(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		int user_idx = (int) session.getAttribute("user_idx");
-		List<Feed> list = dao.feedList(user_idx);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_idx", user_idx);
+		if (request.getParameter("keyword") != null) {
+			String keyword = request.getParameter("keyword");
+			map.put("keyword", "%#" + keyword + "%");
+			System.out.println(request.getParameter("keyword"));
+		}
+		List<Feed> list = dao.feedList(map);
 		return list;
 	}
 

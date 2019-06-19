@@ -17,6 +17,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 <script type="text/javascript">
 	$(function() {
 		$('.fa-heart').click(function() {
@@ -40,10 +41,45 @@
 			$(this).toggleClass("far");
 			$(this).toggleClass("fas");
 		});
-	})
+
+		/* var content = document.getElementById('hashTags').innerHTML;
+		var splitedArray = content.split(' ');
+		var linkedContent = '';
+		for(var word in splitedArray)
+		{
+		  word = splitedArray[word];
+		   if(word.indexOf('#') == 0)
+		   {
+		      word = '<a href=\'링크\'>'+word+'</a>';
+		   }
+		   linkedContent += word+' ';
+		}
+		 */
+
+	});
+	$(function() {
+		$.each($('.hashtag'), function(index, data) {
+			var content = $(data).text();
+			var splitedArray = content.split(' ');
+			var linkedContent = '';
+			for ( var word in splitedArray) {
+				word = splitedArray[word];
+				if (word.indexOf('#') == 0) {
+					var keyword = word.substring(1,word.length);
+					word = '<a href=\'list?keyword=' + keyword + '\'>' + word + '</a>';
+				}
+				linkedContent += word + ' ';
+			}
+			$(data).html(linkedContent);
+		});
+
+	});
 </script>
+
+
 </head>
 <body>
+
 	<div class="container">
 
 		<div class="dropdown">
@@ -65,7 +101,7 @@
 
 
 	<div class="container-fluid"
-		style="display: inline-block; text-align: center;">
+		style=" margin-left: 360px; inline-block; text-align: center;">
 		<c:forEach var="feed" items="${feedList}">
 			<div class="col-md-6 mt-5 ">
 				<div class="card text-center">
@@ -73,15 +109,22 @@
 						src="https://picsum.photos/1900/1080?image=235"
 						alt="Card image cap">
 					<div class="card-body">
+
 						<h5 class="card-title">${feed.title }</h5>
 						<hr>
-						<p>${feed.contents }</p>
+
+						<div class="hashtag">${feed.contents }</div>
+
+
+
 						<div class="container" role="main">
 							<form action="insertActionReply" method="post">
 								<div class="mb-3">
+
 									<input type="hidden" name="feed_idx" value="${feed.feed_idx}" />
 									<textarea class="form-control" rows="1" name="contents"
-										id="contents" placeholder="내용을 입력해 주세요"></textarea>
+										id="contents" placeholder="내용을 입력해 주세요">
+										</textarea>
 								</div>
 								<div>
 									<button type="submit" class="btn btn-sm btn-primary"
@@ -97,6 +140,7 @@
 						<p></p>
 						<div class="collapse" id="collapseExample">
 							<div class="card card-body">
+
 								<c:forEach var="reply" items="${feed.replys}">
 
 									<div>${reply.contents}
@@ -111,6 +155,7 @@
 									src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d11880.492291371422!2d12.4922309!3d41.8902102!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x28f1c82e908503c4!2sColosseo!5e0!3m2!1sit!2sit!4v1524815927977"
 									width="100%" height="200" frameborder="0" style="border: 0"
 									allowfullscreen></iframe> -->
+
 							</div>
 						</div>
 					</div>
@@ -142,5 +187,6 @@
 			</div>
 		</c:forEach>
 	</div>
+
 </body>
 </html>

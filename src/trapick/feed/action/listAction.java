@@ -19,10 +19,11 @@ public class listAction implements Action {
 
 		FeedService service = FeedService.getInstance();
 		ReplyService replyService = ReplyService.getInstance();
-		ActionForward forward = new ActionForward();
+		
 		List<Feed> feedList = service.FeedListService(request, response);
 		for (Feed feed : feedList)
 			feed.setReplys(replyService.listReplyService(feed.getFeed_idx()));
+		
 		System.out.println(feedList);
 
 		if (request.getParameter("odb") != null) {
@@ -30,24 +31,32 @@ public class listAction implements Action {
 			switch (request.getParameter("odb")) {
 			case "pop":
 
-				Collections.sort(feedList, (o1, o2) -> (o1.getHeart() - o2.getHeart()) * ud);
+				Collections.sort(feedList, (o1, o2) -> (o1.getHeart() - o2.getHeart()) * ud );
 				break;
 			case "rep":
 				Collections.sort(feedList, new Comparator<Feed>() {
 
 					@Override
 					public int compare(Feed o1, Feed o2) {
-						// TODO Auto-generated method stub
+					
 						return (o1.getReplys().size() - o2.getReplys().size()) * ud;
 					}
 				});
 				break;
+				
 			default:
+	
+				
 				break;
 			}
 		}
+		
+		
+		
 		request.setAttribute("feedList", feedList);
-
+		
+		
+		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
 		forward.setPath("/feedList.jsp");
 

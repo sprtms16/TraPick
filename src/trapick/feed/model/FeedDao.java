@@ -2,6 +2,7 @@ package trapick.feed.model;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -49,11 +50,11 @@ public class FeedDao {
 		return re;
 	}
 
-	public List<Feed> feedList(int user_idx) {
+	public List<Feed> feedList(Map<String, Object> map) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		List<Feed> list = null;
 		try {
-			list = sqlSession.getMapper(FeedMapper.class).feedList(user_idx);
+			list = sqlSession.getMapper(FeedMapper.class).feedList(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -160,4 +161,5 @@ public class FeedDao {
 		return heartCount;
 	}
 
+	
 }
