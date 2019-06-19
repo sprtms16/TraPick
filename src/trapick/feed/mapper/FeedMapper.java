@@ -9,7 +9,7 @@ public interface FeedMapper {
 
 	int insertFeed(Feed feed);
 
-	List<Feed> feedList();
+	List<Feed> feedList(int user_idx);
 
 	Feed getFeed(int feed_idx);
 
@@ -20,5 +20,9 @@ public interface FeedMapper {
 	Feed updateFeed(int feed_idx);
 
 	int updateFeedAction(Feed feed);
+
+	int selectFeedHeartCount(int feed_idx);
+
+	int selectFeedHeartCheck(int user_idx);
 
 }

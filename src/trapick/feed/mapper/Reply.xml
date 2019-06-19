@@ -26,17 +26,19 @@
 	</update>
 
 	<update id="updateReplyDislike" parameterType="ReplyDislike">
-		merge INTO reply_dislike
+		merge INTO
+		reply_dislike
 		USING dual ON (feed_idx = #{feed_idx} AND reply_idx =
 		#{reply_idx} )
 		WHEN matched THEN
-		UPDATE SET disliker = #{disliker} WHERE disliker
+		UPDATE SET disliker = #{disliker} WHERE
+		disliker
 		= #{disliker}
-		DELETE WHERE disliker = #{disliker} WHEN NOT matched THEN
+		DELETE WHERE disliker = #{disliker} WHEN NOT
+		matched THEN
 		INSERT
 		VALUES(
 		#{reply_idx}, #{feed_idx}, #{disliker})
 	</update>
-	
-	<update id=""></update>
+
 </mapper>

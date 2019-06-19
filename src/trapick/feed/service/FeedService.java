@@ -32,8 +32,9 @@ public class FeedService {
 	}
 
 	public List<Feed> FeedListService(HttpServletRequest request, HttpServletResponse response) {
-		List<Feed> list = dao.feedList();
-
+		HttpSession session = request.getSession();
+		int user_idx = (int) session.getAttribute("user_idx");
+		List<Feed> list = dao.feedList(user_idx);
 		return list;
 	}
 
@@ -48,7 +49,14 @@ public class FeedService {
 		int feed_idx = Integer.parseInt(request.getParameter("feed_idx"));
 		int user_idx = (int) session.getAttribute("user_idx");
 		Heart heart = new Heart(feed_idx, user_idx);
-		return dao.updateFeedHeart(heart);
+		if (dao.selectFeedHeartCheck(user_idx) > 0) {
+
+		}
+		if (dao.updateFeedHeart(heart) > 0) {
+			return dao.selectFeedHeartCount(feed_idx);
+		} else {
+			return -1;
+		}
 
 	}
 
