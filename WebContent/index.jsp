@@ -43,8 +43,9 @@
 	</table>
 
 	<form action="Recommend/itemList">
-		<input type="text" name="country_name"> <input type="text"
-			name="city_name"> <input type="submit" value="검색">
+		<input type="text" name="country_name">
+		<input type="text" name="city_name">
+		<input type="submit" value="검색">
 	</form>
 
 </body>

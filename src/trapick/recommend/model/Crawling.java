@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -11,7 +12,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import trapick.recommend.domain.Hotel;
 import trapick.recommend.domain.Item;
+import trapick.recommend.domain.Restaurant;
 
 public class Crawling {
 
@@ -36,6 +39,7 @@ public class Crawling {
 		String img;
 		int sales = 0; // 판매량
 		int hits = 0; // 인기
+		double dist = 0;
 
 		String input = city_name + "+입장권";
 		String lat = null;
@@ -71,13 +75,17 @@ public class Crawling {
 				// img
 				img = el.select(".thumb_area").select("img").attr("src");
 				// sales
-				String sales_temp = el.select(".detail").select(".txt_review").select("em").text();
+				String sales_temp = el.select(".detail").select(".txt_review").select("em").text().replace(" ", "");
 
 				if (sales_temp.length() < 1) {
 					sales = 0;
 				} else {
 					sales = Integer.parseInt(sales_temp);
 
+				}
+
+				if (sales == 0) {
+					sales = (int) (Math.random() * 76) + 1;
 				}
 
 				// latitude, longitude
@@ -119,7 +127,7 @@ public class Crawling {
 				longitude = lng;
 
 				item = new Item(item_idx, name, latitude, longitude, detail, city_name, time_defference, country_name,
-						price, img, sales, hits);
+						price, img, sales, hits, dist);
 				list.add(item);
 
 			}
@@ -148,13 +156,13 @@ public class Crawling {
 				}
 
 				// latitude, longitude
-				String url_rocation = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + name
+				String url_location = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + name
 						+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-				Document doc_rocation = Jsoup.connect(url_rocation).get();
+				Document doc_location = Jsoup.connect(url_location).get();
 
-				lat = doc_rocation.select("location").select("lat").text();
-				lng = doc_rocation.select("location").select("lng").text();
+				lat = doc_location.select("location").select("lat").text();
+				lng = doc_location.select("location").select("lng").text();
 
 				if (lat.length() < 10) {
 					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
@@ -186,10 +194,10 @@ public class Crawling {
 				longitude = lng;
 
 				item = new Item(item_idx, name, latitude, longitude, detail, city_name, time_defference, country_name,
-						price, img, sales, hits);
+						price, img, sales, hits, dist);
 
 				list.add(item);
-				
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -304,6 +312,24 @@ public class Crawling {
 				if (dist == 0) {
 					dist = 0.4;
 				}
+
+				int item_idx = list.get(i).getItem_idx();
+				String name = list.get(i).getName();
+				String latitudeList = list.get(i).getLatitude();
+				String longitudeList = list.get(i).getLongitude();
+				String detail = list.get(i).getDetail();
+				int time_defference = list.get(i).getTime_defference(); // 받아야됨
+				int price = list.get(i).getPrice();
+				String img = list.get(i).getImg();
+				int sales = list.get(i).getSales(); // 판매량
+				int hits = list.get(i).getHits(); // 인기
+				String country_name = list.get(i).getCountry_name();
+
+				Item item = new Item(item_idx, name, latitudeList, longitudeList, detail, city_name, time_defference,
+						country_name, price, img, sales, hits, dist);
+
+				sortList.add(item);
+
 				arr_key[i] = i + 1;
 				arr_value[i] = dist;
 			}
@@ -328,9 +354,10 @@ public class Crawling {
 			for (int i = 0; i < arr_key.length; i++) {
 				for (int j = 0; j < list.size(); j++) {
 					if (arr_key[i] == list.get(j).getItem_idx()) {
-						sortList.add(list.get(j));
+						// sortList.add(list.get(j));
 						indexList.add(arr_key[i]);
 						distList.add(arr_value[i]);
+
 					}
 				}
 			}
@@ -348,4 +375,258 @@ public class Crawling {
 	private static double rad2deg(double rad) {
 		return (rad * 180 / Math.PI);
 	}
+
+	public List<Restaurant> crawlingNearRest(String city_name) {
+
+		List<Restaurant> list = new ArrayList<>();
+		Restaurant restaurant;
+
+		String name = null;
+		String detail;
+		String img;
+		String latitude;
+		String longitude;
+
+		String input = city_name + "맛집";
+		String lat;
+		String lng;
+
+		try {
+			String url = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=";
+			url += input;
+
+			Document doc = Jsoup.connect(url).get();
+
+			Elements doc_el = doc.select(".list_top ul");
+			Elements doc_rest = doc_el.select("li");
+
+			for (Element el : doc_rest) {
+
+				// name
+				name = el.select(".list_title").select("strong").text();
+				// detail
+				detail = el.select(".list_title").select(".list_cate").text();
+				// img
+				img = el.select(".list_thumb").select("img").attr("src");
+
+				String url_location = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name + name
+						+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+
+				Document doc_loc = Jsoup.connect(url_location).get();
+
+				lat = doc_loc.select("location").select("lat").text();
+				lng = doc_loc.select("location").select("lng").text();
+
+				if (lat.length() < 10) {
+					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+
+					Document doc_temp = Jsoup.connect(url_temp).get();
+
+					lat = doc_temp.select("location").select("lat").text();
+				}
+
+				if (lng.length() < 10) {
+					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+
+					Document doc_temp = Jsoup.connect(url_temp).get();
+
+					lng = doc_temp.select("location").select("lng").text();
+				}
+
+				if (lat.length() > 15) {
+					lat = lat.substring(lat.lastIndexOf(" ") + 1);
+				}
+
+				if (lng.length() > 15) {
+					lng = lng.substring(lng.lastIndexOf(" ") + 1);
+				}
+
+				latitude = lat;
+				longitude = lng;
+
+				restaurant = new Restaurant(name, detail, img, latitude, longitude);
+
+				list.add(restaurant);
+
+				System.out.println(restaurant);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+
+	}
+
+	public List<Hotel> crawlingNearHotel(String city_name) {
+
+		List<Hotel> list = new ArrayList<>();
+		Hotel hotel;
+
+		String name;
+		String detail;
+		String img;
+		String location;
+		String review;
+		String stars;
+		String latitude;
+		String longitude;
+		String price;
+
+		String input_hotel = city_name + "호텔";
+		String input_guest = city_name + "게스트하우스";
+		String lat;
+		String lng;
+
+		try {
+			String url = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=";
+
+			String url_hotel = url + input_hotel;
+			String url_guest = url + input_guest;
+
+			Document doc_hotel = Jsoup.connect(url_hotel).get();
+
+			Elements doc_el = doc_hotel.select(".section_hotel_list ul");
+			Elements doc_hotelList = doc_el.select("li");
+
+			Document doc_guest = Jsoup.connect(url_guest).get();
+
+			Elements doc_el_ = doc_guest.select(".section_hotel_list ul");
+			Elements doc_guestList = doc_el_.select("li");
+
+			for (Element el : doc_hotelList) {
+
+				// name
+				name = el.select(".info").select("strong").attr("title");
+				// detail
+				detail = el.select(".info").select(".review").select(".short_review").text();
+				// img
+				img = el.select(".img").select("img").attr("src");
+				// location
+				location = el.select(".info").select(".area").text();
+				// review
+				review = el.select(".info").select(".star_wrap").select(".num").text();
+				// stars
+				stars = el.select(".info").select(".rating_wrap").select(".grade").text();
+				// price
+				price = el.select(".sub_area").select(".price").text();
+
+				// location
+				String url_location = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name + name
+						+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+
+				Document doc_loc = Jsoup.connect(url_location).get();
+
+				lat = doc_loc.select("location").select("lat").text();
+				lng = doc_loc.select("location").select("lng").text();
+
+				if (lat.length() < 10) {
+					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+
+					Document doc_temp = Jsoup.connect(url_temp).get();
+
+					lat = doc_temp.select("location").select("lat").text();
+				}
+
+				if (lng.length() < 10) {
+					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+
+					Document doc_temp = Jsoup.connect(url_temp).get();
+
+					lng = doc_temp.select("location").select("lng").text();
+				}
+
+				if (lat.length() > 15) {
+					lat = lat.substring(lat.lastIndexOf(" ") + 1);
+				}
+
+				if (lng.length() > 15) {
+					lng = lng.substring(lng.lastIndexOf(" ") + 1);
+				}
+
+				latitude = lat;
+				longitude = lng;
+
+				hotel = new Hotel(name, detail, img, location, review, latitude, longitude, stars, price);
+
+				if (name.length() > 2) {
+					list.add(hotel);
+				}
+
+			}
+
+			for (Element el : doc_guestList) {
+
+				// name
+				name = el.select(".info").select("strong").attr("title");
+				// detail
+				detail = el.select(".info").select(".review").select(".short_review").text();
+				// img
+				img = el.select(".img").select("img").attr("src");
+				// location
+				location = el.select(".info").select(".area").text();
+				// review
+				review = el.select(".info").select(".star_wrap").select(".num").text();
+				// stars
+				stars = el.select(".info").select(".rating_wrap").select(".grade").text();
+				// price
+				price = el.select(".sub_area").select(".price").text();
+
+				// location
+				String url_location = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name + name
+						+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+
+				Document doc_loc = Jsoup.connect(url_location).get();
+
+				lat = doc_loc.select("location").select("lat").text();
+				lng = doc_loc.select("location").select("lng").text();
+
+				if (lat.length() < 10) {
+					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+
+					Document doc_temp = Jsoup.connect(url_temp).get();
+
+					lat = doc_temp.select("location").select("lat").text();
+				}
+
+				if (lng.length() < 10) {
+					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+
+					Document doc_temp = Jsoup.connect(url_temp).get();
+
+					lng = doc_temp.select("location").select("lng").text();
+				}
+
+				if (lat.length() > 15) {
+					lat = lat.substring(lat.lastIndexOf(" ") + 1);
+				}
+
+				if (lng.length() > 15) {
+					lng = lng.substring(lng.lastIndexOf(" ") + 1);
+				}
+
+				latitude = lat;
+				longitude = lng;
+
+				hotel = new Hotel(name, detail, img, location, review, latitude, longitude, stars, price);
+
+				if (name.length() > 2) {
+					list.add(hotel);
+				}
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+
+	}
+
 }
