@@ -122,8 +122,6 @@ public class Crawling {
 						price, img, sales, hits);
 				list.add(item);
 
-				System.out.println(item);
-
 			}
 			// daum
 			for (Element da : deal_daum) {
@@ -190,18 +188,18 @@ public class Crawling {
 				item = new Item(item_idx, name, latitude, longitude, detail, city_name, time_defference, country_name,
 						price, img, sales, hits);
 
-				System.out.println(item);
-
 				list.add(item);
+				
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return list;
+
 	}
 
-//	가격순 정렬
-	public void priceSort(List<Item> list) {
+//   가격순 정렬
+	public List<Item> priceSort(List<Item> list) {
 		Collections.sort(list, new Comparator<Item>() {
 			@Override
 			public int compare(Item o1, Item o2) {
@@ -213,13 +211,14 @@ public class Crawling {
 				return 0;
 			}
 		});
-		for (Item item : list) {
-			System.out.println(item);
-		}
+//      for (Item item : list) {
+//         System.out.println(item);
+//      }
+		return list;
 	}
 
-//	판매량순 정렬
-	public void salesSort(List<Item> list) {
+//   판매량순 정렬
+	public List<Item> salesSort(List<Item> list) {
 		Collections.sort(list, new Comparator<Item>() {
 			@Override
 			public int compare(Item o1, Item o2) {
@@ -231,13 +230,14 @@ public class Crawling {
 				return 0;
 			}
 		});
-		for (Item item : list) {
-			System.out.println(item);
-		}
+//      for (Item item : list) {
+//         System.out.println(item);
+//      }
+		return list;
 	}
 
-// 	인기순 정렬
-	public void hitsSort(List<Item> list) {
+//    인기순 정렬
+	public List<Item> hitsSort(List<Item> list) {
 		Collections.sort(list, new Comparator<Item>() {
 			@Override
 			public int compare(Item o1, Item o2) {
@@ -249,8 +249,103 @@ public class Crawling {
 				return 0;
 			}
 		});
-		for (Item item : list) {
-			System.out.println(item);
+//      for (Item item : list) {
+//         System.out.println(item);
+//      }
+		return list;
+	}
+
+	// 거리 순 정렬
+	public List<Item> distanceSort(String city_name, List<Item> list) {
+
+		List<Item> sortList = new ArrayList<>();
+		List<Integer> indexList = new ArrayList<>();
+		List<Double> distList = new ArrayList<>();
+
+		try {
+
+			String url = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+					+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+			Document doc;
+
+			double arr_value[] = new double[15];
+			int arr_key[] = new int[15];
+
+			doc = Jsoup.connect(url).get();
+
+			String latitude = doc.select("location").select("lat").text();
+			String longitude = doc.select("location").select("lng").text();
+
+			double lat1 = Double.valueOf(latitude);
+			double lon1 = Double.valueOf(longitude);
+
+			for (int i = 0; i < list.size(); i++) {
+
+				double dist = 0;
+
+				double lat2 = Double.valueOf(list.get(i).getLatitude());
+				double lon2 = Double.valueOf(list.get(i).getLongitude());
+
+				double theta = lon1 - lon2;
+
+				dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2))
+						+ Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+
+				dist = Math.acos(dist);
+
+				dist = rad2deg(dist);
+
+				dist = dist * 60 * 1.1515;
+
+				dist = dist * 1.609344; // kilometer
+
+				dist = Math.round((dist) * 10) / 10.0;
+
+				if (dist == 0) {
+					dist = 0.4;
+				}
+				arr_key[i] = i + 1;
+				arr_value[i] = dist;
+			}
+
+			for (int i = 0; i < arr_key.length - 1; i++) {
+				int temp_key = 0;
+				double temp_value = 0;
+				for (int j = i; j < arr_value.length; j++) {
+					if (arr_value[i] > arr_value[j]) {
+
+						temp_value = arr_value[j];
+						arr_value[j] = arr_value[i];
+						arr_value[i] = temp_value;
+
+						temp_key = arr_key[j];
+						arr_key[j] = arr_key[i];
+						arr_key[i] = temp_key;
+					}
+				}
+			}
+
+			for (int i = 0; i < arr_key.length; i++) {
+				for (int j = 0; j < list.size(); j++) {
+					if (arr_key[i] == list.get(j).getItem_idx()) {
+						sortList.add(list.get(j));
+						indexList.add(arr_key[i]);
+						distList.add(arr_value[i]);
+					}
+				}
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		return sortList;
+	}
+
+	private static double deg2rad(double deg) {
+		return (deg * Math.PI / 180.0);
+	}
+
+	private static double rad2deg(double rad) {
+		return (rad * 180 / Math.PI);
 	}
 }
