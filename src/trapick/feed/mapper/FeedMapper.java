@@ -13,8 +13,6 @@ public interface FeedMapper {
 
 	Feed getFeed(int feed_idx);
 
-	int updateFeedHeart(Heart heart);
-
 	int deleteFeed(int feed_idx);
 
 	Feed updateFeed(int feed_idx);
@@ -23,6 +21,10 @@ public interface FeedMapper {
 
 	int selectFeedHeartCount(int feed_idx);
 
-	int selectFeedHeartCheck(int user_idx);
+	int selectFeedHeartCheck(Heart heart);
+
+	int deleteFeedHeart(Heart heart);
+
+	int insertFeedHeart(Heart heart);
 
 }

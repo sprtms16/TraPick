@@ -17,6 +17,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../style/js/jquery.jscroll.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$('.fa-heart').click(function() {
@@ -29,16 +30,36 @@
 					$('.fa-heart').toggleClass("far");
 					$('.fa-heart').toggleClass("fas");
 				}
-			})
+			});
 			return false;
 		});
 		$('.fa-thumbs-up').click(function() {
-			$(this).toggleClass("far");
-			$(this).toggleClass("fas");
+			var href = $(this).parents('a').attr("href");
+			var up = $(this);
+			$.ajax({
+				url : href,
+				dataType : "json",
+				success : function(data) {
+					up.text(data.heartCount);
+					up.toggleClass("far");
+					up.toggleClass("fas");
+				}
+			});
+			return false;
 		});
 		$('.fa-thumbs-down').click(function() {
-			$(this).toggleClass("far");
-			$(this).toggleClass("fas");
+			var href = $(this).parents('a').attr("href");
+			var down = $(this);
+			$.ajax({
+				url : href,
+				dataType : "json",
+				success : function(data) {
+					down.text(data.heartCount);
+					down.toggleClass("far");
+					down.toggleClass("fas");
+				}
+			});
+			return false;
 		});
 	})
 </script>
@@ -101,10 +122,26 @@
 
 									<div>${reply.contents}
 										<a
-											href="replyLikeAction?feed_idx=${reply.feed_idx}&reply_idx=${reply.reply_idx}"><i
-											class="far fa-thumbs-up"></i></a> <a
-											href="replyDislikeAction?feed_idx=${reply.feed_idx}&reply_idx=${reply.reply_idx}"><i
-											class="far fa-thumbs-down"></i></a>
+											href="replyLikeAction?feed_idx=${reply.feed_idx}&reply_idx=${reply.reply_idx}">
+											<c:choose>
+												<c:when test="${reply.isLike eq 1}">
+													<i class="fas fa-thumbs-up">${reply.like }</i>
+												</c:when>
+												<c:otherwise>
+													<i class="far fa-thumbs-up">${reply.like }</i>
+												</c:otherwise>
+											</c:choose>
+										</a> <a
+											href="replyDislikeAction?feed_idx=${reply.feed_idx}&reply_idx=${reply.reply_idx}">
+											<c:choose>
+												<c:when test="${reply.isDislike eq 1}">
+													<i class="fas fa-thumbs-down">${reply.dislike }</i>
+												</c:when>
+												<c:otherwise>
+													<i class="far fa-thumbs-down">${reply.dislike }</i>
+												</c:otherwise>
+											</c:choose>
+										</a>
 									</div>
 								</c:forEach>
 								<!-- 	<iframe

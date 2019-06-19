@@ -9,36 +9,87 @@
 		#{user_idx})
 	</insert>
 
-	<select id="listReply" parameterType="int" resultType="Reply">
-		select *
-		from reply where feed_idx = #{feed_idx}
+	<select id="listReply" parameterType="Map" resultType="Reply">
+		SELECT
+		r.*,
+		nvl2(l.LIKER,1,0) AS isLike,
+		nvl2(d.DISLIKER,1,0) AS isDislike,
+		(SELECT COUNT(*) FROM REPLY_LIKE sl WHERE sl.reply_idx = r.reply_idx
+		)
+		AS "like" ,
+		(SELECT COUNT(*) FROM REPLY_DISLIKE sd WHERE sd.reply_idx =
+		r.reply_idx
+		) AS "dislike"
+		FROM REPLY r
+		LEFT JOIN REPLY_LIKE l
+		ON
+		r.REPLY_IDX = l.REPLY_IDX
+		AND l.LIKER = #{user_idx}
+		LEFT JOIN
+		REPLY_DISLIKE d
+		ON r.REPLY_IDX = d.REPLY_IDX
+		AND d.DISLIKER =
+		#{user_idx}
+		WHERE
+		r.feed_idx= #{feed_idx} order by r.REPLY_IDX desc
+	</select>
+	<!--replylike -->
+	<select id="selectReplyLikeCheck" resultType="int"
+		parameterType="ReplyLike">
+		select count(*) from reply_like where liker =
+		#{liker}
+		and feed_idx = #{feed_idx} and reply_idx = #{reply_idx}
 	</select>
 
-	<update id="updateReplyLike" parameterType="ReplyLike">
-		merge INTO reply_like
-		USING dual ON (feed_idx = #{feed_idx} AND reply_idx = #{reply_idx} )
-		WHEN matched THEN
-		UPDATE SET liker = #{liker} WHERE liker
-		= #{liker}
-		DELETE WHERE liker = #{liker} WHEN NOT matched THEN
-		INSERT VALUES(
-		#{reply_idx}, #{feed_idx}, #{liker})
-	</update>
+	<delete id="deleteReplyLike" parameterType="ReplyLike">
+		delete from
+		reply_like where
+		liker = #{liker}
+		and
+		feed_idx = #{feed_idx}
+		and
+		reply_idx
+		= #{reply_idx}
+	</delete>
 
-	<update id="updateReplyDislike" parameterType="ReplyDislike">
-		merge INTO
-		reply_dislike
-		USING dual ON (feed_idx = #{feed_idx} AND reply_idx =
-		#{reply_idx} )
-		WHEN matched THEN
-		UPDATE SET disliker = #{disliker} WHERE
-		disliker
-		= #{disliker}
-		DELETE WHERE disliker = #{disliker} WHEN NOT
-		matched THEN
-		INSERT
-		VALUES(
-		#{reply_idx}, #{feed_idx}, #{disliker})
-	</update>
+	<select id="selectReplyLikeCount" parameterType="int"
+		resultType="int">
+		select count(*) from reply_like where reply_idx =
+		#{reply_idx}
+	</select>
+
+	<insert id="insertReplyLike" parameterType="ReplyLike">
+		insert into
+		reply_like values(#{reply_idx},#{feed_idx},#{liker})
+	</insert>
+
+	<!--replydislike -->
+	<select id="selectReplyDislikeCheck" resultType="int"
+		parameterType="ReplyDislike">
+		select count(*) from reply_dislike where disliker =
+		#{disliker}
+		and feed_idx = #{feed_idx} and reply_idx = #{reply_idx}
+	</select>
+
+	<delete id="deleteReplyDislike" parameterType="ReplyDislike">
+		delete from
+		reply_dislike where
+		disliker = #{disliker}
+		and
+		feed_idx = #{feed_idx}
+		and
+		reply_idx = #{reply_idx}
+	</delete>
+
+	<select id="selectReplyDislikeCount" parameterType="int"
+		resultType="int">
+		select count(*) from reply_dislike where reply_idx =
+		#{reply_idx}
+	</select>
+
+	<insert id="insertReplyDislike" parameterType="ReplyDislike">
+		insert into
+		reply_dislike values(#{reply_idx},#{feed_idx},#{disliker})
+	</insert>
 
 </mapper>

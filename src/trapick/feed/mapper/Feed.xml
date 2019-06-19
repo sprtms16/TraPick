@@ -14,7 +14,7 @@
 		f.*, nvl2(h.user_idx,1,0) as islike, (select COUNT(*) from feed_heart
 		where feed_heart.FEED_IDX = f.FEED_IDX)as heart from feed f left JOIN
 		FEED_HEART h
-		on f.feed_idx = h.feed_idx and h.user_idx = #{user_idx}
+		on f.feed_idx = h.feed_idx and h.user_idx = #{user_idx} order by regdate desc
 	</select>
 
 	<select id="getFeed" parameterType="int" resultType="Feed">
@@ -22,22 +22,32 @@
 		from feed where feed_idx = #{feed_idx}
 	</select>
 
-	<update id="updateFeedHeart" parameterType="Heart">
-		merge INTO feed_heart
-		USING dual ON (feed_idx = #{feed_idx})
-		WHEN matched THEN
-		UPDATE SET
-		user_idx = #{user_idx}
-		WHERE user_idx
-		= #{user_idx}
-		DELETE WHERE user_idx
-		= #{user_idx} WHEN
-		NOT matched THEN
-		INSERT
+	<select id="selectFeedHeartCount" parameterType="int"
+		resultType="int">
+		select COUNT(*)
+		from feed_heart
+		where feed_idx = #{feed_idx}
+	</select>
+
+	<select id="selectFeedHeartCheck" parameterType="Heart"
+		resultType="int">
+		select COUNT(*) from feed_heart
+		where user_idx = #{user_idx}
+		and feed_idx = #{feed_idx}
+	</select>
+
+	<delete id="deleteFeedHeart" parameterType="Heart">
+		delete from
+		feed_heart where feed_idx = #{feed_idx} and user_idx=#{user_idx}
+	</delete>
+
+	<insert id="insertFeedHeart" parameterType="Heart">
+		insert into
+		feed_heart
 		VALUES(
 		#{user_idx},
 		#{feed_idx})
-	</update>
+	</insert>
 
 	<delete id="deleteFeed" parameterType="int">
 		delete from feed where
@@ -55,17 +65,7 @@
 		#{feed_idx}
 
 	</update>
-	<select id="selectFeedHeartCount" parameterType="int"
-		resultType="int">
-		select COUNT(*)
-		from feed_heart
-		where feed_idx = #{feed_idx}
-	</select>
-	<select id="selectFeedHeartCheck" parameterType="int"
-		resultType="int">
-		select COUNT(*) from feed_heart
-		where user_idx = #{user_idx}
-	</select>
+
 
 </mapper>
 

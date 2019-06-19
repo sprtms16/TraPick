@@ -22,7 +22,7 @@ public class listAction implements Action {
 		ActionForward forward = new ActionForward();
 		List<Feed> feedList = service.FeedListService(request, response);
 		for (Feed feed : feedList)
-			feed.setReplys(replyService.listReplyService(feed.getFeed_idx()));
+			feed.setReplys(replyService.listReplyService(request,feed.getFeed_idx()));
 		System.out.println(feedList);
 
 		if (request.getParameter("odb") != null) {
