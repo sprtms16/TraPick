@@ -5,7 +5,7 @@ public class ActionForward {
 	private boolean isRedirect;
 	private String path;
 	
-	ActionForward(){}
+	public ActionForward(){}
 
 	public boolean isRedirect() {
 		return isRedirect;

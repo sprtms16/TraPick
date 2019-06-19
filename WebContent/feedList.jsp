@@ -16,12 +16,44 @@
 <link rel="stylesheet" type="text/css" href="../style/css/feedList.css" />
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
+	
+<title>Bootstrap Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+
+	 
+
 </head>
 <body>
-	<div class="container-fluid"
+ <div class="container">
+  
+  <div class="dropdown">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+     	정렬
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="list">최신 순</a>
+      <a class="dropdown-item" href="list?odb=pop&sc=up">인기 순↑</a>
+      <a class="dropdown-item" href="list?odb=pop&sc=down">인기 순↓</a>
+      <a class="dropdown-item" href="list?odb=rep&sc=up">댓글 순↑</a>
+      <a class="dropdown-item" href="list?odb=rep&sc=down">댓글 순↓</a>
+      <div class="dropdown-divider"></div>
+      
+    </div>
+  </div>
+</div>
+
+
+       
+        
+	<div class="container-fluid"	
 		style="display: inline-block; text-align: center;">
 		<c:forEach var="feed" items="${feedList}">
-<<<<<<< HEAD
 			<div class="col-md-6 mt-5 ">
 				<div class="card text-center">
 					<img class="card-img-top"
@@ -36,14 +68,6 @@
 								href="#collapseExample" role="button" aria-expanded="false"
 								aria-controls="collapseExample"> <i class="fas fa-map"></i>
 								Maps
-							</a> <a class="btn btn-primary" data-toggle="collapse"
-								href="hearAction?feed_idx=${feed.feed_idx}" role="button"
-								aria-expanded="false" aria-controls="collapseExample"> <i
-								class="fas fa-map"></i> 하트
-							</a> <a class="btn btn-primary" data-toggle="collapse"
-								href="#collapseExample" role="button" aria-expanded="false"
-								aria-controls="collapseExample"> <i class="fas fa-map"></i>
-								Maps
 							</a>
 
 						</p>
@@ -53,7 +77,7 @@
 								<div class="mb-3">
 									<input type="hidden" name="feed_idx" value="${feed.feed_idx}" />
 									<label for="content">내용</label>
-									<textarea class="form-control" rows="5" name="contents"
+									<textarea class="form-control" rows="2" name="contents"
 										id="contents" placeholder="내용을 입력해 주세요"></textarea>
 								</div>
 								<div>
@@ -87,13 +111,14 @@
 					<div class="card-footer text-muted">
 						<div class="row">
 							<div class="col">
-								<a href=""><i class="fas fa-map"></i></a>
+								<a href="updateForm?feed_idx=${feed.feed_idx }"><i class="fas fa-edit"></i></a>
 							</div>
 							<div class="col">
-								<a href="mailto:test@test.com"><i class="fas fa-envelope"></i></a>
+								<a href="deleteFeedAction?feed_idx=${feed.feed_idx }"><i class="fas fa-trash-alt"></i></a>
 							</div>
 							<div class="col">
-								<a href="tel:+123456789"><i class="fas fa-phone"></i></a>
+								<a href="hearAction?feed_idx=${feed.feed_idx}"><i
+									class="fas fa-heart"></i><i class="far fa-heart"></i></a>
 							</div>
 						</div>
 					</div>
