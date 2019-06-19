@@ -8,9 +8,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- <script type="text/javascript">
-	location.href = "feed/list";
-</script> -->
 </head>
 <body>
 	<table>
@@ -24,9 +21,10 @@
 				<td>Schedule/main</td>
 				<td>Schedule/country</td>
 				<td>Schedule/city</td>
+				<td>Recommend/itemList</td>
 			</tr>
 		</thead>
-		<tbody>	
+		<tbody>
 			<tr>
 				<td><button onclick="location.href = 'feed/feedInsertForm'">feed/feedInsertForm</button></td>
 				<td><button onclick="location.href = 'feed/insertAction'">feed/insertAction</button></td>
@@ -36,8 +34,15 @@
 				<td><button onclick="location.href = 'Schedule/main'">Schedule/main</button></td>
 				<td><button onclick="location.href = 'Schedule/country'">Schedule/country</button></td>
 				<td><button onclick="location.href = 'Schedule/city'">Schedule/city</button></td>
+				<!--<td><button onclick="location.href = 'Recommend/itemList'">Recommend/itemList</button></td>  -->
 			</tr>
 		</tbody>
 	</table>
+
+	<form action="Recommend/itemList">
+		<input type="text" name="country_name"> <input type="text"
+			name="city_name"> <input type="submit" value="검색">
+	</form>
+
 </body>
 </html>
