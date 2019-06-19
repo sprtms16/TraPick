@@ -14,11 +14,13 @@ import trapick.feed.action.ActionForward;
 import trapick.feed.action.ErrorAction;
 import trapick.feed.action.InsertAction;
 import trapick.feed.action.InsertFormAction;
+import trapick.feed.action.deleteFeedAction;
 import trapick.feed.action.heartAction;
 import trapick.feed.action.insertActionReply;
 import trapick.feed.action.listAction;
 import trapick.feed.action.replyDislikeAction;
 import trapick.feed.action.replyLikeAction;
+import trapick.feed.action.updateFeedAction;
 import trapick.feed.action.updateFormAction;
 
 @WebServlet("/feed/*")
@@ -39,14 +41,13 @@ public class FeedController extends HttpServlet {
 		Action action = null;
 		ActionForward forward = null;
 		System.out.println(command);
+		System.out.println(request.getSession().getAttribute("user_idx"));
 		if (command.equals("feed/feedInsertForm")) {
 			action = new InsertFormAction();
 		} else if (command.equals("feed/insertAction")) {
 			action = new InsertAction();
 		} else if (command.equals("feed/list")) {
 			action = new listAction();
-		} else if (command.equals("feed/updateForm")) {
-			action = new updateFormAction();
 		} else if (command.equals("feed/insertActionReply")) {
 			action = new insertActionReply();
 		} else if (command.equals("feed/replyLikeAction")) {
@@ -55,6 +56,12 @@ public class FeedController extends HttpServlet {
 			action = new replyDislikeAction();
 		} else if (command.equals("feed/hearAction")) {
 			action = new heartAction();
+		} else if (command.equals("feed/deleteFeedAction")) {
+			action = new deleteFeedAction();
+		}else if (command.equals("feed/updateForm")) {
+			action = new updateFeedFormAction();
+		}else if (command.equals("feed/updateFeedAction")) {
+			action = new updateFeedAction();
 		} else {
 
 			action = new ErrorAction();

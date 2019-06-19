@@ -1,4 +1,4 @@
-package trapick.schedule.controller;
+package trapick.feed.controller;
 
 import java.io.IOException;
 
@@ -9,46 +9,52 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import trapick.schedule.action.Action;
-import trapick.schedule.action.ActionForward;
-import trapick.schedule.action.CityListAction;
-import trapick.schedule.action.CountryIsoListAction;
-import trapick.schedule.action.CountryListAction;
-import trapick.schedule.action.SelectCountryAction;
-import trapick.schedule.action.getStartDateAction;
+import trapick.feed.action.Action;
+import trapick.feed.action.ActionForward;
+import trapick.feed.action.ErrorAction;
+import trapick.feed.action.InsertFormAction;
 
-@WebServlet("/Schedule/*")
-public class ScheduleController extends HttpServlet {
+/**
+ * Servlet implementation class FeedDataController
+ */
+@WebServlet("/FeedData/*")
+public class FeedDataController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public ScheduleController() {
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public FeedDataController() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public void doProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		String requestURL = request.getRequestURI();
+		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
-		String command = requestURL.substring(contextPath.length() + 1);
+		String command = requestURI.substring(contextPath.length() + 1);
 
 		Action action = null;
 		ActionForward forward = null;
 		System.out.println(command);
-		if (command.equals("Schedule/main")) {
-			action = new SelectCountryAction();
-		} else if (command.equals("Schedule/country")) {
-			action = new CountryListAction();
-		} else if (command.equals("Schedule/city")) {
-			action = new CityListAction();
-		} else if (command.equals("Schedule/country_iso")) {
-			action = new CountryIsoListAction();
+
+		switch (command) {
+		case "FeedData/feedInsertForm":
+			action = new InsertFormAction();
+			break;
+
+		default:
+			action = new ErrorAction();
+			break;
 		}
+
 		try {
 			forward = action.execute(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		if (forward != null) {
 			if (forward.isRedirect()) {
 				response.sendRedirect(forward.getPath());
@@ -59,13 +65,23 @@ public class ScheduleController extends HttpServlet {
 		}
 	}
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doProcess(request, response);
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doProcess(request, response);
 	}
 

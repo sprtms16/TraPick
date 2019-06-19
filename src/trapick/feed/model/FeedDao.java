@@ -11,19 +11,18 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import trapick.feed.domain.Feed;
 import trapick.feed.domain.Heart;
 import trapick.feed.mapper.FeedMapper;
-import trapick.feed.mapper.ReplyMapper;
 
 public class FeedDao {
 	private static FeedDao dao = new FeedDao();
-	
-	public static FeedDao getInstance(){
+
+	public static FeedDao getInstance() {
 		return dao;
 	}
-	
-	public SqlSessionFactory getSqlSessionFactory(){
-		String resource =  "mybatis-config.xml";
+
+	public SqlSessionFactory getSqlSessionFactory() {
+		String resource = "mybatis-config.xml";
 		InputStream in = null;
-		
+
 		try {
 			in = Resources.getResourceAsStream(resource);
 		} catch (Exception e) {
@@ -35,7 +34,7 @@ public class FeedDao {
 	public int insertFeed(Feed feed) {
 		int re = -1;
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
-		
+
 		try {
 			re = sqlSession.getMapper(FeedMapper.class).insertFeed(feed);
 			if (re > 0) {
@@ -46,15 +45,15 @@ public class FeedDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return re;
 	}
 
-	public List<Feed> feedList() {
+	public List<Feed> feedList(int user_idx) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		List<Feed> list = null;
 		try {
-			list = sqlSession.getMapper(FeedMapper.class).feedList();
+			list = sqlSession.getMapper(FeedMapper.class).feedList(user_idx);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -75,9 +74,9 @@ public class FeedDao {
 	public int updateFeedHeart(Heart heart) {
 		int re = -1;
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
-
 		try {
 			re = sqlSession.getMapper(FeedMapper.class).updateFeedHeart(heart);
+			System.out.println("re is " + re);
 			if (re > 0) {
 				sqlSession.commit();
 			} else {
@@ -90,5 +89,75 @@ public class FeedDao {
 		return re;
 	}
 
-	
+	public int deleteFeed(int feed_idx) {
+		int re = -1;
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+
+		try {
+			re = sqlSession.getMapper(FeedMapper.class).deleteFeed(feed_idx);
+			if (re > 0) {
+				sqlSession.commit();
+			} else {
+				sqlSession.rollback();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return re;
+	}
+
+	public Feed updateFeed(int feed_idx) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		Feed feed = new Feed();
+		try {
+
+			feed = sqlSession.getMapper(FeedMapper.class).updateFeed(feed_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return feed;
+
+	}
+
+	public int updateFeedAction(Feed feed) {
+		int re = -1;
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			re = sqlSession.getMapper(FeedMapper.class).updateFeedAction(feed);
+			// 트랜잭션 == 하나의 작업단위 를 체크해줘야함 다 성공하든지 다 실패하든지
+			if (re > 0) {
+				sqlSession.commit();
+			} else {
+				sqlSession.rollback();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return re;
+	}
+
+	public int selectFeedHeartCount(int feed_idx) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		int heartCount = -1;
+		try {
+			heartCount = sqlSession.getMapper(FeedMapper.class).selectFeedHeartCount(feed_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return heartCount;
+	}
+
+	public int selectFeedHeartCheck(int user_idx) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		int heartCount = -1;
+		try {
+			heartCount = sqlSession.getMapper(FeedMapper.class).selectFeedHeartCheck(user_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return heartCount;
+	}
+
 }

@@ -1,5 +1,7 @@
 package trapick.feed.action;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,28 @@ public class listAction implements Action {
 		for (Feed feed : feedList)
 			feed.setReplys(replyService.listReplyService(feed.getFeed_idx()));
 		System.out.println(feedList);
+
+		if (request.getParameter("odb") != null) {
+			int ud = request.getParameter("sc").equals("up") ? 1 : -1;
+			switch (request.getParameter("odb")) {
+			case "pop":
+
+				Collections.sort(feedList, (o1, o2) -> (o1.getHeart() - o2.getHeart()) * ud);
+				break;
+			case "rep":
+				Collections.sort(feedList, new Comparator<Feed>() {
+
+					@Override
+					public int compare(Feed o1, Feed o2) {
+						// TODO Auto-generated method stub
+						return (o1.getReplys().size() - o2.getReplys().size()) * ud;
+					}
+				});
+				break;
+			default:
+				break;
+			}
+		}
 		request.setAttribute("feedList", feedList);
 
 		forward.setRedirect(false);

@@ -31,4 +31,15 @@ public class ScheduleService {
 		return dao.startDate(idx);
 	}
 
+	public List<String> listCountryIsoService(HttpServletRequest request) {
+		String country_iso = request.getParameter("country_iso");
+		return dao.listCountryIso();
+	}
+
+	public String selectISO(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		String country_name = request.getParameter("country_name");
+		return dao.selectCountryISO(country_name);
+	}
+
 }
