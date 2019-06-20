@@ -62,13 +62,16 @@ public class FeedService {
 		int feed_idx = Integer.parseInt(request.getParameter("feed_idx"));
 		int user_idx = (int) session.getAttribute("user_idx");
 		Heart heart = new Heart(feed_idx, user_idx);
-		if (dao.selectFeedHeartCheck(user_idx) > 0) {
-
-		}
-		if (dao.updateFeedHeart(heart) > 0) {
-			return dao.selectFeedHeartCount(feed_idx);
+		if (dao.selectFeedHeartCheck(heart) > 0) {
+			if (dao.deleteFeedHeart(heart) > 0)
+				return dao.selectFeedHeartCount(feed_idx);
+			else
+				return -1;
 		} else {
-			return -1;
+			if (dao.insertFeedHeart(heart) > 0)
+				return dao.selectFeedHeartCount(feed_idx);
+			else
+				return -1;
 		}
 
 	}

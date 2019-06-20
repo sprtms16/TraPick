@@ -2,11 +2,12 @@ package trapick.feed.domain;
 
 import java.io.Serializable;
 
-public class Heart implements Serializable{
+public class Heart implements Serializable {
 	int feed_idx;
 	int user_idx;
-	
-	public Heart() {}
+
+	public Heart() {
+	}
 
 	public int getFeed_idx() {
 		return feed_idx;
@@ -34,7 +35,5 @@ public class Heart implements Serializable{
 	public String toString() {
 		return "Heart [feed_idx=" + feed_idx + ", user_idx=" + user_idx + "]";
 	}
-	
-	
 
 }
