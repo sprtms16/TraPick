@@ -3,19 +3,21 @@ package trapick.recommend.domain;
 public class LandMark {
 	int land_idx;
 	String name;
-	double latitude;
-	double longitude;
+	String latitude;
+	String longitude;
 	String detail;
 	String city_name;
 	int time_defference;
 	String country_name;
+	String img;
 
 	public LandMark() {
 
 	}
 
-	public LandMark(int land_idx, String name, double latitude, double longitude, String detail, String city_name,
-			int time_defference, String country_name) {
+	
+	public LandMark(int land_idx, String name, String latitude, String longitude, String detail, String city_name,
+			int time_defference, String country_name, String img) {
 		super();
 		this.land_idx = land_idx;
 		this.name = name;
@@ -25,7 +27,9 @@ public class LandMark {
 		this.city_name = city_name;
 		this.time_defference = time_defference;
 		this.country_name = country_name;
+		this.img = img;
 	}
+
 
 	public int getLand_idx() {
 		return land_idx;
@@ -43,19 +47,19 @@ public class LandMark {
 		this.name = name;
 	}
 
-	public double getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
 
-	public double getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
 
@@ -91,11 +95,21 @@ public class LandMark {
 		this.country_name = country_name;
 	}
 
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+
 	@Override
 	public String toString() {
 		return "LandMark [land_idx=" + land_idx + ", name=" + name + ", latitude=" + latitude + ", longitude="
 				+ longitude + ", detail=" + detail + ", city_name=" + city_name + ", time_defference=" + time_defference
-				+ ", country_name=" + country_name + "]";
+				+ ", country_name=" + country_name + ", img=" + img + "]";
 	}
+	
 
 }
