@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="trapick.mypage.domain.LandMark">
+<mapper namespace="trapick.recommend.mapper.LandMarkMapper">
 	<cache />
+	<select id="landMarkList" parameterType="String" resultType="LandMark">
+		select l.land_idx, l.name, l.image, l.latitude, l.longitude, l.detail, l.city_idx, c.name "city_name", c.time_difference 
+		from landmark l, city c 
+		where l.city_idx = c.city_idx and c.name = #{city_name}
+	</select>
 
 </mapper>

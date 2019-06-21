@@ -15,7 +15,6 @@ import trapick.schedule.action.CityListAction;
 import trapick.schedule.action.CountryIsoListAction;
 import trapick.schedule.action.CountryListAction;
 import trapick.schedule.action.SelectCountryAction;
-import trapick.schedule.action.getStartDateAction;
 
 @WebServlet("/Schedule/*")
 public class ScheduleController extends HttpServlet {

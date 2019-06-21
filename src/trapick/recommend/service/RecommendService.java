@@ -6,14 +6,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import trapick.recommend.domain.Item;
+import trapick.recommend.domain.LandMark;
 import trapick.recommend.model.Crawling;
+import trapick.recommend.model.LandMarkDao;
 
 public class RecommendService {
    private static RecommendService service = new RecommendService();
    private static Crawling crawling;
+   private static LandMarkDao dao;
+	
 
    public static RecommendService getInstance() {
-
+	  dao = LandMarkDao.getInstance();
       crawling = Crawling.getInstance();
       return service;
    }
@@ -47,4 +51,13 @@ public class RecommendService {
       }
       return list;
    }   
+   
+   public List<LandMark> landMarkListService(HttpServletRequest request)throws Exception{
+		request.setCharacterEncoding("utf-8");
+		String city_name = request.getParameter("city_name");
+		List<LandMark> list = dao.landMarkList(city_name);
+		
+		return list;
+	}
+   
 }

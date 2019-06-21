@@ -1,6 +1,8 @@
 package trapick.recommend.domain;
 
-public class LandMark {
+import java.io.Serializable;
+
+public class LandMark implements Serializable{
 	int land_idx;
 	String name;
 	double latitude;
@@ -9,6 +11,7 @@ public class LandMark {
 	String city_name;
 	int time_defference;
 	String country_name;
+	String image;
 
 	public LandMark() {
 
