@@ -77,18 +77,6 @@
 
 	</update>
 
-	<select id="selectFeedHeartCount" parameterType="int"
-		resultType="int">
-		select COUNT(*)
-		from feed_heart
-		where feed_idx = #{feed_idx}
-	</select>
-
-	<select id="selectFeedHeartCheck" parameterType="int"
-		resultType="int">
-		select COUNT(*) from feed_heart
-		where user_idx = #{user_idx}
-	</select>
 
 
 </mapper>

@@ -42,4 +42,11 @@ public class ScheduleService {
 		return dao.selectCountryISO(country_name);
 	}
 
+	public String selectCityEnameService(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		String city_ename = request.getParameter("city_name");
+		/* System.out.println("service" + city_ename); */
+		return dao.selectCityEname(city_ename);
+	}
+
 }

@@ -15,4 +15,6 @@ public interface ScheduleMapper {
 	List<String> selectcountryiso();
 
 	String selectCountryIso(String country_name);
+
+	String selectCityEname(String cityEname);
 }

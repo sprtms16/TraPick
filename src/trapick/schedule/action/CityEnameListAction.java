@@ -9,17 +9,16 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import trapick.schedule.service.ScheduleService;
 
-public class CityListAction implements Action {
+public class CityEnameListAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		ScheduleService service = ScheduleService.getInstance();
-
-		List<String> list = service.listCityService(request);
-		JSONArray array = JSONArray.fromObject(list);
-		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().print(array);
-		/* System.out.println(array); */
+		String ename = service.selectCityEnameService(request);
+		
+		response.setContentType("text/html;charset=UTF-8");
+		response.getWriter().print(ename);
+		/* System.out.println("action : " + ename); */
 		return null;
 	}
 
