@@ -102,22 +102,16 @@
 <body>
 
 	<div class="container">
-		<div class = "search_menu">
-			<form action="list" method = "get">
-				<aside style = "float: right;"> 
-					<input type = "text" name = "word"  placeholder="검색어를 입력하시오">
-					<button type = "submit">검색</button>
-					
+		<div class="search_menu">
+			<form action="list" method="get">
+				<aside style="float: right;">
+					<input type="text" name="word" placeholder="검색어를 입력하시오">
+					<button type="submit">검색</button>
+
 				</aside>
 			</form>
 		</div>
-
 		
-
-
-
-
-
 		<div class="dropdown">
 			<button type="button" class="btn btn-primary dropdown-toggle"
 				data-toggle="dropdown">정렬</button>
