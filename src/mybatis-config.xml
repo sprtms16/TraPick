@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias type="trapick.feed.domain.Feed" alias="Feed" />
+		<typeAlias type="trapick.feed.domain.Reply" alias="Reply" />
+		<typeAlias type="trapick.feed.domain.ReplyLike" alias="ReplyLike" />
+		<typeAlias type="trapick.feed.domain.ReplyDislike" alias="ReplyDislike" />
+		<typeAlias type="trapick.feed.domain.Heart" alias="Heart" />
+		<typeAlias type="trapick.mypage.domain.User" alias="User" />
+		<typeAlias type="trapick.recommend.domain.LandMark" alias="LandMark" />
+		<typeAlias type="trapick.recommend.domain.Item" alias="Item" />
+		<typeAlias type="trapick.schedule.domain.SelectedItem" alias="SelectedItem" />
+		<typeAlias type="trapick.schedule.domain.SelectedLandMark" alias="SelectedLandMark" />
+		<typeAlias type="trapick.schedule.domain.Schedule" alias="Schedule" />
+		<typeAlias type="trapick.schedule.domain.Country" alias="Country" />
+		
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver"
+					value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url"
+					value="jdbc:oracle:thin:@localhost:1521:XE" />
+				<property name="username" value="trapick" />
+				<property name="password" value="1234" />
+			</dataSource>
+			<!-- <dataSource type="JNDI"> <property name="data_source" value="java:comp/env/jdbc/oracle" /> </dataSource> -->
+		</environment>
+	</environments>
+
+	<mappers>
+ 		<mapper resource="trapick/feed/mapper/Feed.xml" />
+		<mapper resource="trapick/feed/mapper/Reply.xml" />
+		<mapper resource="trapick/mypage/mapper/User.xml" />
+		<mapper resource="trapick/recommend/mapper/Item.xml" />
+		<mapper resource="trapick/recommend/mapper/LandMark.xml" /> 
+		<mapper resource="trapick/schedule/mapper/Schedule.xml" />
+ 		<mapper resource="trapick/schedule/mapper/SelectedItem.xml" />
+		<mapper resource="trapick/schedule/mapper/SelectedItem.xml" /> 
+	</mappers>
+
+</configuration>
