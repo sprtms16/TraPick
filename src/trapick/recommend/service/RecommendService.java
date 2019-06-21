@@ -1,6 +1,5 @@
 package trapick.recommend.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,9 +32,9 @@ public class RecommendService {
       if (request.getParameter("price") != null) {
     	  if(request.getParameter("price").equals("price")) {
     		  list = crawling.priceSort(list);
-   	   }else if (request.getParameter("sales").equals("sales")) {
+   	   		}else if (request.getParameter("sales").equals("sales")) {
    		   list = crawling.salesSort(list);
-   	   }else if (request.getParameter("hits").equals("hits")) {
+   	   		}else if (request.getParameter("hits").equals("hits")) {
    		   list = crawling.hitsSort(list);
    	   }
        }
@@ -46,11 +45,6 @@ public class RecommendService {
       		   list = crawling.distanceSort(request.getParameter("current"), list);
       	   }
       }
-
-
-
       return list;
-   }
-  
-   
+   }   
 }

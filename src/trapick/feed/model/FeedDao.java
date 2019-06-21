@@ -2,6 +2,7 @@ package trapick.feed.model;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -49,11 +50,11 @@ public class FeedDao {
 		return re;
 	}
 
-	public List<Feed> feedList(int user_idx) {
+	public List<Feed> feedList(Map<String, Object> map) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		List<Feed> list = null;
 		try {
-			list = sqlSession.getMapper(FeedMapper.class).feedList(user_idx);
+			list = sqlSession.getMapper(FeedMapper.class).feedList(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -69,24 +70,6 @@ public class FeedDao {
 			e.printStackTrace();
 		}
 		return feed;
-	}
-
-	public int updateFeedHeart(Heart heart) {
-		int re = -1;
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
-		try {
-			re = sqlSession.getMapper(FeedMapper.class).updateFeedHeart(heart);
-			System.out.println("re is " + re);
-			if (re > 0) {
-				sqlSession.commit();
-			} else {
-				sqlSession.rollback();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return re;
 	}
 
 	public int deleteFeed(int feed_idx) {
@@ -149,15 +132,53 @@ public class FeedDao {
 		return heartCount;
 	}
 
-	public int selectFeedHeartCheck(int user_idx) {
+	public int selectFeedHeartCheck(Heart heart) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		int heartCount = -1;
 		try {
-			heartCount = sqlSession.getMapper(FeedMapper.class).selectFeedHeartCheck(user_idx);
+			heartCount = sqlSession.getMapper(FeedMapper.class).selectFeedHeartCheck(heart);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return heartCount;
+	}
+
+	public int deleteFeedHeart(Heart heart) {
+		// TODO Auto-generated method stub
+		int re = -1;
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			re = sqlSession.getMapper(FeedMapper.class).deleteFeedHeart(heart);
+			// 트랜잭션 == 하나의 작업단위 를 체크해줘야함 다 성공하든지 다 실패하든지
+			if (re > 0) {
+				sqlSession.commit();
+			} else {
+				sqlSession.rollback();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return re;
+	}
+
+	public int insertFeedHeart(Heart heart) {
+		// TODO Auto-generated method stub
+		int re = -1;
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			re = sqlSession.getMapper(FeedMapper.class).insertFeedHeart(heart);
+			// 트랜잭션 == 하나의 작업단위 를 체크해줘야함 다 성공하든지 다 실패하든지
+			if (re > 0) {
+				sqlSession.commit();
+			} else {
+				sqlSession.rollback();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return re;
 	}
 
 }

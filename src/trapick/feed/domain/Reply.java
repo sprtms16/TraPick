@@ -2,7 +2,7 @@ package trapick.feed.domain;
 
 import java.io.Serializable;
 
-public class Reply implements Serializable{
+public class Reply implements Serializable {
 	int reply_idx;
 	int feed_idx;
 	int user_idx;
@@ -10,12 +10,15 @@ public class Reply implements Serializable{
 	String regdate;
 	int like;
 	int dislike;
+	int isLike;
+	int isDislike;
 
 	public Reply() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Reply(int reply_idx, int feed_idx, int user_idx, String contents, String regdate, int like, int dislike) {
+	public Reply(int reply_idx, int feed_idx, int user_idx, String contents, String regdate, int like, int dislike,
+			int isLike, int isDislike) {
 		super();
 		this.reply_idx = reply_idx;
 		this.feed_idx = feed_idx;
@@ -24,6 +27,8 @@ public class Reply implements Serializable{
 		this.regdate = regdate;
 		this.like = like;
 		this.dislike = dislike;
+		this.isLike = isLike;
+		this.isDislike = isDislike;
 	}
 
 	public int getReply_idx() {
@@ -82,10 +87,27 @@ public class Reply implements Serializable{
 		this.dislike = dislike;
 	}
 
+	public int getIsLike() {
+		return isLike;
+	}
+
+	public void setIsLike(int isLike) {
+		this.isLike = isLike;
+	}
+
+	public int getIsDislike() {
+		return isDislike;
+	}
+
+	public void setIsDislike(int isDislike) {
+		this.isDislike = isDislike;
+	}
+
 	@Override
 	public String toString() {
 		return "Reply [reply_idx=" + reply_idx + ", feed_idx=" + feed_idx + ", user_idx=" + user_idx + ", contents="
-				+ contents + ", regdate=" + regdate + ", like=" + like + ", dislike=" + dislike + "]";
+				+ contents + ", regdate=" + regdate + ", like=" + like + ", dislike=" + dislike + ", isLike=" + isLike
+				+ ", isDislike=" + isDislike + "]";
 	}
 
 }

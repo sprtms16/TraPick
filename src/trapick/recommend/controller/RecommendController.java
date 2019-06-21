@@ -28,6 +28,7 @@ public class RecommendController extends HttpServlet {
 		String contextPath = request.getContextPath();
 		String command = requestURI.substring(contextPath.length() + 1);
 
+		System.out.println(command);
 		Action action = null;
 		
 		ActionForward forward = null;

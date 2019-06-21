@@ -13,18 +13,18 @@ public class replyLikeAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		ReplyService replyService = ReplyService.getInstance();
-		
-		replyService.replyLikeService(request);
-		
-		JSONArray jsonArray = new JSONArray();
-		jsonArray.add(new JSONObject().put("status", 1));
-		jsonArray.add(new JSONObject().put("message", "oK"));
-		
-		
-		
-		
-		
 
+		int heartCount = replyService.replyLikeService(request);
+
+		JSONObject object = new JSONObject();
+		object.put("status", 1);
+		object.put("message", "oK");
+
+		if (heartCount >= 0) {
+			object.put("heartCount", heartCount);
+		}
+		System.out.println(object);
+		response.getWriter().println(object);
 		return null;
 	}
 

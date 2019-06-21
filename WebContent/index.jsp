@@ -4,7 +4,7 @@
 	if (session.getAttribute("user_idx") != null) {
 		session.removeAttribute("user_idx");
 	}
-	session.setAttribute("user_idx", 2);
+	session.setAttribute("user_idx", 1);
 %>
 <!DOCTYPE html>
 <html>
@@ -43,8 +43,9 @@
 	</table>
 
 	<form action="Recommend/itemList">
-		<input type="text" name="country_name"> <input type="text"
-			name="city_name"> <input type="submit" value="검색">
+		<input type="text" name="country_name">
+		<input type="text" name="city_name">
+		<input type="submit" value="검색">
 	</form>
 
 </body>

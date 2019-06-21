@@ -23,15 +23,9 @@
 						class="form-control" name="title" id="title"
 						placeholder="제목을 입력해 주세요">
 				</div>
-				<div class="mb-3">
-					<label for="reg_id">작성자</label> <input type="text"
-						class="form-control" name="writer" id="writer"
-						placeholder="이름을 입력해 주세요">
-				</div>
-				<div class="mb-3">
-					<label for="file_id">파일</label> <input type="file"
-						class="form-control" name="fname" id="fname">
-				</div>
+			
+			
+				
 				<div class="mb-3">
 					<label for="content">내용</label>
 					<textarea class="form-control" rows="5" name="contents"

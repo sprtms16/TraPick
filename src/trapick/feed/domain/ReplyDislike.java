@@ -1,6 +1,8 @@
 package trapick.feed.domain;
 
-public class ReplyDislike {
+import java.io.Serializable;
+
+public class ReplyDislike implements Serializable{
 	int feed_idx;
 	int reply_idx;
 	int disliker;
