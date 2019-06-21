@@ -20,11 +20,20 @@
 		#{user_idx}
 		<where>
 			<if test="keyword != null">
-				f.contents like #{keyword}
+				<foreach collection="keyword" item="word"
+					open="regexp_like(f.contents," separator="|" close=")">
+					#{word}
+				</foreach>
+				<foreach collection="keyword" item="word"
+					open=" or regexp_like(f.title," separator="|" close=")">
+					#{word}
+				</foreach>
+				<!-- f.contents like #{keyword} or f.title like #{keyword} -->
 			</if>
 		</where>
 		order by f.regdate desc
 	</select>
+
 
 
 
@@ -77,18 +86,6 @@
 
 	</update>
 
-	<select id="selectFeedHeartCount" parameterType="int"
-		resultType="int">
-		select COUNT(*)
-		from feed_heart
-		where feed_idx = #{feed_idx}
-	</select>
-
-	<select id="selectFeedHeartCheck" parameterType="int"
-		resultType="int">
-		select COUNT(*) from feed_heart
-		where user_idx = #{user_idx}
-	</select>
 
 
 </mapper>
