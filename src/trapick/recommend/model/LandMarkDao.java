@@ -63,6 +63,21 @@ public class LandMarkDao {
 		}
 		return list;
 	}
+	
+	public List<String> cityList(String country_name){
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		List<String> list =null;
+		try {
+			list = sqlSession.selectList("trapick.recommend.mapper.LandMarkMapper.cityList",country_name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+		return list;
+	}
 
 	
 

@@ -89,40 +89,12 @@ google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
 <script type="text/javascript">
-	$('#city_search').on("click",function(){
-		/* $.ajax({
-			url : 'landMarkAjax',
-			type: 'post',
-			dataType:'json',
-			data : $('#city option:selected').val(),
-			success : function(data){
-				$('#landMarkList').empty();
-				$.each(data, function(index, item){
-					var text = '<img src = "'+item.image+'"> <span>'+item.name+'</span>';
-					$('#landMarkList').append(text);
-				})
-			}
-		})
-		return false; */
-	})
-	function ajax(){
-		alert("sd");
-		console.log($('#city option:selected').val());
-		 /* $.ajax({
-				url : 'Recommend/landMarkAjax?city_name='+$('#city option:selected').val(),
-				type: 'get',
-				dataType:'json',
-				success : function(data){
-					
-					$('#landMarkList').empty();
-					$.each(data, function(index, item){
-						var text = '<img src = "'+item.image+'"> <span>'+item.name+'</span>';
-						$('#landMarkList').append(text);
-					})
-				}
-			}) */
+	$(function(){
+		
+		$('#city_search').on("click",function(){
+			//랜드마크 ajax
 			$.ajax({
-				url : 'Recommend/landMarkAjax',
+				url : 'landMarkAjax',
 				type: 'post',
 				dataType:'json',
 				data :{city_name : $('#city option:selected').val()} ,
@@ -135,16 +107,24 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					})
 				}
 			})
-			return false;
-	}
-	
-/* 	function successHandler(data){
-		$('#landMarkList').empty();
-		$.each(data, function(index, item){
-			var text = '<img src = "'+item.image+'"> <span>'+item.name+'</span>';
-			$('#landMarkList').append(text);
+			//아이템 ajax
+			$.ajax({
+				url : 'itemAjax',
+				type: 'post',
+				dataType:'json',
+				data :{city_name : $('#city option:selected').val()} ,
+				success : function(data){
+					
+					$('#itemList').empty();
+					$.each(data, function(index, item){
+						var text = '<img src = "'+item.img+'"> <span>'+item.name+'</span>';
+						$('#itemList').append(text);
+					})
+				}
+			})
+			/* return false; */
 		})
-	} */
+	})
 
 </script>
 
@@ -224,11 +204,11 @@ google.maps.event.addDomListener(window, 'load', initialize);
                <input type = "submit" value="검색">
             </form>
 			<select id = "city" name = "city_name">
-				<option value ="홍콩">홍콩</option>
-				<option value ="파리">파리</option>
-				<option value ="리옹">리옹</option>
+				<c:forEach var="cityList" items="${cityList }">
+					<option value = "${cityList }">${cityList }</option>
+				</c:forEach>
 			</select>
-			<button id = "city_search" onclick = ajax()>검색</button>
+			<button id = "city_search">검색</button>
             <form action="sortList" id="sortButton">
                <button value="price" name="price">가격 순</button>
                <button value="sales" name="sales">판매량 순</button>
@@ -253,24 +233,38 @@ google.maps.event.addDomListener(window, 'load', initialize);
          <div class="col-3">
             <h3>관광 명소</h3>
             <div id ="landMarkList">
+            	<c:forEach var="landMarkList" items="${landMarkList }">
+            		<div class="row">
+                  <div class="col-4">
+                     <img src=${landMarkList.image }>
+                  </div>
+                  <div class="col-8">
+                     <div class="row">${landMarkList.name }</div>
+                     <%-- <div class="row">${landMarkList.detail }</div> --%>
+                     <%-- <div class="row">${landMarkList.price }</div> --%>
+                  </div>
+               </div>
+            	</c:forEach>
             </div>
          </div>
 
          <div class="col-3">
             <h3>여행 상품</h3>
-            <c:forEach var="list" items="${list }">
-               <div class="row">
-                  <div class="col-4">
-                     <img src=${list.img }>
-                  </div>
-                  <div class="col-8">
-                     <div class="row">${list.name }</div>
-                     <div class="row">${list.detail }</div>
-                     <div class="row">${list.price }</div>
-                  </div>
-               </div>
-            </c:forEach>
-         </div>
+				<div id="itemList">
+					<c:forEach var="list" items="${list }">
+						<div class="row">
+							<div class="col-4">
+								<img src=${list.img }>
+							</div>
+							<div class="col-8">
+								<div class="row">${list.name }</div>
+								<div class="row">${list.detail }</div>
+								<div class="row">${list.price }</div>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
 
 
       </div>

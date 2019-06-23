@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javafx.concurrent.ScheduledService;
 import trapick.recommend.domain.Item;
 import trapick.recommend.domain.LandMark;
 import trapick.recommend.model.Crawling;
@@ -56,8 +57,17 @@ public class RecommendService {
 		request.setCharacterEncoding("utf-8");
 		String city_name = request.getParameter("city_name");
 		List<LandMark> list = dao.landMarkList(city_name);
-		
+		System.out.println(list);
 		return list;
 	}
+   
+   public List<String> cityListService(HttpServletRequest request)throws Exception{
+	   request.setCharacterEncoding("utf-8");
+	   String country_name = request.getParameter("country_name");
+	   System.out.println(country_name);
+	   List<String> list = dao.cityList(country_name);
+	   
+	   return list;
+   }
    
 }

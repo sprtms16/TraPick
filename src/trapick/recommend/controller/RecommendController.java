@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import trapick.recommend.action.Action;
 import trapick.recommend.action.ActionForward;
 import trapick.recommend.action.ItemListAction;
+import trapick.recommend.action.ItemListAjaxAction;
 import trapick.recommend.action.LandMarkListAction;
 import trapick.recommend.action.ListSortAction;
 
@@ -60,6 +61,14 @@ public class RecommendController extends HttpServlet {
 			}
 		}else if(command.equals("Recommend/landMarkAjax")) {
 			action = new LandMarkListAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("Recommend/itemAjax")) {
+			action = new ItemListAjaxAction();
 			
 			try {
 				forward = action.execute(request, response);
