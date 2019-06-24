@@ -5,20 +5,46 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="../style/css/feedList.css" />
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../style/js/jquery.jscroll.js"></script>
+
 <script type="text/javascript">
+
+	function getQuerystring(paramName) {
+		var _tempUrl = window.location.search.substring(1);
+		var _tempArray = _tempUrl.split('&');
+
+		for (var i = 0; _tempArray.length; i++) {
+			var _keyValuePair = _tempArray[i].split('=');
+
+			if (_keyValuePair[0] == paramName) {
+
+				return _keyValuePair[1];
+			}
+		}
+
+	};
+	function scrollMove(seq) {
+
+		//id가 p로 시작하는 객체를 찾아서, 그곳까지 이동
+
+		$('html, body').animate({
+			scrollTop : $("#target" + seq).offset().top
+		}, 1000);
+
+	}
 	$(function() {
 		$('.fa-heart').click(function() {
 			var href = $(this).parents('a').attr("href");
@@ -75,9 +101,6 @@
 		   linkedContent += word+' ';
 		}
 		 */
-
-	});
-	$(function() {
 		$.each($('.hashtag'), function(index, data) {
 			var content = $(data).text();
 			var splitedArray = content.split(' ');
@@ -93,8 +116,13 @@
 			}
 			$(data).html(linkedContent);
 		});
-
+		
 	});
+	
+	jQuery.event.add(window,"load",function(){ //이미지가 모두 실행된 후 함수 실행
+		scrollMove(getQuerystring("feed_idx"));
+	});
+
 </script>
 
 
@@ -102,6 +130,15 @@
 <body>
 
 	<div class="container">
+		<div class="search_menu">
+			<form action="list" method="get">
+				<aside style="float: right;">
+					<input type="text" name="word" placeholder="검색어를 입력하시오">
+					<button type="submit">검색</button>
+
+				</aside>
+			</form>
+		</div>
 
 		<div class="dropdown">
 			<button type="button" class="btn btn-primary dropdown-toggle"
@@ -121,10 +158,11 @@
 
 
 
-	<div class="container-fluid"
+
+	<div  class="container-fluid"
 		style="margin-left: 360px; inline-block; text-align: center;">
 		<c:forEach var="feed" items="${feedList}">
-			<div class="col-md-6 mt-5 ">
+			<div id="target${feed.feed_idx }" class="col-md-6 mt-5 ">
 				<div class="card text-center">
 					<img class="card-img-top"
 						src="https://picsum.photos/1900/1080?image=235"

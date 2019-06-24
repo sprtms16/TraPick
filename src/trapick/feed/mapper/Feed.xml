@@ -9,30 +9,47 @@
       values(feed_idx.nextval, sysdate,#{title},0,#{contents},1,1)
    </insert>
 
-   <select id="feedList" resultType="Feed" parameterType="int">
-      select
-      f.*, nvl2(h.user_idx,1,0) as islike, (select COUNT(*) from
-      feed_heart
-      where feed_heart.FEED_IDX = f.FEED_IDX)as heart from feed f
-      left JOIN
-      FEED_HEART h
-      on f.feed_idx = h.feed_idx and h.user_idx =
-      #{user_idx}
-      <where>
-         <if test="keyword != null">
-            REGEXP_LIKE(replace(f.contents,' ',''), #{keyword}) OR REGEXP_LIKE(replace(f.title,' ',''), #{keyword})
-         </if>
-      </where>
-      order by f.regdate desc
-   </select>
-   
+	<insert id="insertFeed" parameterType="Feed">
+		<!-- insert into feed values(feed_idx.nextval, sysdate,#{title},0,#{contents},1,1) -->
+		INSERT ALL into feed
+		values(feed_idx.nextval,
+		sysdate,#{title},0,#{contents},#{user_idx},1)
+		<if test="url != null">
+			<foreach collection="url" item="item" separator=" "
+				close="SELECT * FROM DUAL">
+				into UPDATE_IMAGE values(#{item},
+				feed_idx.currval)
+			</foreach>
+		</if>
+	</insert>
+	<select id="feedList" resultType="Feed" parameterType="map">
+		select
+		f.*, nvl2(h.user_idx,1,0) as islike, (select COUNT(*) from
+		feed_heart
+		where feed_heart.FEED_IDX = f.FEED_IDX)as heart from feed f
+		left JOIN
+		FEED_HEART h
+		on f.feed_idx = h.feed_idx and h.user_idx =
+		#{user_idx}
+		<where>
+			<if test="keyword != null">
+				REGEXP_LIKE(replace(f.contents,' ',''), #{keyword}) OR
+				REGEXP_LIKE(replace(f.title,' ',''), #{keyword})
+			</if>
+		</where>
+		order by f.regdate desc
+	</select>
+	
+	<select id="selectMyFeedList" resultType="Feed" parameterType="int">
+		select * from feed where user_idx = #{user_idx}
+		order by regdate desc
+	</select>
+	
+	<select id="getFeed" parameterType="int" resultType="Feed">
+		select *
+		from feed where feed_idx = #{feed_idx}
+	</select>
 
-
-
-   <select id="getFeed" parameterType="int" resultType="Feed">
-      select *
-      from feed where feed_idx = #{feed_idx}
-   </select>
 
    <select id="selectFeedHeartCount" parameterType="int"
       resultType="int">
