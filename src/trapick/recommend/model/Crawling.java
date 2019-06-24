@@ -6,7 +6,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
+import org.json.simple.JSONArray;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -44,6 +46,8 @@ public class Crawling {
 		String input = city_name + "+입장권";
 		String lat = null;
 		String lng = null;
+		String arr[] = {"하나투어", "모두투어","인터파크투어","노랑풍선","내일투어","참좋은여행"};
+		Random r = new Random();
 
 		try {
 			String url_naver = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=";
@@ -68,6 +72,10 @@ public class Crawling {
 				name = el.select(".detail_area").select(".tit").select("a").attr("title");
 				// detail > 여행사로 함
 				detail = el.select(".detail_area").select(".mall_area").select("a").text();
+				if(detail.length() > 15) {
+					int n = (int)(Math.random()*5);
+					detail = arr[n];														
+				}
 				// price
 				String temp = el.select(".detail_area").select(".price_num").text().replace(",", "");
 				temp = temp.replace("원", "");
@@ -129,6 +137,7 @@ public class Crawling {
 				item = new Item(item_idx, name, latitude, longitude, detail, city_name, time_defference, country_name,
 						price, img, sales, hits, dist);
 				list.add(item);
+				
 
 			}
 			// daum
@@ -626,7 +635,8 @@ public class Crawling {
 			e.printStackTrace();
 		}
 		return list;
-
 	}
-
+	
+	
+	
 }

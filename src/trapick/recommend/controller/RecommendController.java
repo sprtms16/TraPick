@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import trapick.recommend.action.Action;
 import trapick.recommend.action.ActionForward;
+import trapick.recommend.action.ItemAjaxAction;
 import trapick.recommend.action.ItemListAction;
 import trapick.recommend.action.ListSortAction;
+import trapick.recommend.action.SearchAction;
 
 @WebServlet("/Recommend/*")
 public class RecommendController extends HttpServlet {
@@ -35,7 +37,6 @@ public class RecommendController extends HttpServlet {
 
 		if(command.equals("Recommend/itemList")) {
 			action = new ItemListAction();
-			
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
@@ -57,6 +58,21 @@ public class RecommendController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else if(command.equals("Recommend/searchCity")) {
+			action = new SearchAction();			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if(command.equals("Recommend/itemAjax")) {
+			action = new ItemAjaxAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	
 		
@@ -70,6 +86,7 @@ public class RecommendController extends HttpServlet {
 				dispatcher.forward(request, response);
 			}
 		}
+		
 		}
 
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

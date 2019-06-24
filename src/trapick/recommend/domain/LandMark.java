@@ -1,21 +1,29 @@
 package trapick.recommend.domain;
 
-public class LandMark {
+import java.io.Serializable;
+
+public class LandMark implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	int land_idx;
 	String name;
-	double latitude;
-	double longitude;
+	String latitude;
+	String longitude;
 	String detail;
 	String city_name;
 	int time_defference;
 	String country_name;
+	String image;
 
 	public LandMark() {
 
 	}
 
-	public LandMark(int land_idx, String name, double latitude, double longitude, String detail, String city_name,
-			int time_defference, String country_name) {
+	public LandMark(int land_idx, String name, String latitude, String longitude, String detail, String city_name,
+			int time_defference, String country_name, String image) {
 		super();
 		this.land_idx = land_idx;
 		this.name = name;
@@ -25,6 +33,7 @@ public class LandMark {
 		this.city_name = city_name;
 		this.time_defference = time_defference;
 		this.country_name = country_name;
+		this.image = image;
 	}
 
 	public int getLand_idx() {
@@ -43,19 +52,19 @@ public class LandMark {
 		this.name = name;
 	}
 
-	public double getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
 
-	public double getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
 
@@ -91,11 +100,24 @@ public class LandMark {
 		this.country_name = country_name;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
 		return "LandMark [land_idx=" + land_idx + ", name=" + name + ", latitude=" + latitude + ", longitude="
 				+ longitude + ", detail=" + detail + ", city_name=" + city_name + ", time_defference=" + time_defference
-				+ ", country_name=" + country_name + "]";
+				+ ", country_name=" + country_name + ", image=" + image + "]";
 	}
 
+	
 }

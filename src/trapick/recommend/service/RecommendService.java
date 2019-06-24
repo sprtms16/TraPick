@@ -6,16 +6,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import trapick.recommend.domain.Item;
+import trapick.recommend.domain.LandMark;
 import trapick.recommend.model.Crawling;
+import trapick.recommend.model.LandMarkDao;
 
 public class RecommendService {
    private static RecommendService service = new RecommendService();
    private static Crawling crawling;
-
+   private static LandMarkDao dao;
+   
    public static RecommendService getInstance() {
 
       crawling = Crawling.getInstance();
       return service;
+   }
+   
+   public static RecommendService getInstance_dao() {
+	   
+	   dao = LandMarkDao.getInstance();
+	   return service;
+	   
    }
 
    public List<Item> ItemListService(HttpServletRequest request, HttpServletResponse response) {
@@ -26,9 +36,7 @@ public class RecommendService {
       String city_name = request.getParameter("city_name");
 
       List<Item> list = crawling.Getcrawling(country_name, city_name); // 크롤링한 원본 데이터 리스트
-      
-      System.out.println(request.getParameter("distance"));
-      
+
       if (request.getParameter("price") != null) {
     	  if(request.getParameter("price").equals("price")) {
     		  list = crawling.priceSort(list);
@@ -46,5 +54,15 @@ public class RecommendService {
       	   }
       }
       return list;
-   }   
+   }
+   
+   public List<LandMark> listLandMarkService(HttpServletRequest request){
+	   
+	   String city_name = request.getParameter("city_name");
+	    
+	   List<LandMark> list_Land = dao.listLandMark(city_name);
+	   	   
+	   return list_Land;	   
+	   
+   }
 }
