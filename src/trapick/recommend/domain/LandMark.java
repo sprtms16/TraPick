@@ -2,7 +2,7 @@ package trapick.recommend.domain;
 
 import java.io.Serializable;
 
-public class LandMark implements Serializable{
+public class LandMark implements Serializable {
 	int land_idx;
 	String name;
 	double latitude;
@@ -17,7 +17,6 @@ public class LandMark implements Serializable{
 
 	}
 
-	
 	public LandMark(int land_idx, String name, double latitude, double longitude, String detail, String city_name,
 			int time_defference, String country_name, String image) {
 		super();
@@ -31,7 +30,6 @@ public class LandMark implements Serializable{
 		this.country_name = country_name;
 		this.image = image;
 	}
-
 
 	public int getLand_idx() {
 		return land_idx;
@@ -105,7 +103,6 @@ public class LandMark implements Serializable{
 		this.image = image;
 	}
 
-
 	@Override
 	public String toString() {
 		return "LandMark [land_idx=" + land_idx + ", name=" + name + ", latitude=" + latitude + ", longitude="
@@ -113,7 +110,4 @@ public class LandMark implements Serializable{
 				+ ", country_name=" + country_name + ", image=" + image + "]";
 	}
 
-	
-
 }
->>>>>>> refs/remotes/origin/psd
