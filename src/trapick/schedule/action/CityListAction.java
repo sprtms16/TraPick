@@ -19,7 +19,7 @@ public class CityListAction implements Action {
 		JSONArray array = JSONArray.fromObject(list);
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(array);
-		System.out.println(array);
+		/* System.out.println(array); */
 		return null;
 	}
 

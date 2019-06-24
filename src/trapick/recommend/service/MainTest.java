@@ -3,6 +3,8 @@ package trapick.recommend.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,6 +15,28 @@ import trapick.recommend.domain.Hotel;
 public class MainTest {
 
 	public static void main(String[] args) {
+		
+		JSONArray jaArray = new JSONArray();
+		JSONObject obj = new JSONObject();
+		
+		List<Integer> list = new ArrayList<>();
+		
+		list.add(1);
+		list.add(2);
+		list.add(3);
+		list.add(4);
+		list.add(5);
+		
+		try {
+			for(int i=0; i<list.size();i++) {
+			obj.put("name", list.get(i));
+			jaArray.add(obj);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(jaArray);
+		
 
 //		Crawling crawling = new Crawling();
 //		
@@ -115,7 +139,7 @@ public class MainTest {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-
+/*
 		List<Hotel> list = new ArrayList<>();
 		Hotel hotel;
 
@@ -150,7 +174,7 @@ public class MainTest {
 
 			Elements doc_el_ = doc_guest.select(".section_hotel_list ul");
 			Elements doc_guestList = doc_el_.select("li");
-
+*/
 //			for (Element el : doc_hotelList) {
 //
 //				// name
@@ -215,7 +239,7 @@ public class MainTest {
 //				System.out.println(hotel);
 //
 //			}
-
+/*
 			for (Element el : doc_guestList) {
 
 				// name
@@ -287,6 +311,6 @@ public class MainTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+*/
 	}
 }

@@ -32,5 +32,7 @@ public interface FeedMapper {
 
 	List<Feed> selectMyFeedList(int user_idx);
 
+	List<String> selectFeedUrl(int feed_idx);
+
 
 }

@@ -15,4 +15,8 @@
 	<select id="selectCountryIso" resultType="String" parameterType="String">
 		select country_iso from country where NAME = #{country_name}
 	</select>
+	
+	<select id="selectCityEname" resultType="String" parameterType="String">
+		select E_NAME from city where NAME = #{cityEname}
+	</select>
 </mapper>

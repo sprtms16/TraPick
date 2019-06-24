@@ -193,4 +193,16 @@ public class FeedDao {
 		return list;
 	}
 
+	public List<String> selectFeedUrl(int feed_idx) {
+		// TODO Auto-generated method stub
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		List<String> list = null;
+		try {
+			list = sqlSession.getMapper(FeedMapper.class).selectFeedUrl(feed_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 }
