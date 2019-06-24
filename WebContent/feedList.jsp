@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="../style/css/feedList.css" />
+<!-- 
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
 <link rel="stylesheet"
@@ -18,20 +18,28 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
 
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../style/css/feedList.css" />
 <script type="text/javascript">
-
 	function getQuerystring(paramName) {
 		var _tempUrl = window.location.search.substring(1);
 		var _tempArray = _tempUrl.split('&');
+		if (_tempArray.length > 1) {
+			for (var i = 0; _tempArray.length; i++) {
+				var _keyValuePair = _tempArray[i].split('=');
 
-		for (var i = 0; _tempArray.length; i++) {
-			var _keyValuePair = _tempArray[i].split('=');
+				if (_keyValuePair[0] == paramName) {
 
-			if (_keyValuePair[0] == paramName) {
-
-				return _keyValuePair[1];
+					return _keyValuePair[1];
+				}
 			}
 		}
 
@@ -116,16 +124,15 @@
 			}
 			$(data).html(linkedContent);
 		});
-		
-		$('#myCarousel').carousel({
-			interval : 3000
-		});
-	});
-	
-	jQuery.event.add(window,"load",function(){ //이미지가 모두 실행된 후 함수 실행
-		scrollMove(getQuerystring("feed_idx"));
 	});
 
+	jQuery.event.add(window, "load", function() { //이미지가 모두 실행된 후 함수 실행
+		var seq = getQuerystring("feed_idx");
+		if (seq != null) {
+			scrollMove();
+		}
+
+	});
 </script>
 
 
@@ -162,45 +169,48 @@
 
 
 
-	<div  class="container-fluid"
-		style="margin-left: 360px; inline-block; text-align: center;">
+	<div class="container-fluid">
+		<!-- 
+		style="margin-left: 360px; inline-block; text-align: center;" -->
 		<c:forEach var="feed" items="${feedList}">
-			<div id="target${feed.feed_idx }" class="col-md-6 mt-5 ">
+			<div id="target${feed.feed_idx }" class="mt-5">
 				<div class="card text-center">
 					<!-- <img class="card-img-top"
 						src="https://picsum.photos/1900/1080?image=235"
 						alt="Card image cap"> -->
-					<div id="myCarousel" class="carousel slide" data-ride="carousel">
-						<!-- Indicators -->
-						<ol class="carousel-indicators">
-							<c:forEach var="i" begin="1" items="${feed.url }">
-								<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-							</c:forEach>
-							
-							<li data-target="#myCarousel" data-slide-to="1"></li>
-							<li data-target="#myCarousel" data-slide-to="2"></li>
-							<li data-target="#myCarousel" data-slide-to="3"></li>
-						</ol>
 
-						<!-- Wrapper for slides -->
-						<div class="carousel-inner" role="listbox">
-							<c:forEach var="img" items="${feed.url }">
-								<div class="item">
-									<img src="../upload/${img}">
-								</div>
+					<div id="carouselExampleControls${feed.feed_idx }"
+						class="carousel slide" data-ride="carousel">
+						<div class="carousel-inner">
+							<c:forEach var="img" items="${feed.url }" varStatus="status">
+								<c:choose>
+									<c:when test="${status.first }">
+										<div class="carousel-item active"
+											style="width: 100%; height: 500px; overflow: hidden">
+											<img src="../upload/${img }" class="d-block w-100"
+												style="width: auto; height: 500px;">
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="carousel-item"
+											style="width: 100%; height: 500px; overflow: hidden">
+											<img src="../upload/${img }" class="d-block w-100"
+												style="width: auto; height: 500px;">
+										</div>
+									</c:otherwise>
+								</c:choose>
+
 							</c:forEach>
+							<a class="carousel-control-prev"
+								href="#carouselExampleControls${feed.feed_idx }" role="button"
+								data-slide="prev"> <span class="carousel-control-prev-icon"
+								aria-hidden="true"></span> <span class="sr-only">Previous</span>
+							</a> <a class="carousel-control-next"
+								href="#carouselExampleControls${feed.feed_idx }" role="button"
+								data-slide="next"> <span class="carousel-control-next-icon"
+								aria-hidden="true"></span> <span class="sr-only">Next</span>
+							</a>
 						</div>
-
-						<!-- Left and right controls -->
-						<a class="left carousel-control" href="#myCarousel" role="button"
-							data-slide="prev"> <span
-							class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-							<span class="sr-only">Previous</span>
-						</a> <a class="right carousel-control" href="#myCarousel"
-							role="button" data-slide="next"> <span
-							class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-							<span class="sr-only">Next</span>
-						</a>
 					</div>
 					<div class="card-body">
 

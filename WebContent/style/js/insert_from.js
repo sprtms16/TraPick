@@ -159,7 +159,7 @@ function uploadFile(){
     if(confirm("등록 하시겠습니까?")){
         // 등록할 파일 리스트를 formData로 데이터 입력
         var form = $('#uploadForm');
-        var formData = new FormData(form);
+        var formData = new FormData();
         for(var i = 0; i < uploadFileList.length; i++){
             formData.append('files'+i, fileList[uploadFileList[i]]);
         }
