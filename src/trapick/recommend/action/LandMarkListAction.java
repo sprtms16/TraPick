@@ -5,24 +5,25 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import trapick.recommend.domain.LandMark;
 import trapick.recommend.service.RecommendService;
 
 public class LandMarkListAction implements Action {
 
-   @Override
-   public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@Override
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-      RecommendService service = RecommendService.getInstance();
-      ActionForward forward = new ActionForward();
-      
-      List<LandMark> list_Land = service.listLandMarkService(request);
-      
-      request.setAttribute("list_Land", list_Land);
-            
-      forward.setRedirect(false);      
-      
-      return forward;
-   }
+		RecommendService service = RecommendService.getInstance();
+		ActionForward forward = new ActionForward();
+
+		List<LandMark> landMarkList = service.landMarkListService(request);
+
+		JSONArray array = JSONArray.fromObject(landMarkList);
+		response.setContentType("text/html;charset=UTF-8");
+		response.getWriter().print(array);
+		return null;
+
+	}
 
 }

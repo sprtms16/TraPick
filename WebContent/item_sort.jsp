@@ -10,6 +10,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <meta charset="UTF-8">
 <title>TraPick</title>
+<<<<<<< HEAD
 <style>
 	a{color:#000;}
 
@@ -19,17 +20,23 @@
 	#modalLayer #modalContent{width:440px; height:200px; padding:20px; border:1px solid #ccc; position:fixed; left:50%; top:50%; z-index:11; background:#fff;}
 	#modalLayer #modalContent button{position:absolute; right:0; top:0; cursor:pointer;}
 </style>
-
+=======
+>>>>>>> refs/remotes/origin/LeeTaemin
 <link rel="stylesheet" type="text/css" href="../style/css/scheduler.css" />
 <link rel="stylesheet"
    href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+   href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+   integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+   crossorigin="anonymous">
 <link rel="stylesheet" href="/resources/demos/style.css">
+<<<<<<< HEAD
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+=======
+>>>>>>> refs/remotes/origin/LeeTaemin
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript"
    src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -123,36 +130,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
                   $('#landMarkList').append(text);
                })
             }
-         })
-         //음식점 ajax
-         $.ajax({
-        	 url : 'restAjax',
-        	 type : 'post',
-        	 dataType : 'json',
-        	 data :{city_name : $('#city option:selected').val()} ,
-        	 success : function(data){
-        		 
-        		 $('#restList').empty();
-                 $.each(data, function(index, item){
-                    var text = '<img src = "'+item.img+'"> <span>'+item.name+'</span>';
-                    $('#restList').append(text);
-                 }) 
-        	 }
-         })
-         //숙박 ajax
-        $.ajax({
-        	url : 'hotelAjax',
-        	type : 'post',
-        	dataType : 'json',
-        	data :{city_name : $('#city option:selected').val()} ,
-        	success : function(data){
-        		 
-        		 $('#hotelList').empty();
-                 $.each(data, function(index, item){
-                    var text = '<img src = "'+item.img+'"> <span>'+item.name+'</span>';
-                    $('#hotelList').append(text);
-                 }) 
-        	 }
          })
          //아이템 ajax
          $.ajax({
@@ -395,29 +372,16 @@ $(function(){
                   </tr>
                </table>
             </form>
-        	<!--  
             <form action="searchCity" id="searchCity">
-               	도시 검색 : <input type = "text" name = "search_City">
-               			<input type = "submit" value="검색">
+               도시 검색 : <input type = "text" name = "search_City">
+               <input type = "submit" value="검색">
             </form>
-            -->
-            <form action="itemList">
-            	도시 검색 : 
-				<input type="text" name="city_name">
-				<input type="submit" value="검색">
-			</form>
-			<!-- 
-			<select id = "city" name = "city_name">
-            	<c:forEach var="cityList" items="${cityList }">
-               		<option value = "${cityList }">${cityList }</option>
-            	</c:forEach>
-         	</select>
-			-->
-         
-         	<!--  
-          	<button id = "city_search">검색</button>
-         	-->
-        
+         <select id = "city" name = "city_name">
+            <c:forEach var="cityList" items="${cityList }">
+               <option value = "${cityList }">${cityList }</option>
+            </c:forEach>
+         </select>
+         <button id = "city_search">검색</button>
             <form action="sortList" id="sortButton">
                <button value="price" name="price">가격 순</button>
                <button value="sales" name="sales">판매량 순</button>
@@ -499,41 +463,33 @@ $(function(){
             </form>
             <div id="popUp">
                <form action="sortDist">
-                  	위치 : <input type="text" name="current" value="">
-                  	<button value="distance" name="distance">확인</button>
-                  	<input type="hidden" name="country_name" value="<%=request.getParameter("country_name")%>"> 
-                  	<input type="hidden" name="city_name" value="<%=request.getParameter("city_name")%>">
+                  위치 : <input type="text" name="current" value="">
+                  <button value="distance" name="distance">확인</button>
+                  <input type="hidden" name="country_name"
+                     value="<%=request.getParameter("country_name")%>"> <input
+                     type="hidden" name="city_name"
+                     value="<%=request.getParameter("city_name")%>">
                </form>
             </div>
          </div>
 
-		<%--
-          <div class="col-3">
+
+         <div class="col-3">
             <h3>관광 명소</h3>
-            <div id="landMarkList">
+            <div id ="landMarkList">
                <c:forEach var="landMarkList" items="${landMarkList }">
                   <div class="row">
-                     <div class="col-4">
-                        <img src=${landMarkList.image }>
-                     </div>
-                     <div class="col-8">
-                        <div class="row">${landMarkList.name }</div>
-                        <div class="row">${landMarkList.detail }</div>
-                        <div class="row">${landMarkList.price }</div>
-                     </div>
+                  <div class="col-4">
+                     <img src=${landMarkList.image }>
                   </div>
-<<<<<<< HEAD
                   <div class="col-8">
                      <div class="row">${landMarkList.name }</div>
                      <%-- <div class="row">${landMarkList.detail }</div> --%>
                      <%-- <div class="row">${landMarkList.price }</div> --%>
                   </div>
                </div>
-=======
->>>>>>> refs/remotes/origin/moon
                </c:forEach>
             </div>
-<<<<<<< HEAD
          </div>
 =======
 
@@ -588,61 +544,6 @@ $(function(){
          </div>   
       </div>
 >>>>>>> refs/remotes/origin/LeeTaemin
-=======
-         </div> 
-		--%>
-         
-         <div class="col-3">
-			<h3>관광 명소</h3>
-			<div id="landMarkList">
-				<c:forEach var="list_Land" items="${list_Land }">
-					<div class="row">
-						<div id="img" class="col-4">
-							<img src=${list_Land.image }>
-						</div>
-						<div class="col-8">
-							<div class="row">${list_Land.name }</div>
-							<div class="row">${list_Land.detail }</div>
-						</div>
-					</div>
-				</c:forEach>
-			</div>
-		</div>
-			
-		<div class="col-3">
-			<h3>음식점</h3>
-			<div id="restList">
-				<c:forEach var="list_Rest" items="${list_Rest }">
-					<div class="row">
-						<div id="img" class="col-4">
-							<img src=${list_Rest.img }>
-						</div>
-						<div class="col-8">
-							<div class="row">${list_Rest.name }</div>
-							<div class="row">${list_Rest.detail }</div>
-						</div>
-					</div>
-				</c:forEach>	
-			</div>
-		</div>
-		
-		<div class="col-3">
-			<h3>숙박</h3>	
-			<div id="hotelList">
-				<c:forEach var="list_Hotel" items="${list_Hotel }">
-					<div class="row">
-						<div id="img" class="col-4">
-							<img src=${list_Hotel.img }>
-						</div>
-						<div class="col-8">
-							<div class="row">${list_Hotel.name }</div>
-							<div class="row">${list_Hotel.detail }</div>
-						</div>
-					</div>
-				</c:forEach>
-			</div>	
-		</div>
->>>>>>> refs/remotes/origin/moon
 
          <div class="col-3">
             <h3>여행 상품</h3>

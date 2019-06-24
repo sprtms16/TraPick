@@ -1,8 +1,11 @@
 package trapick.recommend.action;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import trapick.recommend.domain.Item;
 import trapick.recommend.service.RecommendService;
 
 public class ItemListAction implements Action {
@@ -12,6 +15,8 @@ public class ItemListAction implements Action {
       request.setAttribute("list_Land", RecommendService.getInstance_dao().listLandMarkService(request));
       request.setAttribute("list_Rest", RecommendService.getInstance().listRestaurantService(request, response));
       request.setAttribute("list_Hotel", RecommendService.getInstance().listHotelService(request, response));
+		request.setAttribute("cityList", RecommendService.getInstance().cityListService(request));
+		request.setAttribute("landMarkList", RecommendService.getInstance().landMarkListService(request));
       
       return new ActionForward(false, "/item_sort.jsp");
    }
