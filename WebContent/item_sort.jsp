@@ -72,59 +72,76 @@ function initialize() {
     });     
 }
 google.maps.event.addDomListener(window, 'load', initialize);
-   
-/*    window.onload = function() {
-      $("#popUp").hide();
-   }
-   
-   function showPopup() {
-      $("#popUp").show();
-   }
-    */
-   function hidePopup() {
-      $("#popUp").hide();
-   }
-   
-  
+
 </script>
 
 <script type="text/javascript">
-   $(function(){
-      
-      $('#city_search').on("click",function(){
-         //랜드마크 ajax
-         $.ajax({
-            url : 'landMarkAjax',
-            type: 'post',
-            dataType:'json',
-            data :{city_name : $('#city option:selected').val()} ,
-            success : function(data){
-               
-               $('#landMarkList').empty();
-               $.each(data, function(index, item){
-                  var text = '<img src = "'+item.image+'"> <span>'+item.name+'</span>';
-                  $('#landMarkList').append(text);
-               })
-            }
-         })
-         //아이템 ajax
-         $.ajax({
-            url : 'itemAjax',
-            type: 'post',
-            dataType:'json',
-            data :{city_name : $('#city option:selected').val()} ,
-            success : function(data){
-               
-               $('#itemList').empty();
+$(function(){
+    
+    $('#city_search').on("click",function(){
+       //랜드마크 ajax
+       $.ajax({
+          url : 'landMarkAjax',
+          type: 'post',
+          dataType:'json',
+          data :{city_name : $('#city option:selected').val()} ,
+          success : function(data){
+             
+             $('#landMarkList').empty();
+             $.each(data, function(index, item){
+                var text = '<img src = "'+item.image+'"> <span>'+item.name+'</span>';
+                $('#landMarkList').append(text);
+             })
+          }
+       })
+       //음식점 ajax
+       $.ajax({
+          url : 'restAjax',
+          type : 'post',
+          dataType : 'json',
+          data :{city_name : $('#city option:selected').val()} ,
+          success : function(data){
+             
+             $('#restList').empty();
                $.each(data, function(index, item){
                   var text = '<img src = "'+item.img+'"> <span>'+item.name+'</span>';
-                  $('#itemList').append(text);
-               })
-            }
-         })
-         /* return false; */
-      })
-   })
+                  $('#restList').append(text);
+               }) 
+          }
+       })
+       //숙박 ajax
+      $.ajax({
+         url : 'hotelAjax',
+         type : 'post',
+         dataType : 'json',
+         data :{city_name : $('#city option:selected').val()} ,
+         success : function(data){
+             
+             $('#hotelList').empty();
+               $.each(data, function(index, item){
+                  var text = '<img src = "'+item.img+'"> <span>'+item.name+'</span>';
+                  $('#hotelList').append(text);
+               }) 
+          }
+       })
+       //아이템 ajax
+       $.ajax({
+          url : 'itemAjax',
+          type: 'post',
+          dataType:'json',
+          data :{city_name : $('#city option:selected').val()} ,
+          success : function(data){
+             
+             $('#itemList').empty();
+             $.each(data, function(index, item){
+                var text = '<img src = "'+item.img+'"> <span>'+item.name+'</span>';
+                $('#itemList').append(text);
+             })
+          }
+       })
+       /* return false; */
+    })
+ })
 
 </script>
 
@@ -213,40 +230,67 @@ google.maps.event.addDomListener(window, 'load', initialize);
                <button value="price" name="price">가격 순</button>
                <button value="sales" name="sales">판매량 순</button>
                <button value="hits" name="hits">인기 순</button>
-               <button value="dist" name="dist" onclick="showPopup();">거리순</button>
+               <button value="dist" name="dist">거리순</button>
                <input type="hidden" name="country_name" value="<%=request.getParameter("country_name")%>">
                <input type="hidden" name="city_name" value="<%=request.getParameter("city_name")%>">
             </form>
-            <div id="popUp">
-               <form action="sortDist">
-                  위치 : <input type="text" name="current" value="">
-                  <button value="distance" name="distance">확인</button>
-                  <input type="hidden" name="country_name"
-                     value="<%=request.getParameter("country_name")%>"> <input
-                     type="hidden" name="city_name"
-                     value="<%=request.getParameter("city_name")%>">
-               </form>
-            </div>
+            <form action="searchNear" method="post">
+            	<button value="search" name = searchNearBtn>근처 보기</button>
+          		<input type="hidden" name="city_name" value="<%=request.getParameter("city_name")%>">
+            </form>
          </div>
 
 
-         <div class="col-3">
-            <h3>관광 명소</h3>
-            <div id ="landMarkList">
-               <c:forEach var="landMarkList" items="${landMarkList }">
-                  <div class="row">
-                  <div class="col-4">
-                     <img src=${landMarkList.image }>
+          <div class="col-3">
+         <h3>관광 명소</h3>
+         <div id="landMarkList">
+            <c:forEach var="list_Land" items="${list_Land }">
+               <div class="row">
+                  <div id="img" class="col-4">
+                     <img src=${list_Land.image }>
                   </div>
                   <div class="col-8">
-                     <div class="row">${landMarkList.name }</div>
-                     <%-- <div class="row">${landMarkList.detail }</div> --%>
-                     <%-- <div class="row">${landMarkList.price }</div> --%>
+                     <div class="row">${list_Land.name }</div>
+                     <div class="row">${list_Land.detail }</div>
                   </div>
                </div>
-               </c:forEach>
-            </div>
+            </c:forEach>
          </div>
+      </div>
+         
+      <div class="col-3">
+         <h3>음식점</h3>
+         <div id="restList">
+            <c:forEach var="list_Rest" items="${list_Rest }">
+               <div class="row">
+                  <div id="img" class="col-4">
+                     <img src=${list_Rest.img }>
+                  </div>
+                  <div class="col-8">
+                     <div class="row">${list_Rest.name }</div>
+                     <div class="row">${list_Rest.detail }</div>
+                  </div>
+               </div>
+            </c:forEach>   
+         </div>
+      </div>
+      
+      <div class="col-3">
+         <h3>숙박</h3>   
+         <div id="hotelList">
+            <c:forEach var="list_Hotel" items="${list_Hotel }">
+               <div class="row">
+                  <div id="img" class="col-4">
+                     <img src=${list_Hotel.img }>
+                  </div>
+                  <div class="col-8">
+                     <div class="row">${list_Hotel.name }</div>
+                     <div class="row">${list_Hotel.detail }</div>
+                  </div>
+               </div>
+            </c:forEach>
+         </div>   
+      </div>
 
          <div class="col-3">
             <h3>여행 상품</h3>

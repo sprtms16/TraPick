@@ -10,19 +10,19 @@ import trapick.recommend.service.RecommendService;
 
 public class LandMarkListAction implements Action {
 
-	@Override
-	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+   @Override
+   public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		RecommendService service = RecommendService.getInstance();
-		ActionForward forward = new ActionForward();
-		
-		List<LandMark> list_Land = service.listLandMarkService(request);
-		
-		request.setAttribute("list_Land", list_Land);
-				
-		forward.setRedirect(false);		
-		
-		return forward;
-	}
+      RecommendService service = RecommendService.getInstance();
+      ActionForward forward = new ActionForward();
+      
+      List<LandMark> list_Land = service.listLandMarkService(request);
+      
+      request.setAttribute("list_Land", list_Land);
+            
+      forward.setRedirect(false);      
+      
+      return forward;
+   }
 
 }

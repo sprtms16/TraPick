@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
-import org.json.simple.JSONArray;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -46,8 +43,6 @@ public class Crawling {
 		String input = city_name + "+입장권";
 		String lat = null;
 		String lng = null;
-		String arr[] = {"하나투어", "모두투어","인터파크투어","노랑풍선","내일투어","참좋은여행"};
-		Random r = new Random();
 
 		try {
 			String url_naver = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=";
@@ -72,10 +67,6 @@ public class Crawling {
 				name = el.select(".detail_area").select(".tit").select("a").attr("title");
 				// detail > 여행사로 함
 				detail = el.select(".detail_area").select(".mall_area").select("a").text();
-				if(detail.length() > 15) {
-					int n = (int)(Math.random()*5);
-					detail = arr[n];														
-				}
 				// price
 				String temp = el.select(".detail_area").select(".price_num").text().replace(",", "");
 				temp = temp.replace("원", "");
@@ -137,7 +128,6 @@ public class Crawling {
 				item = new Item(item_idx, name, latitude, longitude, detail, city_name, time_defference, country_name,
 						price, img, sales, hits, dist);
 				list.add(item);
-				
 
 			}
 			// daum
@@ -385,9 +375,11 @@ public class Crawling {
 		return (rad * 180 / Math.PI);
 	}
 
-	public List<Restaurant> crawlingNearRest(String city_name) {
+	public List<Restaurant> crawlingNearRest(String city_name, String base_Point) {
 
 		List<Restaurant> list = new ArrayList<>();
+		List<Restaurant> list_restaurant = new ArrayList<>();
+		List<Restaurant> list_rest = new ArrayList<>();
 		Restaurant restaurant;
 
 		String name = null;
@@ -399,6 +391,7 @@ public class Crawling {
 		String input = city_name + "맛집";
 		String lat;
 		String lng;
+		double dist = 0;
 
 		try {
 			String url = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=";
@@ -455,19 +448,96 @@ public class Crawling {
 				latitude = lat;
 				longitude = lng;
 
-				restaurant = new Restaurant(name, detail, img, latitude, longitude);
+				restaurant = new Restaurant(name, detail, img, latitude, longitude, dist);
 
 				list.add(restaurant);
-
-				System.out.println(restaurant);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return list;
+		try {
+			String url = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + base_Point
+					+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
+			Document doc;
+
+			doc = Jsoup.connect(url).get();
+
+			String latitude_1 = doc.select("location").select("lat").text();
+			String longitude_1 = doc.select("location").select("lng").text();
+
+			double lat_1 = Double.valueOf(latitude_1);
+			double lon_1 = Double.valueOf(longitude_1);
+
+			for (int i = 0; i < list.size(); i++) {
+
+				double lat_2 = Double.valueOf(list.get(i).getLatitude());
+				double lon_2 = Double.valueOf(list.get(i).getLongitude());
+
+				double theta = lon_1 - lon_2;
+
+				dist = Math.sin(deg2rad(lat_1)) * Math.sin(deg2rad(lat_2))
+						+ Math.cos(deg2rad(lat_1)) * Math.cos(deg2rad(lat_2)) * Math.cos(deg2rad(theta));
+
+				dist = Math.acos(dist);
+
+				dist = rad2deg(dist);
+
+				dist = dist * 60 * 1.1515;
+
+				dist = dist * 1.609344; // kilometer
+
+				dist = Math.round((dist) * 10) / 10.0;
+
+				if (dist == 0) {
+					dist = 0.4;
+				}
+
+				String name_list = list.get(i).getName();
+				String detail_list = list.get(i).getDetail();
+				String img_list = list.get(i).getImg();
+				String latitude_list = list.get(i).getLatitude();
+				String longitude_list = list.get(i).getLongitude();
+
+				Restaurant restaurant2 = new Restaurant(name_list, detail_list, img_list, latitude_list, longitude_list,
+						dist);
+
+				list_rest.add(restaurant2);
+
+			}
+
+			int min = 0;
+
+			for (int i = 0; i < list_rest.size(); i++) {
+				for (int j = i; j < list_rest.size(); j++) {
+					if (list_rest.get(i).getDist() > list_rest.get(j).getDist()) {
+						min = j;
+					} else {
+						min = i;
+					}
+				}
+
+				String name_rest = list_rest.get(min).getName();
+				String detail_rest = list_rest.get(min).getDetail();
+				String img_rest = list_rest.get(min).getImg();
+				String latitude_rest = list_rest.get(min).getLatitude();
+				String longitude_rest = list_rest.get(min).getLongitude();
+				double dist_rest = list_rest.get(min).getDist();
+
+				Restaurant restaurant2 = new Restaurant(name_rest, detail_rest, img_rest, latitude_rest, longitude_rest,
+						dist_rest);
+				
+				list_restaurant.add(restaurant2);
+				
+			}
+			System.out.println("크롤링"+list_restaurant);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list_restaurant;
 	}
 
 	public List<Hotel> crawlingNearHotel(String city_name) {
@@ -635,8 +705,7 @@ public class Crawling {
 			e.printStackTrace();
 		}
 		return list;
+
 	}
-	
-	
-	
+
 }

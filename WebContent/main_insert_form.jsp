@@ -67,19 +67,13 @@
                });
             });
             
-            
-            
          }
          
       });
 /*       $("#target2").autocomplete({
          source : uniqueAvailableTags2
       });  */
-      
-      
-      
-      
-      
+         
       $("#today").text(new Date().toLocaleDateString());
       $.datepicker.setDefaults($.datepicker.regional['ko']);
       
@@ -113,7 +107,6 @@
          }
       });
 
-      
       
       $('#target2').change(function(){
             var city = $('#target2 option:selected').val();
@@ -153,31 +146,23 @@
                });  
              }
             });
-            
-            
-             
          });
-       
-    
-   
    });
    
 </script>
 </head>
 <body>
-   <form action="itemList" method="post">
+   <!-- <form action="#" method="post"> -->
+   <form action="#">
       <div>
-         <input id="target" type="text" name="country">
-         <input type = "hidden" value=${country } name = "country_name">
+         <input id="target" type="text" name="country"> 
          <!-- <input id="target2" type="text" name="city"> -->
          <select id="target2" name="city">
-                 <option value="">::선택::</option>           
+                 <option value="">::선택::</option>         
          </select>
-         
-         <input type = "hidden" value="중국" name = "city_name">     
          <br> 
          오늘날짜 : <span id="today"></span><br>
-         <label for="sta   rt_time">출발</label>
+         <label for="start_time">출발</label>
          <input type="text"   name="start_time" id="start_time"  autocomplete=off>
          ~
          <label for="end_time">귀국</label>
@@ -186,12 +171,12 @@
          <a id="target3"></a>
          <p id="weather"></p>   
          <img src="" id="weatherIcon" style="display:none;"/>
-		 <input type="submit" value="확인">
-             
-                
-
-      
       </div>
    </form>
+	<form action="../Recommend/itemList">
+		<input type="hidden" value=<%=request.getParameter("city") %> name="city_name">
+		<input type="hidden" value=<%=request.getParameter("country") %> name="country_name">
+		<input type="submit" value="검색">
+	</form>
 </body>
 </html>

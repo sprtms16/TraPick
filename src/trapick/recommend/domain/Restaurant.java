@@ -7,18 +7,20 @@ public class Restaurant {
 	private String img;
 	private String latitude;
 	private String longitude;
+	private double dist;
 	
 	public Restaurant() {
 		
 	}
 
-	public Restaurant(String name, String detail, String img, String latitude, String longitude) {
+	public Restaurant(String name, String detail, String img, String latitude, String longitude, double dist) {
 		super();
 		this.name = name;
 		this.detail = detail;
 		this.img = img;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.dist = dist;
 	}
 
 	public String getName() {
@@ -61,10 +63,20 @@ public class Restaurant {
 		this.longitude = longitude;
 	}
 
+	public double getDist() {
+		return dist;
+	}
+
+	public void setDist(double dist) {
+		this.dist = dist;
+	}
+
 	@Override
 	public String toString() {
 		return "Restaurant [name=" + name + ", detail=" + detail + ", img=" + img + ", latitude=" + latitude
-				+ ", longitude=" + longitude + "]";
+				+ ", longitude=" + longitude + ", dist=" + dist + "]";
 	}
+
+	
 	
 }

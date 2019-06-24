@@ -6,6 +6,6 @@ import trapick.recommend.domain.LandMark;
 
 public interface LandMarkMapper {
 
-	List<LandMark> listLandMark(String city_name);
-	
+   List<LandMark> listLandMark(String city_name);
+   
 }
