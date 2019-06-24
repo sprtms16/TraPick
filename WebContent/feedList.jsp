@@ -21,7 +21,6 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-
 	function getQuerystring(paramName) {
 		var _tempUrl = window.location.search.substring(1);
 		var _tempArray = _tempUrl.split('&');
@@ -36,6 +35,26 @@
 		}
 
 	};
+
+	 $(function() {
+	        $(window).scroll(function() {
+	            if ($(this).scrollTop() > 500) {
+	                $('#MOVE_TOP_BTN').fadeIn();
+	            } else {
+	                $('#MOVE_TOP_BTN').fadeOut();
+	            }
+	        });
+	        
+	        $("#MOVE_TOP_BTN").click(function() {
+	            $('html, body').animate({
+	                scrollTop : 0
+	            }, 400);
+	            return false;
+	        });
+	    });
+
+
+
 	function scrollMove(seq) {
 
 		//id가 p로 시작하는 객체를 찾아서, 그곳까지 이동
@@ -116,20 +135,22 @@
 			}
 			$(data).html(linkedContent);
 		});
-		
-	});
-	
-	jQuery.event.add(window,"load",function(){ //이미지가 모두 실행된 후 함수 실행
-		scrollMove(getQuerystring("feed_idx"));
+
 	});
 
+	jQuery.event.add(window, "load", function() { //이미지가 모두 실행된 후 함수 실행
+		scrollMove(getQuerystring("feed_idx"));
+	});
 </script>
 
 
 </head>
 <body>
-
+	
 	<div class="container">
+	<a id="MOVE_TOP_BTN" href="#">TOP</a>
+
+
 		<div class="search_menu">
 			<form action="list" method="get">
 				<aside style="float: right;">
@@ -159,7 +180,7 @@
 
 
 
-	<div  class="container-fluid"
+	<div class="container-fluid"
 		style="margin-left: 360px; inline-block; text-align: center;">
 		<c:forEach var="feed" items="${feedList}">
 			<div id="target${feed.feed_idx }" class="col-md-6 mt-5 ">
@@ -258,10 +279,14 @@
 							</div>
 						</div>
 					</div>
+
+
 				</div>
 			</div>
 		</c:forEach>
 	</div>
+
+
 
 </body>
 </html>
