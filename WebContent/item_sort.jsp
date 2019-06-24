@@ -10,15 +10,6 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <meta charset="UTF-8">
 <title>TraPick</title>
-<style>
-	a{color:#000;}
-
-	.mask{width:100%; height:100%; position:fixed; left:0; top:0; z-index:10; background:#000; opacity:.5; filter:alpha(opacity=50);}
-
-	#modalLayer{display:none; position:relative;}
-	#modalLayer #modalContent{width:440px; height:200px; padding:20px; border:1px solid #ccc; position:fixed; left:50%; top:50%; z-index:11; background:#fff;}
-	#modalLayer #modalContent button{position:absolute; right:0; top:0; cursor:pointer;}
-</style>
 <link rel="stylesheet" type="text/css" href="../style/css/scheduler.css" />
 <link rel="stylesheet"
    href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -132,13 +123,13 @@ google.maps.event.addDomListener(window, 'load', initialize);
                $.each(data, function(index, item){
                   var text = '<img src = "'+item.img+'"> <span>'+item.name+'</span>';
                   $('#itemList').append(text);
-               })
+               })	
             }
          })
          /* return false; */
       })
       
-     $(document).ready(function(){
+/*      $(document).ready(function(){
     	 var modalLayer = $("#modalLayer");
     	 var modalLink = $(".modalLink");
     	 var modalCont = $(".modalContent");
@@ -159,12 +150,12 @@ google.maps.event.addDomListener(window, 'load', initialize);
     		 modalLayer.fadeOut("slow");
     		 modalLink.focus();
     	 })
-     })
+     }) */
      $("#popbutton").click(function(){
         $('div.modal').modal({
                       remote : 'layer.html'
                 });
-    })
+    }) 
 	
     $("#delete_schedule").click(function(){
     	$(this).parent().empty();
@@ -198,20 +189,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
                      <td>06 ~ 09</td>
                      <td><img src="">뉴욕 우드버리 왕복버스 티켓</td>
                      <td>
-                     <div>
-                        <a href="#modalLayer" class="modalLink">
-                        	<img src="https://shopping-phinf.pstatic.net/main_8210211/82102117713.jpg?type=f133">
-                        </a>
-                        <div id="modalLayer">
-                        	<div class="modalContent">
-	                     		<button type="button" class="close" data-dismiss="modal">×</button>
-								<div>뉴욕 우드버리 왕복버스 티켓</div>
-								<div>네이버 아이디 하나로 간편구매</div>
-								<div>39600</div>
-							</div>
-                  	   </div>
-                     </div>
-                     
                   </td>
                      <td>빈칸</td>
                      <td>

@@ -163,11 +163,11 @@
 </script>
 </head>
 <body>
-	<form action="#" method="post">
+	<form action="../Recommend/itemList" method="post">
 		<div>
-			<input id="target" type="text" name="country"> 
+			<input id="target" type="text" name="country_name"> 
 			<!-- <input id="target2" type="text" name="city"> -->
-			<select id="target2" name="city">
+			<select id="target2" name="city_name">
 	    	   	 <option value="">::선택::</option>
 			</select>
 			<br> 
@@ -181,12 +181,8 @@
 			<a id="target3"></a>
 			<p id="weather"></p>	
 			<img src="" id="weatherIcon" style="display:none;"/>
-
-		       
-       			
-
-		
 		</div>
+		<input type = "submit" value = "생성">
 	</form>
 </body>
 </html>

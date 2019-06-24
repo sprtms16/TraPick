@@ -9,6 +9,7 @@ public class ItemListAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		request.setAttribute("list", RecommendService.getInstance().ItemListService(request, response));
 		return new ActionForward(false, "/item_sort.jsp");
 	}
