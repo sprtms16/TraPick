@@ -38,8 +38,6 @@
 		});
 		var availableTags2 = [];
 		var uniqueAvailableTags2 = [];
-		var availableTags3 = [];
-		var uniqueAvailableTags3 = [];
 		
 		$("#target").autocomplete({
 			source : uniqueAvailableTags,
