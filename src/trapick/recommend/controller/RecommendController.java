@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import trapick.recommend.action.Action;
 import trapick.recommend.action.ActionForward;
+import trapick.recommend.action.HotelAjaxAction;
 import trapick.recommend.action.ItemAjaxAction;
 import trapick.recommend.action.ItemListAction;
 import trapick.recommend.action.LandMarkListAction;
 import trapick.recommend.action.ListSortAction;
+import trapick.recommend.action.RestAjaxAction;
 
 @WebServlet("/Recommend/*")
 public class RecommendController extends HttpServlet {
@@ -58,7 +60,16 @@ public class RecommendController extends HttpServlet {
          } catch (Exception e) {
             e.printStackTrace();
          }
-      }else if(command.equals("Recommend/itemAjax")) {
+      }else if(command.equals("Recommend/landMarkAjax")) {
+    	  action = new LandMarkListAction();
+    	  
+    	  try {
+              forward = action.execute(request, response);
+           } catch (Exception e) {
+              e.printStackTrace();
+           }
+      }
+      else if(command.equals("Recommend/itemAjax")) {
           action = new ItemAjaxAction();
           
           try {
@@ -66,10 +77,24 @@ public class RecommendController extends HttpServlet {
           } catch (Exception e) {
              e.printStackTrace();
           }
+       }else if(command.equals("Recommend/restAjax")) {
+    	   action = new RestAjaxAction();
+    	   
+    	   try {
+               forward = action.execute(request, response);
+            } catch (Exception e) {
+               e.printStackTrace();
+            } 
+       }else if(command.equals("Recommend/hotelAjax")) {
+    	   action = new HotelAjaxAction();
+    	   
+    	   try {
+               forward = action.execute(request, response);
+            } catch (Exception e) {
+               e.printStackTrace();
+            } 
        }
    
-      
-      
       if(forward!=null)
       {
          if (forward.isRedirect()) {

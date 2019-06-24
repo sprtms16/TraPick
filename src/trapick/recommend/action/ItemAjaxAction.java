@@ -22,7 +22,7 @@ public class ItemAjaxAction implements Action {
       JSONArray jsonArray = JSONArray.fromObject(list);
       
       response.setContentType("text/html;charset=UTF-8");
-       response.getWriter().print(jsonArray);            
+      response.getWriter().print(jsonArray);            
       
       return null;
    }
