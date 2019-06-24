@@ -17,7 +17,7 @@ public class myFeedList implements Action {
 		// TODO Auto-generated method stub
 		FeedService service = FeedService.getInstance();
 		List<Feed> list = service.selectMyFeedList(request);
-		JSONArray array = JSONArray.fromObject(list);
+		JSONArray array = JSONArray.fromObject(list); //list¸¦ json array·Î 
 		response.setContentType("text/html;charset=UTF-8");
 		response.getWriter().print(array);
 		return null;

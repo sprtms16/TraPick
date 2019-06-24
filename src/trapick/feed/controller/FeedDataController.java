@@ -40,7 +40,7 @@ public class FeedDataController extends HttpServlet {
 		System.out.println(command);
 
 		switch (command) {
-		case "FeedData/myFeedList":
+		case "FeedData/myFeedList":  //경로가 혼자 다므르로 FeedData까지 추가해줘야 한다.
 			action = new myFeedList();
 			break;
 

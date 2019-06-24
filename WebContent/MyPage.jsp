@@ -9,6 +9,11 @@
                      minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
 
 <title>Insert title here</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
 <style type="text/css">
 div {
 	width: 100%;
@@ -32,6 +37,26 @@ div.right {
 	background: white;
 }
 </style>
+<script type="text/javascript">
+	
+	$(function() {
+		$.getJSON('../FeedData/myFeedList', function(data) {
+			$.each(data, function(index, item) {
+				$('#MyFeedList').append(
+						$('<tr>').append(
+								$('<td>').append(
+										$('<a>').attr(
+												"href",
+												"list?feed_idx="
+														+ item.feed_idx)
+												.text(item.title))))
+			});
+		});
+
+		
+
+	});
+</script>
 </head>
 <body>
 	<h1>My Page</h1>
@@ -42,6 +67,14 @@ div.right {
 		</div>
 		<div class="right">
 			<h4>나의 게시글 목록</h4>
+			<table>
+				<thead>
+					<th>피드 제목</th>
+				</thead>
+				<tbody id="MyFeedList">
+
+				</tbody>
+			</table>
 		</div>
 
 	</div>
