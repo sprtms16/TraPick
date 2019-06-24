@@ -40,7 +40,7 @@ public class FeedDataController extends HttpServlet {
 		System.out.println(command);
 
 		switch (command) {
-		case "FeedData/feedInsertForm":
+		case "FeedData/myFeedList":
 			action = new InsertFormAction();
 			break;
 

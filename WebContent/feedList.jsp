@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="../style/css/feedList.css" />
 <link rel="stylesheet"
@@ -17,7 +18,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../style/js/jquery.jscroll.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
 <script type="text/javascript">
 	$(function() {
 		$('.fa-heart').click(function() {
@@ -95,24 +97,56 @@
 		});
 
 	});
+	
+	
+	$(document).ready(function(event) {
+
+		$(window).scroll(function() {
+
+			var scrollHeight = $(window).scrollTop() + $(window).height();
+
+			var documentHeight = $(document).height();
+
+			
+
+			if (scrollHeight == documentHeight) {
+
+				$.ajax({
+					type : "post",
+					url : " ",
+					data : data,
+					success : function(data){
+						$('#')
+					}
+				})
+
+				}
+
+			}
+
+		});
+
+	});
+
+
 </script>
 
 
 </head>
 <body>
-
+  
 	<div class="container">
-		<div class = "search_menu">
-			<form action="list" method = "get">
-				<aside style = "float: right;"> 
-					<input type = "text" name = "word"  placeholder="검색어를 입력하시오">
-					<button type = "submit">검색</button>
-					
+		<div class="search_menu">
+			<form action="list" method="get">
+				<aside style="float: right;">
+					<input type="text" name="word" placeholder="검색어를 입력하시오">
+					<button type="submit">검색</button>
+
 				</aside>
 			</form>
 		</div>
 
-		
+
 
 
 

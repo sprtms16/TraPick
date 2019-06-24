@@ -19,21 +19,13 @@
 		on f.feed_idx = h.feed_idx and h.user_idx =
 		#{user_idx}
 		<where>
-			<if test="keyword != null">
-				<foreach collection="keyword" item="word"
-					open="regexp_like(f.contents," separator="|" close=")">
-					#{word}
-				</foreach>
-				<foreach collection="keyword" item="word"
-					open=" or regexp_like(f.title," separator="|" close=")">
-					#{word}
-				</foreach>
-				<!-- f.contents like #{keyword} or f.title like #{keyword} -->
-			</if>
-		</where>
+         <if test="keyword != null">
+            REGEXP_LIKE(replace(f.contents,' ',''), #{keyword}) OR REGEXP_LIKE(replace(f.title,' ',''), #{keyword})
+         </if>
+      </where>
 		order by f.regdate desc
 	</select>
-
+	
 
 
 

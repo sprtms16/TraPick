@@ -44,17 +44,18 @@ public class FeedService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<String> keywordList = new ArrayList<String>();
 		map.put("user_idx", user_idx);
-		if (request.getParameter("keyword") != null) { // hashtag
-			String keyword = "#" + request.getParameter("keyword");
+		if (request.getParameter("keyword") != null) { //hashtag
+			String keyword = "%#" +request.getParameter("keyword") + "%";
 			keywordList.add(keyword);
-			map.put("keyword", keywordList);
+			map.put("keyword",  keywordList);
 		}
-		if (request.getParameter("word") != null) { // 검색창에 입력한 text값
+		if (request.getParameter("word") != null) { //검색창에 입력한 text값
 			String word = request.getParameter("word");
-			for (String words : word.split(" "))
-				keywordList.add(words);
-			map.put("keyword", keywordList);
+			for(String words : word.split(" "))
+				keywordList.add("%" + words + "%");
+			map.put("keyword", "%" + word + "%");
 		}
+		
 
 		List<Feed> list = dao.feedList(map);
 		return list;
