@@ -117,5 +117,14 @@ public class RecommendService {
 
 		dao.saveSchedule(html);
 	}
+	public List<Restaurant> listRestaurantService(HttpServletRequest request, HttpServletResponse response){
+	      
+	      String city_name = request.getParameter("city_name");
+	      String base_point = "°³¼±¹®";
+	      
+	      List<Restaurant> list_Rest = crawling.crawlingNearRest(city_name, base_point);
+	      
+	      return list_Rest;
+	   }
 
 }

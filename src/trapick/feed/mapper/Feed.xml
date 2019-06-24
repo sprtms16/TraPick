@@ -4,11 +4,6 @@
 <mapper namespace="trapick.feed.mapper.FeedMapper">
    <cache />
 
-   <insert id="insertFeed" parameterType="Feed">
-      insert into feed
-      values(feed_idx.nextval, sysdate,#{title},0,#{contents},1,1)
-   </insert>
-
 	<insert id="insertFeed" parameterType="Feed">
 		<!-- insert into feed values(feed_idx.nextval, sysdate,#{title},0,#{contents},1,1) -->
 		INSERT ALL into feed
