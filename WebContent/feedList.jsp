@@ -97,8 +97,7 @@
 		});
 
 	});
-	
-	
+
 	$(document).ready(function(event) {
 
 		$(window).scroll(function() {
@@ -107,34 +106,28 @@
 
 			var documentHeight = $(document).height();
 
-			
-
 			if (scrollHeight == documentHeight) {
 
 				$.ajax({
 					type : "post",
 					url : " ",
 					data : data,
-					success : function(data){
+					success : function(data) {
 						$('#')
 					}
 				})
-
-				}
 
 			}
 
 		});
 
 	});
-
-
 </script>
 
 
 </head>
 <body>
-  
+
 	<div class="container">
 		<div class="search_menu">
 			<form action="list" method="get">
@@ -145,12 +138,6 @@
 				</aside>
 			</form>
 		</div>
-
-
-
-
-
-
 
 		<div class="dropdown">
 			<button type="button" class="btn btn-primary dropdown-toggle"
