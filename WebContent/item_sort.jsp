@@ -7,6 +7,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+
+
+<script type="text/javascript" src="../../scripts/jquery-1.4.js"></script>
+	    <script type="text/javascript" src="../../scripts/jquery-ui-1.8.custom.min.js"></script>
+	    <script type="text/javascript" src="../../scripts/jqia2.support.js"></script>
+
+
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <meta charset="UTF-8">
 <title>TraPick</title>
@@ -19,11 +27,12 @@
    crossorigin="anonymous">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript"
-   src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<!-- <script type="text/javascript"
+   src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
 <script type="text/javascript"
    src="http://maps.google.com/maps/api/js?key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg"></script>
 <script>
+
 
 function initialize() {
     
@@ -90,6 +99,57 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 <script type="text/javascript">
 	$(function(){
+		$("#delete_schedule").click(function(){
+		       $(this).parent().empty();
+		    })
+		
+		
+		
+		 var html = "";
+
+		
+		 $('.drag').draggable({
+             helper: 'clone',
+             opacity: 0.5,
+             revert: true,
+             start : function(e,ui){
+              html += '<button type="button" id="delete_schedule" class="btn btn-default">x</button>';
+           	  html += $(this).html();
+             },
+             stop : function(e,ui){
+            	 $("#delete_schedule").click(function(){
+         			alert("dlspq");
+         		       $(this).parent().empty();
+         		    })
+         		    
+             }
+           }); 
+   	  
+   	  $('table td').droppable({
+             accept: "div",
+             drop: function(event, ui) {
+            	 $(this).empty();
+				$(this).append(html);
+             }
+         });
+		
+	
+		$('#save').on("click", function(){
+			var htmlSource = $('#mySheduleTable').html();
+			console.log(htmlSource);
+			$.ajax({
+				url : 'saveAjax',
+				type: 'post',
+				dataType:'json',
+				data :{html : htmlSource} ,
+				success : function(data){
+					
+				}
+			})
+			location.href = '/TrePick/index.jsp';
+			return false;
+		})
+		
 		
 		$('#city_search').on("click",function(){
 			//랜드마크 ajax
@@ -102,9 +162,25 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					
 					$('#landMarkList').empty();
 					$.each(data, function(index, item){
-						var text = '<img src = "'+item.image+'"> <span>'+item.name+'</span>';
+						var text = '<div class = "drag"><img src = "'+item.image+'"> <span>'+item.name+'</span></div>';
 						$('#landMarkList').append(text);
 					})
+					
+					$('.drag').draggable({
+			             helper: 'clone',
+			             opacity: 0.5,
+			             revert: true,
+			             start : function(e,ui){
+			              html += '<button type="button" id="delete_schedule" class="btn btn-default">x</button>';
+			           	  html += $(this).html();
+			             },
+			             stop : function(e,ui){
+			            	 $("#delete_schedule").click(function(){
+			         			alert("dlspq");
+			         		       $(this).parent().empty();
+			         		    })
+			             }
+			           }); 
 				}
 			})
 			//아이템 ajax
@@ -120,6 +196,22 @@ google.maps.event.addDomListener(window, 'load', initialize);
 						var text = '<img src = "'+item.img+'"> <span>'+item.name+'</span>';
 						$('#itemList').append(text);
 					})
+					
+					$('.drag').draggable({
+			             helper: 'clone',
+			             opacity: 0.5,
+			             revert: true,
+			             start : function(e,ui){
+			              html += '<button type="button" id="delete_schedule" class="btn btn-default">x</button>';
+			           	  html += $(this).html();
+			             },
+			             stop : function(e,ui){
+			            	 $("#delete_schedule").click(function(){
+			         			alert("dlspq");
+			         		       $(this).parent().empty();
+			         		    })
+			             }
+			           }); 
 				}
 			})
 			/* return false; */
@@ -127,7 +219,16 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	})
 
 </script>
-
+<style type="text/css">
+	table td{
+		height: 100px;
+		width: 100px;
+	}
+	.drag{
+		width : 70px;
+		height: 70px;
+	}
+</style>
 
 <title>여행상품</title>
 </head>
@@ -140,64 +241,66 @@ google.maps.event.addDomListener(window, 'load', initialize);
             <!-- Temp_Scheduler -->
             <form action="????????" id="scheduleTable">
                <p>여행 일정표</p>
-               <table border="1">
-                  <tr>
-                     <th>일정</th>
-                     <th>1일차</th>
-                     <th>2일차</th>
-                     <th>3일차</th>
-                     <th>4일차</th>
-                     <th>5일차</th>
-                  </tr>
-                  <tr>
-                     <td>06 ~ 09</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-                  <tr>
-                     <td>09 ~ 12</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-                  <tr>
-                     <td>12 ~ 15</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-                  <tr>
-                     <td>15 ~ 18</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-                  <tr>
-                     <td>18 ~ 21</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-                  <tr>
-                     <td>21 ~ 24</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-               </table>
+               <div id = "mySheduleTable">
+	               <table border="1">
+	                  <tr>
+	                     <th>일정</th>
+	                     <th>1일차</th>
+	                     <th>2일차</th>
+	                     <th>3일차</th>
+	                     <th>4일차</th>
+	                     <th>5일차</th>
+	                  </tr>
+	                  <tr>
+	                     <td>06 ~ 09</td>
+	                     <td>이름 </td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                  </tr>
+	                  <tr>
+	                     <td>09 ~ 12</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                  </tr>
+	                  <tr>
+	                     <td>12 ~ 15</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                  </tr>
+	                  <tr>
+	                     <td>15 ~ 18</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                  </tr>
+	                  <tr>
+	                     <td>18 ~ 21</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                  </tr>
+	                  <tr>
+	                     <td>21 ~ 24</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                     <td>빈칸</td>
+	                  </tr>
+	               </table>
+	             </div>
             </form>
             <form action="searchCity" id="searchCity">
                도시 검색 : <input type = "text" name = "search_City">
@@ -227,6 +330,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                      value="<%=request.getParameter("city_name")%>">
                </form>
             </div>
+            <button id = "save">일정 저장</button>
          </div>
 
 
@@ -234,7 +338,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
             <h3>관광 명소</h3>
             <div id ="landMarkList">
             	<c:forEach var="landMarkList" items="${landMarkList }">
-            		<div class="row">
+            	<div class="row drag">
                   <div class="col-4">
                      <img src=${landMarkList.image }>
                   </div>

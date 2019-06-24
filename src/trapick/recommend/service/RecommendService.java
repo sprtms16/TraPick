@@ -70,4 +70,12 @@ public class RecommendService {
 	   return list;
    }
    
+   public void saveScheduleService(HttpServletRequest request)throws Exception{
+	   request.setCharacterEncoding("utf-8");
+	   String html = request.getParameter("html");
+	   System.out.println(html);
+
+	   dao.saveSchedule(html);
+   }
+   
 }

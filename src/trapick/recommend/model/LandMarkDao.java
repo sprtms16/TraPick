@@ -78,6 +78,25 @@ public class LandMarkDao {
 		}
 		return list;
 	}
+	
+	public void saveSchedule(String html){
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		int re = -1;
+		try {
+			re = sqlSession.insert("trapick.recommend.mapper.LandMarkMapper.saveSchedule",html);
+			if (re > 0) {
+				sqlSession.commit();
+			} else {
+				sqlSession.rollback();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+	}
 
 	
 

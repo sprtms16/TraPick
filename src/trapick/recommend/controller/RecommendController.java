@@ -15,6 +15,7 @@ import trapick.recommend.action.ItemListAction;
 import trapick.recommend.action.ItemListAjaxAction;
 import trapick.recommend.action.LandMarkListAction;
 import trapick.recommend.action.ListSortAction;
+import trapick.recommend.action.SaveScheduleAction;
 
 @WebServlet("/Recommend/*")
 public class RecommendController extends HttpServlet {
@@ -75,8 +76,15 @@ public class RecommendController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else if(command.equals("Recommend/saveAjax")) {
+			action = new SaveScheduleAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-	
 		
 		
 		if(forward!=null)
