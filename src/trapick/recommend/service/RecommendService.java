@@ -1,5 +1,6 @@
 package trapick.recommend.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,10 +24,10 @@ public class RecommendService {
       return service;
    }
 
-   public List<Item> ItemListService(HttpServletRequest request, HttpServletResponse response) {
+   public List<Item> ItemListService(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	   
 	  Crawling crawling = Crawling.getInstance();
-
+	  request.setCharacterEncoding("utf-8");
       String country_name = request.getParameter("country_name");
       String city_name = request.getParameter("city_name");
 

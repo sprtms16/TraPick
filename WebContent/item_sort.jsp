@@ -8,12 +8,10 @@
 <html>
 <head>
 
-
-
-<script type="text/javascript" src="../../scripts/jquery-1.4.js"></script>
-	    <script type="text/javascript" src="../../scripts/jquery-ui-1.8.custom.min.js"></script>
-	    <script type="text/javascript" src="../../scripts/jqia2.support.js"></script>
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <meta charset="UTF-8">
@@ -99,13 +97,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 <script type="text/javascript">
 	$(function(){
-		$("#delete_schedule").click(function(){
-		       $(this).parent().empty();
-		    })
 		
 		
-		
-		 var html = "";
+		var html = "";
 
 		
 		 $('.drag').draggable({
@@ -113,12 +107,14 @@ google.maps.event.addDomListener(window, 'load', initialize);
              opacity: 0.5,
              revert: true,
              start : function(e,ui){
-              html += '<button type="button" id="delete_schedule" class="btn btn-default">x</button>';
+            	 $(".delete_schedule").click(function(){
+       		       $(this).parent().empty();
+       		    })
+              html += '<button type="button" class="delete_schedule btn btn-default">x</button>';
            	  html += $(this).html();
              },
              stop : function(e,ui){
-            	 $("#delete_schedule").click(function(){
-         			alert("dlspq");
+          	  $(".delete_schedule").click(function(){
          		       $(this).parent().empty();
          		    })
          		    
@@ -130,6 +126,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
              drop: function(event, ui) {
             	 $(this).empty();
 				$(this).append(html);
+				html = "";
              }
          });
 		
@@ -171,14 +168,17 @@ google.maps.event.addDomListener(window, 'load', initialize);
 			             opacity: 0.5,
 			             revert: true,
 			             start : function(e,ui){
-			              html += '<button type="button" id="delete_schedule" class="btn btn-default">x</button>';
+			            	 $(".delete_schedule").click(function(){
+			       		       $(this).parent().empty();
+			       		    })
+			              html += '<button type="button" class="delete_schedule btn btn-default>x</button>';
 			           	  html += $(this).html();
 			             },
 			             stop : function(e,ui){
-			            	 $("#delete_schedule").click(function(){
-			         			alert("dlspq");
+			          	  $(".delete_schedule").click(function(){
 			         		       $(this).parent().empty();
 			         		    })
+			         		    
 			             }
 			           }); 
 				}
@@ -193,7 +193,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					
 					$('#itemList').empty();
 					$.each(data, function(index, item){
-						var text = '<img src = "'+item.img+'"> <span>'+item.name+'</span>';
+						var text = '<div class = "drag"><img src = "'+item.img+'"> <span>'+item.name+'</span></div>';
 						$('#itemList').append(text);
 					})
 					
@@ -202,14 +202,17 @@ google.maps.event.addDomListener(window, 'load', initialize);
 			             opacity: 0.5,
 			             revert: true,
 			             start : function(e,ui){
-			              html += '<button type="button" id="delete_schedule" class="btn btn-default">x</button>';
+			            	 $(".delete_schedule").click(function(){
+			       		       $(this).parent().empty();
+			       		    })
+			              html += '<button type="button" class="delete_schedule btn btn-default">x</button>';
 			           	  html += $(this).html();
 			             },
 			             stop : function(e,ui){
-			            	 $("#delete_schedule").click(function(){
-			         			alert("dlspq");
+			          	  $(".delete_schedule").click(function(){
 			         		       $(this).parent().empty();
 			         		    })
+			         		    
 			             }
 			           }); 
 				}
@@ -225,8 +228,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
 		width: 100px;
 	}
 	.drag{
-		width : 70px;
-		height: 70px;
+		width : 100px;
+		height: 100px;
 	}
 </style>
 
@@ -302,6 +305,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	               </table>
 	             </div>
             </form>
+
+
+
             <form action="searchCity" id="searchCity">
                도시 검색 : <input type = "text" name = "search_City">
                <input type = "submit" value="검색">
@@ -344,9 +350,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
                   </div>
                   <div class="col-8">
                      <div class="row">${landMarkList.name }</div>
-                     <%-- <div class="row">${landMarkList.detail }</div> --%>
-                     <%-- <div class="row">${landMarkList.price }</div> --%>
+                     <div class="row">${landMarkList.detail }</div>
                   </div>
+
                </div>
             	</c:forEach>
             </div>
@@ -356,7 +362,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
             <h3>여행 상품</h3>
 				<div id="itemList">
 					<c:forEach var="list" items="${list }">
-						<div class="row">
+						<div class="row drag">
 							<div class="col-4">
 								<img src=${list.img }>
 							</div>
