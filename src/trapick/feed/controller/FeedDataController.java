@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import trapick.feed.action.Action;
 import trapick.feed.action.ActionForward;
 import trapick.feed.action.ErrorAction;
-import trapick.feed.action.InsertFormAction;
+import trapick.feed.action.myFeedList;
 
 /**
  * Servlet implementation class FeedDataController
@@ -40,8 +40,8 @@ public class FeedDataController extends HttpServlet {
 		System.out.println(command);
 
 		switch (command) {
-		case "FeedData/feedInsertForm":
-			action = new InsertFormAction();
+		case "FeedData/myFeedList":
+			action = new myFeedList();
 			break;
 
 		default:

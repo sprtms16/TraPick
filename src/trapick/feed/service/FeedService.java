@@ -134,4 +134,11 @@ public class FeedService {
 
 	}
 
+	public List<Feed> selectMyFeedList(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		int user_idx = (int) session.getAttribute("user_idx");
+		return dao.selectMyFeedList(user_idx);
+	}
+
 }
