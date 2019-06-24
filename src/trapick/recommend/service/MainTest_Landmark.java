@@ -16,7 +16,7 @@ public class MainTest_Landmark {
 		System.out.println(landscape_list);
 		for (LandMark mark : landscape_list) {
 			System.out.println("insert into LANDMARK values(landmark_seq.nextval, '" + mark.getName() + "','"
-					+ mark.getImg() + "' ,'"+mark.getLatitude()+"','"+mark.getLongitude()+"', '"+mark.getDetail()+"',(select city_idx from city where NAME = '"+mark.getCity_name()+"'));");
+					+ mark.getImage() + "' ,'"+mark.getLatitude()+"','"+mark.getLongitude()+"', '"+mark.getDetail()+"',(select city_idx from city where NAME = '"+mark.getCity_name()+"'));");
 		}
 
 	}

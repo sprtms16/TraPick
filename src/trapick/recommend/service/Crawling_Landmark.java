@@ -27,7 +27,7 @@ public class Crawling_Landmark {
 		
 		int land_idx = 0;
 		String name = "";
-		String img = "";
+		String image = "";
 		String latitude = "0";
 		String longitude = "0";
 		String detail;	// 명소 카테고리 (ex: 건축물, 박물관, 유적지, 성당 등)
@@ -49,7 +49,7 @@ public class Crawling_Landmark {
 				
 				land_idx += 1;
 				name = el.select(".list_title").select("strong").text();
-				img = el.select(".list_thumb").select("img").attr("src");
+				image = el.select(".list_thumb").select("img").attr("src");
 				detail = el.select(".list_title").select(".list_cate").text();
 				
 				// latitude, longitude
@@ -90,13 +90,13 @@ public class Crawling_Landmark {
 				latitude = lat;
 				longitude = lng;
 
-				landmark = new LandMark(land_idx, name, latitude, longitude, detail, city_name, time_defference, country_name, img);
+				landmark = new LandMark(land_idx, name, latitude, longitude, detail, city_name, time_defference, country_name, image);
 				landscape_list.add(landmark);
 				
 				
 				System.out.println("idx\t" + land_idx);
 				System.out.println("name\t" + name);
-				System.out.println("img\t" + img);
+				System.out.println("img\t" + image);
 				System.out.println("lat\t" + latitude);
 				System.out.println("long\t" + longitude);
 				System.out.println("detail\t" + detail);

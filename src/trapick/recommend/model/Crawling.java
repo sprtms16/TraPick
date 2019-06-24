@@ -4,17 +4,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
+import org.json.simple.JSONArray;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import net.sf.json.JSONObject;
 import trapick.recommend.domain.Hotel;
 import trapick.recommend.domain.Item;
 import trapick.recommend.domain.Restaurant;
+
 
 public class Crawling {
 
@@ -197,6 +199,7 @@ public class Crawling {
 						price, img, sales, hits, dist);
 
 				list.add(item);
+				
 
 			}
 		} catch (IOException e) {
@@ -205,6 +208,7 @@ public class Crawling {
 		return list;
 
 	}
+	
 
 //   가격순 정렬
 	public List<Item> priceSort(List<Item> list) {

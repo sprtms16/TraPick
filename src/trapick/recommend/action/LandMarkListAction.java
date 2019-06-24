@@ -5,23 +5,22 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import trapick.recommend.domain.Item;
+import trapick.recommend.domain.LandMark;
 import trapick.recommend.service.RecommendService;
 
-public class ListSortAction implements Action {
+public class LandMarkListAction implements Action {
 
    @Override
    public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-      
+
       RecommendService service = RecommendService.getInstance();
       ActionForward forward = new ActionForward();
       
-      List<Item> list = service.ItemListService(request, response);
+      List<LandMark> list_Land = service.listLandMarkService(request);
       
-      request.setAttribute("list",list);
+      request.setAttribute("list_Land", list_Land);
             
-      forward.setRedirect(false);
-      forward.setPath("itemList");
+      forward.setRedirect(false);      
       
       return forward;
    }
