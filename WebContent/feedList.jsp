@@ -93,6 +93,10 @@
 			}
 			$(data).html(linkedContent);
 		});
+		
+		$('#myCarousel').carousel({
+			interval : 3000
+		});
 
 	});
 </script>
@@ -111,7 +115,7 @@
 				</aside>
 			</form>
 		</div>
-		
+
 		<div class="dropdown">
 			<button type="button" class="btn btn-primary dropdown-toggle"
 				data-toggle="dropdown">정렬</button>
@@ -136,9 +140,41 @@
 		<c:forEach var="feed" items="${feedList}">
 			<div class="col-md-6 mt-5 ">
 				<div class="card text-center">
-					<img class="card-img-top"
+					<!-- <img class="card-img-top"
 						src="https://picsum.photos/1900/1080?image=235"
-						alt="Card image cap">
+						alt="Card image cap"> -->
+					<div id="myCarousel" class="carousel slide" data-ride="carousel">
+						<!-- Indicators -->
+						<ol class="carousel-indicators">
+							<c:forEach var="i" begin="1" items="${feed.url }">
+								<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+							</c:forEach>
+							
+							<li data-target="#myCarousel" data-slide-to="1"></li>
+							<li data-target="#myCarousel" data-slide-to="2"></li>
+							<li data-target="#myCarousel" data-slide-to="3"></li>
+						</ol>
+
+						<!-- Wrapper for slides -->
+						<div class="carousel-inner" role="listbox">
+							<c:forEach var="img" items="${feed.url }">
+								<div class="item">
+									<img src="../upload/${img}">
+								</div>
+							</c:forEach>
+						</div>
+
+						<!-- Left and right controls -->
+						<a class="left carousel-control" href="#myCarousel" role="button"
+							data-slide="prev"> <span
+							class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a> <a class="right carousel-control" href="#myCarousel"
+							role="button" data-slide="next"> <span
+							class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
+					</div>
 					<div class="card-body">
 
 						<h5 class="card-title">${feed.title }</h5>
