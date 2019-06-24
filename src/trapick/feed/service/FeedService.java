@@ -142,4 +142,9 @@ public class FeedService {
 		return dao.selectMyFeedList(user_idx);
 	}
 
+	public List<String> getUrlService(HttpServletRequest request, int feed_idx) {
+		// TODO Auto-generated method stub
+		return dao.selectFeedUrl(feed_idx);
+	}
+
 }
