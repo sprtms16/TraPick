@@ -20,7 +20,10 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script
@@ -227,8 +230,7 @@
 
 									<input type="hidden" name="feed_idx" value="${feed.feed_idx}" />
 									<textarea class="form-control" rows="1" name="contents"
-										id="contents" placeholder="내용을 입력해 주세요">
-										</textarea>
+										id="contents" placeholder="내용을 입력해 주세요"></textarea>
 								</div>
 								<div>
 									<button type="submit" class="btn btn-sm btn-primary"
