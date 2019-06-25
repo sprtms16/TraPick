@@ -52,7 +52,7 @@ div.right {
 												.text(item.title))))
 			});
 		});
-
+      
 		
 
 	});
