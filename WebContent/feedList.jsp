@@ -47,6 +47,24 @@
 		}
 
 	};
+
+	$(function() {
+		$(window).scroll(function() {
+			if ($(this).scrollTop() > 500) {
+				$('#MOVE_TOP_BTN').fadeIn();
+			} else {
+				$('#MOVE_TOP_BTN').fadeOut();
+			}
+		});
+
+		$("#MOVE_TOP_BTN").click(function() {
+			$('html, body').animate({
+				scrollTop : 0
+			}, 400);
+			return false;
+		});
+	});
+
 	function scrollMove(seq) {
 
 		//id가 p로 시작하는 객체를 찾아서, 그곳까지 이동
@@ -134,7 +152,6 @@
 		if (seq != null) {
 			scrollMove();
 		}
-
 	});
 </script>
 
@@ -143,6 +160,9 @@
 <body>
 
 	<div class="container">
+		<a id="MOVE_TOP_BTN" href="#">TOP</a>
+
+
 		<div class="search_menu">
 			<form action="list" method="get">
 				<aside style="float: right;">
@@ -305,10 +325,14 @@
 							</div>
 						</div>
 					</div>
+
+
 				</div>
 			</div>
 		</c:forEach>
 	</div>
+
+
 
 </body>
 </html>
