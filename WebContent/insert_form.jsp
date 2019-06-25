@@ -22,7 +22,8 @@
 
 			<form name="uploadForm" id="uploadForm" enctype="multipart/form-data"
 				method="post">
-
+				<input type="hidden" name="schd_idx" id="schd_idx"
+					value="${schd_idx }">
 				<div class="mb-3">
 					<label for="title">제목</label> <input type="text"
 						class="form-control" name="title" id="title"

@@ -13,6 +13,7 @@ import trapick.feed.action.Action;
 import trapick.feed.action.ActionForward;
 import trapick.feed.action.ErrorAction;
 import trapick.feed.action.myFeedList;
+import trapick.feed.action.mySchdList;
 
 /**
  * Servlet implementation class FeedDataController
@@ -42,6 +43,10 @@ public class FeedDataController extends HttpServlet {
 		switch (command) {
 		case "FeedData/myFeedList":  //경로가 혼자 다므르로 FeedData까지 추가해줘야 한다.
 			action = new myFeedList();
+			break;
+			
+		case "FeedData/mySchdList":  //경로가 혼자 다므르로 FeedData까지 추가해줘야 한다.
+			action = new mySchdList();
 			break;
 
 		default:

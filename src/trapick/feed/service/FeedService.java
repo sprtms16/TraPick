@@ -43,6 +43,7 @@ public class FeedService {
 		Feed feed = new Feed();
 		feed.setTitle(multi.getParameter("title"));
 		feed.setContents(multi.getParameter("contents"));
+		feed.setSchd_idx(Integer.parseInt(multi.getParameter("schd_idx")));
 		feed.setUser_idx((int) session.getAttribute("user_idx"));
 		if (multi.getFileNames() != null) {
 			@SuppressWarnings("unchecked")
@@ -73,12 +74,11 @@ public class FeedService {
 			String keyword = "#" + request.getParameter("keyword");
 			map.put("keyword", keyword);
 		}
-		if (request.getParameter("word") != null) { //검색창에 입력한 text값
+		if (request.getParameter("word") != null) { // 검색창에 입력한 text값
 			String word = request.getParameter("word");
 			word = word.replace(" ", "|");
 			map.put("keyword", word);
 		}
-		
 
 		List<Feed> list = dao.feedList(map);
 		return list;
@@ -145,6 +145,13 @@ public class FeedService {
 	public List<String> getUrlService(HttpServletRequest request, int feed_idx) {
 		// TODO Auto-generated method stub
 		return dao.selectFeedUrl(feed_idx);
+	}
+
+	public List<Feed> selectMySchdListService(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		int user_idx = (int) session.getAttribute("user_idx");
+		return dao.selectMySchdList(user_idx);
 	}
 
 }

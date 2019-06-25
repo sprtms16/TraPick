@@ -205,4 +205,16 @@ public class FeedDao {
 		return list;
 	}
 
+	public List<Feed> selectMySchdList(int user_idx) {
+		// TODO Auto-generated method stub
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		List<Feed> list = null;
+		try {
+			list = sqlSession.getMapper(FeedMapper.class).selectMySchdList(user_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 }

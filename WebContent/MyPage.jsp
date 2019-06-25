@@ -38,7 +38,6 @@ div.right {
 }
 </style>
 <script type="text/javascript">
-	
 	$(function() {
 		$.getJSON('../FeedData/myFeedList', function(data) {
 			$.each(data, function(index, item) {
@@ -48,12 +47,23 @@ div.right {
 										$('<a>').attr(
 												"href",
 												"list?feed_idx="
-														+ item.feed_idx)
-												.text(item.title))))
+														+ item.feed_idx).text(
+												item.title))))
 			});
 		});
-      
-		
+
+		$.getJSON('../FeedData/mySchdList', function(data) {
+			$.each(data, function(index, item) {
+				$('#MySchdList').append(
+						$('<tr>').append(
+								$('<td>').append(
+										$('<a>').attr(
+												"href",
+												"feedInsertForm?schd_idx="
+														+ item.schd_idx).text(
+												item.title))))
+			});
+		});
 
 	});
 </script>
@@ -64,7 +74,18 @@ div.right {
 
 		<div class="left">
 			<h3>나의 일정목록</h3>
+			<table>
+				<thead>
+					<th>일정표 title</th>
+				</thead>
+				<tbody id="MySchdList">
+
+				</tbody>
+
+			</table>
 		</div>
+
+
 		<div class="right">
 			<h4>나의 게시글 목록</h4>
 			<table>
