@@ -134,6 +134,7 @@ $(function() {
 
    $(function(){
       
+	   
       function pop($selector){
          var url= "";    //팝업창 페이지 URL
           var winWidth = 700;
@@ -204,8 +205,8 @@ $(function() {
                
                $('#landMarkList').empty();
                $.each(data, function(index, item){
-                  var text = '<div class="row drag"><div class="col-4"><img class="img" src='
-                  +item.image+'></div><div class="col-8 list_detail"><div id="name" class="row">'
+                  var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
+                  +item.image+'></div><div class="list_detail"><div id = "name" class="row">'
                   +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
                   +item.detail+'</div></div></div>';
                   $('#landMarkList').append(text);
@@ -237,11 +238,11 @@ $(function() {
                
                $('#itemList').empty();
                $.each(data, function(index, item){
-                  var text = '<div class="row drag"><div class="col-4"><img class="img" src='
-                     +item.img+'></div><div class="col-8 list_detail"><div id="name"  class="row">'
-                     +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
-                     +item.detail+'</div><div  id="price" class="row">'
-                     +item.price+'</div></div></div>';
+                     var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
+                         +item.image+'></div><div class="list_detail"><div id = "name" class="row">'
+                         +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
+                         +item.detail+'<div  id="price" class="row">'
+                         +item.price+'</div></div></div>';
                   $('#itemList').append(text);
                })
                
@@ -271,10 +272,10 @@ $(function() {
                  
                  $('#restList').empty();
                    $.each(data, function(index, item){
-                      var text = '<div class="row drag"><div class="col-4"><img class="img" src='
-                     +item.img+'></div><div class="col-8 list_detail"><div id="name"  class="row">'
-                     +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
-                     +item.detail+'</div></div></div>';
+                	   var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
+                           +item.image+'></div><div class="list_detail"><div id = "name" class="row">'
+                           +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
+                           +item.detail+'</div></div></div>';
                       $('#restList').append(text);
                    }) 
                    $('.drag').draggable({
@@ -303,11 +304,11 @@ $(function() {
               
               $('#hotelList').empty();
                 $.each(data, function(index, item){
-                   var text = '<div class="row drag"><div class="col-4"><img class="img" src='
-                  +item.img+'></div><div class="col-8 list_detail"><div  id="name" class="row">'
-                  +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
-                  +item.detail+'</div><div id="price"  class="row">'
-                  +item.price+'</div></div></div>';
+                	var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
+                        +item.image+'></div><div class="list_detail"><div id = "name" class="row">'
+                        +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
+                        +item.detail+'<div  id="price" class="row">'
+                        +item.price+'</div></div></div>';
                    $('#hotelList').append(text);
                    console.log(text);
                 }) 
