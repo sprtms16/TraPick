@@ -453,7 +453,6 @@ $(function() {
                      <div  style = "display : none"  id ="detail" class="row">${landMarkList.detail }</div>
            		 </div>
                </div>
-               
                </c:forEach>
                
             </div>
