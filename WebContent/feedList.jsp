@@ -145,6 +145,14 @@
 			}
 			$(data).html(linkedContent);
 		});
+
+		$('.d-block').click(function(e) {
+			var $img = $(this).clone().removeAttr("style").removeClass().css({
+				'object-fit' : 'scale-down'
+			});
+			$('#exampleModal').find('.modal-content').html($img);
+			$('#exampleModal').modal('toggle');
+		});
 	});
 
 	jQuery.event.add(window, "load", function() { //이미지가 모두 실행된 후 함수 실행
@@ -209,16 +217,18 @@
 								<c:choose>
 									<c:when test="${status.first }">
 										<div class="carousel-item active"
-											style="width: 100%; height: 500px; overflow: hidden">
+											style="width: 100%; height: 500px; overflow: hidden; position: relative;">
 											<img src="../upload/${img }" class="d-block w-100"
-												style="width: auto; height: 500px;">
+												style="position: absolute; left: 50%; top: 50%; max-width: 100%; height: auto; -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
+											<!-- style="width: auto; height: 500px;" -->
 										</div>
 									</c:when>
 									<c:otherwise>
 										<div class="carousel-item"
-											style="width: 100%; height: 500px; overflow: hidden">
+											style="width: 100%; height: 500px; overflow: hidden; position: relative;">
 											<img src="../upload/${img }" class="d-block w-100"
-												style="width: auto; height: 500px;">
+												style="position: absolute; left: 50%; top: 50%; max-width: 100%; height: auto; -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
+											<!-- style="width: auto; height: 500px;" -->
 										</div>
 									</c:otherwise>
 								</c:choose>
@@ -332,7 +342,13 @@
 		</c:forEach>
 	</div>
 
-
+	<div class="modal fade bs-example-modal-lg" id="exampleModal"
+		tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content"></div>
+		</div>
+	</div>
 
 </body>
 </html>
