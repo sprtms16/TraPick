@@ -1,14 +1,14 @@
 package trapick.recommend.service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javafx.concurrent.ScheduledService;
+import trapick.recommend.domain.Hotel;
 import trapick.recommend.domain.Item;
 import trapick.recommend.domain.LandMark;
+import trapick.recommend.domain.Restaurant;
 import trapick.recommend.model.Crawling;
 import trapick.recommend.model.LandMarkDao;
 
@@ -78,5 +78,26 @@ public class RecommendService {
 
 	   dao.saveSchedule(html);
    }
+
+   public List<Restaurant> listRestaurantService(HttpServletRequest request) {
+
+	      String city_name = request.getParameter("city_name");
+
+	      List<Restaurant> list_Res = crawling.crawlingNearRest(city_name);
+
+	      return list_Res;
+
+	}
+
+   public List<Hotel> listHotelService(HttpServletRequest request, HttpServletResponse response) {
+
+	   String city_name = request.getParameter("city_name");
+
+	   List<Hotel> list_Hotel = crawling.crawlingNearHotel(city_name);
+
+	   return list_Hotel;
+	}
+	   
+
    
 }

@@ -14,7 +14,7 @@
 	</select>
 	
 	<insert id="saveSchedule" parameterType="String">
-		insert into SCHEDULE_SF values(1,'여행일정1',1,#{html})
+		insert into SCHEDULE_SF values(schedule_sh_sq.nextval,'여행일정1',1,#{html})
 	</insert>
 
 </mapper>

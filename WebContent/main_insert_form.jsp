@@ -173,7 +173,7 @@
          <br> 
          오늘날짜 : <span id="today"></span><br>
          <label for="sta   rt_time">출발</label>
-         <input type="text"   name="start_time" id="start_time"  autocomplete=off>
+         <input type="text"  name="start_time" id="start_time"  autocomplete=off>
          ~
          <label for="end_time">귀국</label>
          <input type="text"   name="end_time" id="end_time"  autocomplete=off> 
