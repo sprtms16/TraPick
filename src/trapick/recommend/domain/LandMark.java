@@ -3,6 +3,11 @@ package trapick.recommend.domain;
 import java.io.Serializable;
 
 public class LandMark implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	int land_idx;
 	String name;
 	double latitude;
@@ -17,7 +22,6 @@ public class LandMark implements Serializable{
 
 	}
 
-	
 	public LandMark(int land_idx, String name, double latitude, double longitude, String detail, String city_name,
 			int time_defference, String country_name, String image) {
 		super();
@@ -31,7 +35,6 @@ public class LandMark implements Serializable{
 		this.country_name = country_name;
 		this.image = image;
 	}
-
 
 	public int getLand_idx() {
 		return land_idx;
@@ -105,6 +108,9 @@ public class LandMark implements Serializable{
 		this.image = image;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	@Override
 	public String toString() {
@@ -114,6 +120,5 @@ public class LandMark implements Serializable{
 	}
 
 	
-
+	
 }
->>>>>>> refs/remotes/origin/psd

@@ -2,47 +2,38 @@
 <%@page import="trapick.recommend.domain.Item"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <meta charset="UTF-8">
 <title>TraPick</title>
-<<<<<<< HEAD
-<style>
-	a{color:#000;}
-
-	.mask{width:100%; height:100%; position:fixed; left:0; top:0; z-index:10; background:#000; opacity:.5; filter:alpha(opacity=50);}
-
-	#modalLayer{display:none; position:relative;}
-	#modalLayer #modalContent{width:440px; height:200px; padding:20px; border:1px solid #ccc; position:fixed; left:50%; top:50%; z-index:11; background:#fff;}
-	#modalLayer #modalContent button{position:absolute; right:0; top:0; cursor:pointer;}
-</style>
-=======
->>>>>>> refs/remotes/origin/LeeTaemin
 <link rel="stylesheet" type="text/css" href="../style/css/scheduler.css" />
 <link rel="stylesheet"
-   href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-   integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-   crossorigin="anonymous">
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
 <link rel="stylesheet" href="/resources/demos/style.css">
-<<<<<<< HEAD
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-=======
->>>>>>> refs/remotes/origin/LeeTaemin
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- <script type="text/javascript"
+   src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
 <script type="text/javascript"
-   src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script type="text/javascript"
-   src="http://maps.google.com/maps/api/js?key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg"></script>
+	src="http://maps.google.com/maps/api/js?key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg"></script>
 <script>
+
 
 function initialize() {
     
@@ -91,7 +82,6 @@ function initialize() {
     });     
 }
 google.maps.event.addDomListener(window, 'load', initialize);
-<<<<<<< HEAD
    
 /*    window.onload = function() {
       $("#popUp").hide();
@@ -106,15 +96,106 @@ google.maps.event.addDomListener(window, 'load', initialize);
    }
    
   
-=======
-
->>>>>>> refs/remotes/origin/LeeTaemin
 </script>
 
 <script type="text/javascript">
-<<<<<<< HEAD
+//호텔 , 음식점 스크립트
+$(function() {
+   $('#restList').hide();
+   $('#hotelList').hide();
+});
+   
+$(function() {
+   
+   $('#tab-2').click(function() {
+      $('#restList').show();
+      $('#hotelList').hide();
+      $('#itemList').hide();
+   });
+});
+
+$(function() {
+   
+   $('#tab-3').click(function() {
+      $('#hotelList').show();
+      $('#itemList').hide();
+      $('#restList').hide();
+   });
+});
+
+$(function() {
+   
+   $('#tab-1').click(function() {
+      $('#itemList').show();
+      $('#hotelList').hide();
+      $('#restList').hide();
+   });
+});
+
+//호텔 음식점 스크립트 끝
+
+
    $(function(){
       
+      function pop($selector){
+         var url= "";    //팝업창 페이지 URL
+          var winWidth = 700;
+           var winHeight = 600;
+           var popupOption= "width="+winWidth+", height="+winHeight;    //팝업창 옵션(optoin)
+           var detail = $selector.parent().find('#detail').text();
+           var name = $selector.parent().find('#name').text();
+           var price = $selector.parent().find('#price').text();
+           var img = $selector.parent().find('img').attr('src');
+           var str = '<img src = "'+img+'"><br>이름 : '+name+'<br>상세설명 : '+detail+'<br>가격 : '+price;
+          window.open(url,"",popupOption).document.write(str);
+      }
+      
+      function event(){
+         $(".delete_schedule").click(function(){
+                 $(this).parent().empty();
+              })
+              $('.detailbt').click(function(){
+                 pop($(this));
+            })
+      }
+      
+      
+      var html = "";
+
+      
+       $('.drag').draggable({
+             helper: 'clone',
+             opacity: 0.5,
+             revert: true,
+             start : function(e,ui){
+                event();
+              html += '<button type="button" class="delete_schedule btn btn-default">x</button>';
+              html += '<input type ="button" class = "detailbt" value ="상세보기">';
+                html += $(this).html();
+             },
+             stop : function(e,ui){
+                event();
+             }
+           }); 
+        
+        $('table td').droppable({
+             accept: "div",
+             drop: function(event, ui) {
+                $(this).empty();
+            $(this).append(html);
+            html = "";
+             }
+         });
+      
+      //일정 저장
+      $('#save').on("click", function(){
+         var htmlSource = $('#mySheduleTable').html();
+         $.post('saveAjax',{html : htmlSource});
+         location.href = '/TrePick/index.jsp';
+         return false;
+      })
+      
+      //도시선택시 ajax 구동
       $('#city_search').on("click",function(){
          //랜드마크 ajax
          $.ajax({
@@ -126,9 +207,27 @@ google.maps.event.addDomListener(window, 'load', initialize);
                
                $('#landMarkList').empty();
                $.each(data, function(index, item){
-                  var text = '<img src = "'+item.image+'"> <span>'+item.name+'</span>';
+                  var text = '<div class="row drag"><div class="col-4"><img src='
+                  +item.image+'></div><div class="col-8"><div id="name" class="row">'
+                  +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
+                  +item.detail+'</div></div></div>';
                   $('#landMarkList').append(text);
                })
+               
+               $('.drag').draggable({
+                      helper: 'clone',
+                      opacity: 0.5,
+                      revert: true,
+                      start : function(e,ui){
+                         event();
+                       html += '<button type="button" class="delete_schedule btn btn-default>x</button>';
+                       html += '<input type ="button" class = "detailbt" value ="상세보기">';
+                         html += $(this).html();
+                      },
+                      stop : function(e,ui){
+                         event();
+                      }
+                    }); 
             }
          })
          //아이템 ajax
@@ -141,435 +240,301 @@ google.maps.event.addDomListener(window, 'load', initialize);
                
                $('#itemList').empty();
                $.each(data, function(index, item){
-                  var text = '<img src = "'+item.img+'"> <span>'+item.name+'</span>';
+                  var text = '<div class="row drag"><div class="col-4"><img src='
+                     +item.img+'></div><div class="col-8"><div id="name"  class="row">'
+                     +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
+                     +item.detail+'</div><div  id="price" class="row">'
+                     +item.price+'</div></div></div>';
                   $('#itemList').append(text);
                })
+               
+               $('.drag').draggable({
+                      helper: 'clone',
+                      opacity: 0.5,
+                      revert: true,
+                      start : function(e,ui){
+                         event();
+                       html += '<button type="button" class="delete_schedule btn btn-default">x</button>';
+                       html += '<input type ="button" class = "detailbt" value ="상세보기">';
+                         html += $(this).html();
+                      },
+                      stop : function(e,ui){
+                         event();
+                      }
+                    }); 
             }
          })
-         /* return false; */
-      })
-      
-     $(document).ready(function(){
-    	 var modalLayer = $("#modalLayer");
-    	 var modalLink = $(".modalLink");
-    	 var modalCont = $(".modalContent");
-    	 var marginlLeft = modalCont.outerWidth()/2;
-    	 var marginTop = modalCont.outerHeight()/2;
-    	 
-    	 modalLink.click(function(){
-    		 modalLayer.fadeIn("slow");
-    		 modalCont.css({"margin-top" : -marginTop,
-    			 "margin-left" : -marginlLeft
-    		 });
-    		 $(this).blur();
-    		 $(".modalContent > a").focus();
-    		 return false;
-    	 });
-    	 
-    	 $(".modalContent > button").click(function(){
-    		 modalLayer.fadeOut("slow");
-    		 modalLink.focus();
-    	 })
-     })
-     $("#popbutton").click(function(){
-        $('div.modal').modal({
-                      remote : 'layer.html'
-                });
-    })
-	
-    $("#delete_schedule").click(function(){
-    	$(this).parent().empty();
-    })
-   });
-=======
-$(function(){
-    
-    $('#city_search').on("click",function(){
-       //랜드마크 ajax
+         //식당 ajax
+          $.ajax({
+              url : 'restAjax',
+              type : 'post',
+              dataType : 'json',
+              data :{city_name : $('#city option:selected').val()} ,
+              success : function(data){
+                 
+                 $('#restList').empty();
+                   $.each(data, function(index, item){
+                      var text = '<div class="row drag"><div class="col-4"><img src='
+                     +item.img+'></div><div class="col-8"><div id="name"  class="row">'
+                     +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
+                     +item.detail+'</div></div></div>';
+                      $('#restList').append(text);
+                   }) 
+                   $('.drag').draggable({
+                      helper: 'clone',
+                      opacity: 0.5,
+                      revert: true,
+                      start : function(e,ui){
+                         event();
+                       html += '<button type="button" class="delete_schedule btn btn-default">x</button>';
+                       html += '<input type ="button" class = "detailbt" value ="상세보기">';
+                         html += $(this).html();
+                      },
+                      stop : function(e,ui){
+                         event();
+                      }
+                    }); 
+              }
+        })
+        //숙박 ajax
        $.ajax({
-          url : 'landMarkAjax',
-          type: 'post',
-          dataType:'json',
-          data :{city_name : $('#city option:selected').val()} ,
-          success : function(data){
-             
-             $('#landMarkList').empty();
-             $.each(data, function(index, item){
-                var text = '<img src = "'+item.image+'"> <span>'+item.name+'</span>';
-                $('#landMarkList').append(text);
-             })
-          }
-       })
-       //음식점 ajax
-       $.ajax({
-          url : 'restAjax',
+          url : 'hotelAjax',
           type : 'post',
           dataType : 'json',
           data :{city_name : $('#city option:selected').val()} ,
           success : function(data){
-             
-             $('#restList').empty();
-               $.each(data, function(index, item){
-                  var text = '<img src = "'+item.img+'"> <span>'+item.name+'</span>';
-                  $('#restList').append(text);
-               }) 
-          }
-       })
-       //숙박 ajax
-      $.ajax({
-         url : 'hotelAjax',
-         type : 'post',
-         dataType : 'json',
-         data :{city_name : $('#city option:selected').val()} ,
-         success : function(data){
-             
-             $('#hotelList').empty();
-               $.each(data, function(index, item){
-                  var text = '<img src = "'+item.img+'"> <span>'+item.name+'</span>';
-                  $('#hotelList').append(text);
-               }) 
-          }
-       })
-       //아이템 ajax
-       $.ajax({
-          url : 'itemAjax',
-          type: 'post',
-          dataType:'json',
-          data :{city_name : $('#city option:selected').val()} ,
-          success : function(data){
-             
-             $('#itemList').empty();
-             $.each(data, function(index, item){
-                var text = '<img src = "'+item.img+'"> <span>'+item.name+'</span>';
-                $('#itemList').append(text);
-             })
-          }
-       })
-       /* return false; */
-    })
- })
->>>>>>> refs/remotes/origin/LeeTaemin
+              
+              $('#hotelList').empty();
+                $.each(data, function(index, item){
+                   var text = '<div class="row drag"><div class="col-4"><img src='
+                  +item.img+'></div><div class="col-8"><div  id="name" class="row">'
+                  +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
+                  +item.detail+'</div><div id="price"  class="row">'
+                  +item.price+'</div></div></div>';
+                   $('#hotelList').append(text);
+                   console.log(text);
+                }) 
+                $('.drag').draggable({
+                   helper: 'clone',
+                   opacity: 0.5,
+                   revert: true,
+                   start : function(e,ui){
+                      event();
+                    html += '<button type="button" class="delete_schedule btn btn-default">x</button>';
+                    html += '<input type ="button" class = "detailbt" value ="상세보기">';
+                      html += $(this).html();
+                   },
+                   stop : function(e,ui){
+                      event();
+                   }
+                 }); 
+           }
+        })
+         /* return false; */
+      })
+   })
 
 </script>
+<style type="text/css">
+table td {
+	height: 100px;
+	width: 100px;
+}
 
+.drag {
+	width: 200px;
+	height: 200px;
+}
+</style>
 
 <title>여행상품</title>
 </head>
 <body>
+	<p id="subject">여행 일정표</p>
 
 
-   <div class="container">
-      <div class="row">
-         <div class="col-6">
-            <!-- Temp_Scheduler -->
-            <form action="????????" id="scheduleTable">
-               <p>여행 일정표</p>
-               <table border="1">
-                  <tr>
-                     <th>일정</th>
-                     <th>1일차</th>
-                     <th>2일차</th>
-                     <th>3일차</th>
-                     <th>4일차</th>
-                     <th>5일차</th>
-                  </tr>
-                  <tr>
-                     <td>06 ~ 09</td>
-<<<<<<< HEAD
-                     <td><img src="">뉴욕 우드버리 왕복버스 티켓</td>
-                     <td>
-                     <div>
-                        <a href="#modalLayer" class="modalLink">
-                        	<img src="https://shopping-phinf.pstatic.net/main_8210211/82102117713.jpg?type=f133">
-                        </a>
-                        <div id="modalLayer">
-                        	<div class="modalContent">
-	                     		<button type="button" class="close" data-dismiss="modal">×</button>
-								<div>뉴욕 우드버리 왕복버스 티켓</div>
-								<div>네이버 아이디 하나로 간편구매</div>
-								<div>39600</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-6">
+				<!-- Temp_Scheduler -->
+				<form action="#" id="scheduleTable">
+					<div>
+						<table id="mySheduleTable" border=2>
+							<tr>
+								<th>일정</th>
+								<th>1일차</th>
+								<th>2일차</th>
+								<th>3일차</th>
+								<th>4일차</th>
+								<th>5일차</th>
+							</tr>
+							<tr>
+								<td class="time">06 ~ 09</td>
+								<td>이름</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+							</tr>
+							<tr>
+								<td class="time">09 ~ 12</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+							</tr>
+							<tr>
+								<td class="time">12 ~ 15</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+							</tr>
+							<tr>
+								<td class="time">15 ~ 18</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+							</tr>
+							<tr>
+								<td class="time">18 ~ 21</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+							</tr>
+							<tr>
+								<td class="time">21 ~ 24</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+								<td>빈칸</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+
+
+
+
+				<button id="save">일정 저장</button>
+			</div>
+
+
+				<div class="col-3" id="city_List">
+					<select id="city" name="city_name">
+						<c:forEach var="cityList" items="${cityList }">
+							<option value="${cityList }">${cityList }</option>
+						</c:forEach>
+				</select>
+				<button id="city_search">검색</button>
+
+				<div id="landMarkList">
+					<ul>
+						<li><a id="land">관광지</a></li>
+					</ul>
+					<div id="landmarkDiv">
+						<c:forEach var="landMarkList" items="${landMarkList }">
+							<div class="row drag"
+								style="margin: 15px; width: 200px; height: 150px;">
+								<div class="list_thumb">
+									<img src=${landMarkList.image } width="auto" height="100">
+								</div>
+								<div class="list_detail"
+									style="padding-top: 30px; margin-left: 0px;">
+									<div class="name" style="width: 100px;">${landMarkList.name}</div>
+									<div class="detail" style="width: 100px;">${landMarkList.detail }</div>
+								</div>
 							</div>
-                  	   </div>
-                     </div>
-                     
-                  </td>
-                     <td>빈칸</td>
-                     <td>
-                     	<button type="button" id="delete_schedule" class="btn btn-default">x</button>
-						<a href="#modalLayer" class="btn btn-default" data-target="#layerpop" data-toggle="modal">
-                        	<img src="https://shopping-phinf.pstatic.net/main_8210211/82102117713.jpg?type=f133">
-                        </a><br/>
-							<div class="modal fade" id="layerpop" >
-							  <div class="modal-dialog">
-							    <div class="modal-content">	
-							    
-							      <!-- header title -->
-							      <div class="modal-header">
-							        <h4 class="modal-title">상세정보</h4>
-							        <button type="button" class="close" data-dismiss="modal">×</button>
-							      </div>
-							      
-							      <!-- body -->
-							      <div class="modal-body">
-							            <div>여행지 설명 : 뉴욕 우드버리 왕복버스 티켓</div>
-										<div>부가설명 : 네이버 아이디 하나로 간편구매</div>
-										<div>가격 : 39600</div>
-							      </div>
-							      
-							      <!-- Footer -->
-							      <div class="modal-footer">
-										<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-							      </div>
-							    </div>
-							  </div>
-							</div>
-=======
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-                  <tr>
-                     <td>09 ~ 12</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-                  <tr>
-                     <td>12 ~ 15</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-                  <tr>
-                     <td>15 ~ 18</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-                  <tr>
-                     <td>18 ~ 21</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-                  <tr>
-                     <td>21 ~ 24</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-               </table>
-            </form>
-            <form action="searchCity" id="searchCity">
-               도시 검색 : <input type = "text" name = "search_City">
-               <input type = "submit" value="검색">
-            </form>
-         <select id = "city" name = "city_name">
-            <c:forEach var="cityList" items="${cityList }">
-               <option value = "${cityList }">${cityList }</option>
-            </c:forEach>
-         </select>
-         <button id = "city_search">검색</button>
-            <form action="sortList" id="sortButton">
-               <button value="price" name="price">가격 순</button>
-               <button value="sales" name="sales">판매량 순</button>
-               <button value="hits" name="hits">인기 순</button>
-               <button value="dist" name="dist">거리순</button>
-               <input type="hidden" name="country_name" value="<%=request.getParameter("country_name")%>">
-               <input type="hidden" name="city_name" value="<%=request.getParameter("city_name")%>">
-            </form>
-            <form action="searchNear" method="post">
-            	<button value="search" name = searchNearBtn>근처 보기</button>
-          		<input type="hidden" name="city_name" value="<%=request.getParameter("city_name")%>">
-            </form>
-         </div>
->>>>>>> refs/remotes/origin/LeeTaemin
+						</c:forEach>
+					</div>
+				</div>
+			</div>
+			<!-- 음식점 숙박 -->
+			<div class="col-3">
+				<form action="sortList" id="sortButton">
+					<button value="price" name="price" class="btn btn-secondary">가격 순</button>
+					<button value="sales" name="sales" class="btn btn-secondary">판매량 순</button>
+					<button value="hits" name="hits" class="btn btn-secondary">인기 순</button>
+					<button value="dist" name="dist" onclick="showPopup();" class="btn btn-secondary">거리순</button>
+					<input type="hidden" name="country_name"
+						value="<%=request.getParameter("country_name")%>"> <input
+						type="hidden" name="city_name"
+						value="<%=request.getParameter("city_name")%>">
+				</form>
+				
+				<div id="tabs">
+					<ul>
+						<li><a href="#tabs-1" id="tab-1">여행 상품</a></li>
+						<li><a href="#tabs-2" id="tab-2">카페 음식점</a></li>
+						<li><a href="#tabs-3" id="tab-3">숙박</a></li>
+					</ul>
+					<div id="tabs-1">
+						<div id="itemList">
+							<c:forEach var="list" items="${list }">
+								<div class="row drag" id="list_thum">
+									<div>
+										<div class="list_thumb">
+											<img src=${list.img }>
+										</div>
+									</div>
+									<div class="list_detail">
+										<div id="name" class="listName">${list.name }</div>
+										<div style="display: none" id="detail" class="listDetail">${list.detail }</div>
+										<div id="price" class="listPrice">${list.price }</div>
+									</div>
+								</div>
+							</c:forEach>
+						</div>
+					</div>
+					<div id="tabs-2">
+						<div id="restList">
+							<c:forEach var="list" items="${list_Rest }">
+								<div class="row drag" id="list_thum">
+									<div>
+										<div class="list_thumb">
+											<img src=${list.img }>
+										</div>
+									</div>
+									<div class="list_detail">
+										<div id="name" class="listName">${list.name }</div>
+										<div style="display: none" id="detail" class="listDetail">${list.detail }</div>
+									</div>
+								</div>
+							</c:forEach>
+						</div>
+					</div>
+					<div id="tabs-3">
+						<div id="hotelList">
+							<c:forEach var="list" items="${list_Hotel }">
+								<div class="row drag" id="list_thum">
+									<div>
+										<div class="list_thumb">
+											<img src=${list.img }>
+										</div>
+									</div>
+									<div class="list_detail">
+										<div id="name" class="listName">${list.name }</div>
+										<div style="display: none" id="detail" class="listDetail">${list.detail }</div>
+									</div>
+								</div>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<<<<<<< HEAD
-					</td>
-                     <td>빈칸</td>
-                  </tr>
-                  <tr>
-                     <td>09 ~ 12</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-                  <tr>
-                     <td>12 ~ 15</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-                  <tr>
-                     <td>15 ~ 18</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-                  <tr>
-                     <td>18 ~ 21</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-                  <tr>
-                     <td>21 ~ 24</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                     <td>빈칸</td>
-                  </tr>
-               </table>
-            </form>
-            <form action="searchCity" id="searchCity">
-               도시 검색 : <input type = "text" name = "search_City">
-               <input type = "submit" value="검색">
-            </form>
-         <select id = "city" name = "city_name">
-            <c:forEach var="cityList" items="${cityList }">
-               <option value = "${cityList }">${cityList }</option>
-            </c:forEach>
-         </select>
-         <button id = "city_search">검색</button>
-            <form action="sortList" id="sortButton">
-               <button value="price" name="price">가격 순</button>
-               <button value="sales" name="sales">판매량 순</button>
-               <button value="hits" name="hits">인기 순</button>
-               <button value="dist" name="dist" onclick="showPopup();">거리순</button>
-               <input type="hidden" name="country_name" value="<%=request.getParameter("country_name")%>">
-               <input type="hidden" name="city_name" value="<%=request.getParameter("city_name")%>">
-            </form>
-            <div id="popUp">
-               <form action="sortDist">
-                  위치 : <input type="text" name="current" value="">
-                  <button value="distance" name="distance">확인</button>
-                  <input type="hidden" name="country_name"
-                     value="<%=request.getParameter("country_name")%>"> <input
-                     type="hidden" name="city_name"
-                     value="<%=request.getParameter("city_name")%>">
-               </form>
-            </div>
-         </div>
-
-
-         <div class="col-3">
-            <h3>관광 명소</h3>
-            <div id ="landMarkList">
-               <c:forEach var="landMarkList" items="${landMarkList }">
-                  <div class="row">
-                  <div class="col-4">
-                     <img src=${landMarkList.image }>
-                  </div>
-                  <div class="col-8">
-                     <div class="row">${landMarkList.name }</div>
-                     <%-- <div class="row">${landMarkList.detail }</div> --%>
-                     <%-- <div class="row">${landMarkList.price }</div> --%>
-                  </div>
-               </div>
-               </c:forEach>
-            </div>
-         </div>
-=======
-
-          <div class="col-3">
-         <h3>관광 명소</h3>
-         <div id="landMarkList">
-            <c:forEach var="list_Land" items="${list_Land }">
-               <div class="row">
-                  <div id="img" class="col-4">
-                     <img src=${list_Land.image }>
-                  </div>
-                  <div class="col-8">
-                     <div class="row">${list_Land.name }</div>
-                     <div class="row">${list_Land.detail }</div>
-                  </div>
-               </div>
-            </c:forEach>
-         </div>
-      </div>
-         
-      <div class="col-3">
-         <h3>음식점</h3>
-         <div id="restList">
-            <c:forEach var="list_Rest" items="${list_Rest }">
-               <div class="row">
-                  <div id="img" class="col-4">
-                     <img src=${list_Rest.img }>
-                  </div>
-                  <div class="col-8">
-                     <div class="row">${list_Rest.name }</div>
-                     <div class="row">${list_Rest.detail }</div>
-                  </div>
-               </div>
-            </c:forEach>   
-         </div>
-      </div>
-      
-      <div class="col-3">
-         <h3>숙박</h3>   
-         <div id="hotelList">
-            <c:forEach var="list_Hotel" items="${list_Hotel }">
-               <div class="row">
-                  <div id="img" class="col-4">
-                     <img src=${list_Hotel.img }>
-                  </div>
-                  <div class="col-8">
-                     <div class="row">${list_Hotel.name }</div>
-                     <div class="row">${list_Hotel.detail }</div>
-                  </div>
-               </div>
-            </c:forEach>
-         </div>   
-      </div>
->>>>>>> refs/remotes/origin/LeeTaemin
-
-         <div class="col-3">
-            <h3>여행 상품</h3>
-            <div id="itemList">
-               <c:forEach var="list" items="${list }">
-                  <div class="row">
-                     <div class="col-4">
-                        <img src=${list.img }>
-                     </div>
-                     <div class="col-8">
-                        <div class="row">${list.name }</div>
-                        <div class="row">${list.detail }</div>
-                        <div class="row">${list.price }</div>
-                     </div>
-                  </div>
-               </c:forEach>
-            </div>
-         </div>
-
-
-      </div>
-   </div>
-
-   <div class="row">
-      <div id="map-canvas" style="width: 60%; height: 340px" title="지도"
-         id="Map"></div>
-   </div>
+	<div class="row">
+		<div id="map-canvas" style="width: 60%; height: 340px" title="지도"
+			id="Map"></div>
+	</div>
 </body>
 </html>

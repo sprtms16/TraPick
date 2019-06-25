@@ -1,8 +1,167 @@
-.img{
-	width: 200px;
+#subject{
+	font-size: 40px;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 25px;
+	margin-top: 30px;
+}
+
+#tabs li{
+	list-style: none;
+	float: left;
+	margin-left: 15px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+#land{
+	text-align: center;
+}
+
+
+#landMarkList li{
+	list-style: none;
+	float: left;
+	margin-left: 80px;
+	margin-bottom: 20px;
+}
+#tabs li a{
+	color: black;
+	font-size: 13.5px;
+	font-weight: bold;
+}
+
+#landMarkList li a{
+	color: black;
+	font-size: 13.5px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#tabs-1 img{
+	height: 100px;
+	width: 163.63px;
+	display: block;
+	vertical-align: bottom;
+	margin-left: 30px;
+	position: absolute;
+}
+#tabs-2 img{
+	height: 100px;
+	width: 163.63px;
+	display: block;
+	vertical-align: bottom;
+	margin-left: 30px;
+	position: absolute;
+}
+#tabs-3 img{
+	height: 100px;
+	width: 163.63px;
+	display: block;
+	vertical-align: bottom;
+	margin-left: 30px;
+	position: absolute;
+}
+
+.list_detail{
+	margin-left: 30px;
+	margin-top: 5px;
+}
+
+.listName{
+	display: inline-block;
+	width: 170px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-align:center;
+	text-overflow: ellipsis;
+	font-weight:bold;
+	font-weight: bold;
+	font-size: 10px;
+	margin-top: 25px;
+}
+
+.listPrice{
+	font-weight: bold;
+	color: black;
+	text-align: right;
+	font-size: 12px;
+}
+
+#list_thum{
 	height: 150px;
 }
 
-.row{
-	border: 1px, solid, black;
+#itemList{
+	margin-left:50px;
+	overflow: scroll;
+	height: 600px;
+	width: 250px;
 }
+#landmarkDiv{
+	margin-left:50px;
+	overflow: scroll;
+	height: 600px;
+	width: 250px;
+}
+#restList{
+	margin-left:50px;
+	overflow: scroll;
+	height: 600px;
+	width: 250px;
+}
+#hotelList{
+	margin-left:50px;
+	overflow: scroll;
+	height: 600px;
+	width: 250px;
+}
+
+
+ .drag img{
+ 	position: relative;
+ }
+ .drag > div{
+ 	width : 160px;
+ 	height : 50px;
+ 	display: inline;
+ 	position: relative;
+ }
+ .list_detail_{
+ 	position: absolute;
+ }
+
+ #mySheduleTable{
+ 	text-align: center;
+ }
+ 
+ #mySheduleTable th{
+ 	height: 40px;
+ 	background-color: gray;
+ 	border-bottom-color: black;
+ }
+ 
+ .time{
+ 	width: 100px;
+ }
+ 
+ #sortButton{
+ 	margin-left: 40px;
+ 	background-color: gray;
+ 	border: 1px;
+ 	
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

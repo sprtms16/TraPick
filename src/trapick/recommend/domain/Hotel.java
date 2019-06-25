@@ -11,11 +11,12 @@ public class Hotel {
 	private String longitude;
 	private String stars;
 	private String price;
+	private double dist;
 	
 	public Hotel() {}
 
 	public Hotel(String name, String detail, String img, String location, String review, String latitude,
-			String longitude, String stars, String price) {
+			String longitude, String stars, String price, double dist) {
 		super();
 		this.name = name;
 		this.detail = detail;
@@ -26,6 +27,7 @@ public class Hotel {
 		this.longitude = longitude;
 		this.stars = stars;
 		this.price = price;
+		this.dist = dist;
 	}
 
 	public String getName() {
@@ -100,11 +102,19 @@ public class Hotel {
 		this.price = price;
 	}
 
+	public double getDist() {
+		return dist;
+	}
+
+	public void setDist(double dist) {
+		this.dist = dist;
+	}
+
 	@Override
 	public String toString() {
 		return "Hotel [name=" + name + ", detail=" + detail + ", img=" + img + ", location=" + location + ", review="
 				+ review + ", latitude=" + latitude + ", longitude=" + longitude + ", stars=" + stars + ", price="
-				+ price + "]";
+				+ price + ", dist=" + dist + "]";
 	}
 		
 }

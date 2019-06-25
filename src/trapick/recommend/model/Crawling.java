@@ -375,11 +375,10 @@ public class Crawling {
 		return (rad * 180 / Math.PI);
 	}
 
-	public List<Restaurant> crawlingNearRest(String city_name, String base_Point) {
+	public List<Restaurant> crawlingNearRest(String city_name) {
 
 		List<Restaurant> list = new ArrayList<>();
-		List<Restaurant> list_restaurant = new ArrayList<>();
-		List<Restaurant> list_rest = new ArrayList<>();
+
 		Restaurant restaurant;
 
 		String name = null;
@@ -457,7 +456,7 @@ public class Crawling {
 			e.printStackTrace();
 		}
 
-		try {
+		/*try {
 			String url = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + base_Point
 					+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
@@ -536,13 +535,14 @@ public class Crawling {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		return list_restaurant;
+		}*/
+		return list;
 	}
 
 	public List<Hotel> crawlingNearHotel(String city_name) {
 
-		List<Hotel> list = new ArrayList<>();
+		List<Hotel> list = new ArrayList<>();		
+		double dist = 0;
 		Hotel hotel;
 
 		String name;
@@ -631,7 +631,7 @@ public class Crawling {
 				latitude = lat;
 				longitude = lng;
 
-				hotel = new Hotel(name, detail, img, location, review, latitude, longitude, stars, price);
+				hotel = new Hotel(name, detail, img, location, review, latitude, longitude, stars, price,dist);
 
 				if (name.length() > 2) {
 					list.add(hotel);
@@ -694,7 +694,7 @@ public class Crawling {
 				latitude = lat;
 				longitude = lng;
 
-				hotel = new Hotel(name, detail, img, location, review, latitude, longitude, stars, price);
+				hotel = new Hotel(name, detail, img, location, review, latitude, longitude, stars, price,dist);
 
 				if (name.length() > 2) {
 					list.add(hotel);
@@ -704,8 +704,92 @@ public class Crawling {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return list;
+		
+		/*try {
+			String url = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + base_Point
+					+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
+			Document doc;
+			
+			doc = Jsoup.connect(url).get();
+			
+			String latitude_1 = doc.select("location").select("lat").text();
+			String longitude_1 = doc.select("location").select("lng").text();
+
+			double lat_1 = Double.valueOf(latitude_1);
+			double lon_1 = Double.valueOf(longitude_1);
+
+			for (int i = 0; i < list.size(); i++) {
+
+				double lat_2 = Double.valueOf(list.get(i).getLatitude());
+				double lon_2 = Double.valueOf(list.get(i).getLongitude());
+
+				double theta = lon_1 - lon_2;
+
+				dist = Math.sin(deg2rad(lat_1)) * Math.sin(deg2rad(lat_2))
+						+ Math.cos(deg2rad(lat_1)) * Math.cos(deg2rad(lat_2)) * Math.cos(deg2rad(theta));
+
+				dist = Math.acos(dist);
+
+				dist = rad2deg(dist);
+
+				dist = dist * 60 * 1.1515;
+
+				dist = dist * 1.609344; // kilometer
+
+				dist = Math.round((dist) * 10) / 10.0;
+
+				if (dist == 0) {
+					dist = 0.4;
+				}
+				
+				String name_hotel = list.get(i).getName();
+				String detail_hotel = list.get(i).getDetail();
+				String img_hotel = list.get(i).getImg();
+				String location_hotel = list.get(i).getLocation();
+				String review_hotel = list.get(i).getReview();
+				String stars_hotel = list.get(i).getStars();
+				String latitude_hotel = list.get(i).getLatitude();
+				String longitude_hotel = list.get(i).getLongitude();
+				String price_hotel = list.get(i).getPrice();
+
+				Hotel hotel2 = new Hotel(name_hotel, detail_hotel, img_hotel, location_hotel, review_hotel, latitude_hotel, longitude_hotel, stars_hotel, price_hotel, dist);
+				
+				list_hotel.add(hotel2);
+		
+			}
+			
+			int min = 0;
+			
+			for(int i=0; i<list_hotel.size();i++) {
+				for(int j=0; j<list_hotel.size();j++) {
+					if(list_hotel.get(i).getDist() > list_hotel.get(j).getDist()) {
+						min = j;
+					}else {
+						min = i;
+					}
+				}
+				
+				String name_hotel = list.get(min).getName();
+				String detail_hotel = list.get(min).getDetail();
+				String img_hotel = list.get(min).getImg();
+				String location_hotel = list.get(min).getLocation();
+				String review_hotel = list.get(min).getReview();
+				String stars_hotel = list.get(min).getStars();
+				String latitude_hotel = list.get(min).getLatitude();
+				String longitude_hotel = list.get(min).getLongitude();
+				String price_hotel = list.get(min).getPrice();
+				double dist_hotel = list.get(min).getDist();
+				
+				Hotel hotel2 = new Hotel(name_hotel, detail_hotel, img_hotel, location_hotel, review_hotel, latitude_hotel, longitude_hotel, stars_hotel, price_hotel, dist_hotel);
+				
+				list_hotel2.add(hotel2);
+				
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}*/
+		return list;
 	}
 
 }

@@ -17,7 +17,7 @@ public class RestAjaxAction implements Action {
 		RecommendService service = RecommendService.getInstance();
 		ActionForward forward = new ActionForward();
 		
-		List<Restaurant> list_Rest = service.listRestaurantService(request, response);
+		List<Restaurant> list_Rest = service.listRestaurantService(request);
 		
 		JSONArray jsonArray = JSONArray.fromObject(list_Rest);
 		

@@ -17,9 +17,9 @@ public class SearchNearAction implements Action {
 		RecommendService service = RecommendService.getInstance();
 		ActionForward forward = new ActionForward();
 		
-		List<Restaurant> RestaurantList = service.listRestaurant(request);	
+		List<Restaurant> restrantList = service.listRestaurantService(request); 
 		
-		JSONArray jsonArray = JSONArray.fromObject(RestaurantList);
+		JSONArray jsonArray = JSONArray.fromObject(restrantList);
 		
 		response.setContentType("text/html;charset=UTF-8");
 		response.getWriter().println(jsonArray);
