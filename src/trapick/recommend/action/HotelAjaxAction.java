@@ -5,10 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import trapick.recommend.domain.Item;
+import net.sf.json.JSONArray;
+import trapick.recommend.domain.Hotel;
 import trapick.recommend.service.RecommendService;
 
-public class ListSortAction implements Action {
+public class HotelAjaxAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -16,15 +17,14 @@ public class ListSortAction implements Action {
 		RecommendService service = RecommendService.getInstance();
 		ActionForward forward = new ActionForward();
 
-		List<Item> list = service.ItemListService(request, response);
-		List<String> cityList = service.cityListService(request);
-		request.setAttribute("list", list);
-		request.setAttribute("cityList", cityList);
+		List<Hotel> list_Hotel = service.listHotelService(request, response);
 
-		forward.setRedirect(false);
-		forward.setPath("itemList");
+		JSONArray jsonArray = JSONArray.fromObject(list_Hotel);
 
-		return forward;
+		response.setContentType("text/html;charset=UTF-8");
+		response.getWriter().print(jsonArray);
+
+		return null;
 	}
 
 }

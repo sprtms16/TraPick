@@ -18,10 +18,11 @@ import trapick.feed.action.deleteFeedAction;
 import trapick.feed.action.heartAction;
 import trapick.feed.action.insertActionReply;
 import trapick.feed.action.listAction;
+import trapick.feed.action.mypageFormAction;
 import trapick.feed.action.replyDislikeAction;
 import trapick.feed.action.replyLikeAction;
 import trapick.feed.action.updateFeedAction;
-import trapick.feed.action.updateFormAction;
+import trapick.feed.action.updateFeedFormAction;
 
 @WebServlet("/feed/*")
 public class FeedController extends HttpServlet {
@@ -58,12 +59,13 @@ public class FeedController extends HttpServlet {
 			action = new heartAction();
 		} else if (command.equals("feed/deleteFeedAction")) {
 			action = new deleteFeedAction();
-		}else if (command.equals("feed/updateForm")) {
+		} else if (command.equals("feed/updateForm")) {
 			action = new updateFeedFormAction();
-		}else if (command.equals("feed/updateFeedAction")) {
+		} else if (command.equals("feed/updateFeedAction")) {
 			action = new updateFeedAction();
+		} else if (command.equals("feed/mypageFormAction")) {
+			action = new mypageFormAction();
 		} else {
-
 			action = new ErrorAction();
 		}
 

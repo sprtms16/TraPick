@@ -16,7 +16,6 @@ import trapick.schedule.action.CityListAction;
 import trapick.schedule.action.CountryIsoListAction;
 import trapick.schedule.action.CountryListAction;
 import trapick.schedule.action.SelectCountryAction;
-import trapick.schedule.action.getStartDateAction;
 
 @WebServlet("/Schedule/*")
 public class ScheduleController extends HttpServlet {
@@ -44,7 +43,7 @@ public class ScheduleController extends HttpServlet {
 			action = new CityListAction();
 		} else if (command.equals("Schedule/country_iso")) {
 			action = new CountryIsoListAction();
-		}else if (command.equals("Schedule/city_Ename")) {
+		} else if (command.equals("Schedule/city_Ename")) {
 			action = new CityEnameListAction();
 		}
 		try {

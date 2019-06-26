@@ -15,6 +15,7 @@ public class Feed implements Serializable {
 	List<Reply> replys;
 	int rating;
 	int islike;
+	String html;
 
 	public Feed() {
 		// TODO Auto-generated constructor stub
@@ -108,8 +109,16 @@ public class Feed implements Serializable {
 		this.islike = islike;
 	}
 
+	public String getHtml() {
+		return html;
+	}
+
+	public void setHtml(String html) {
+		this.html = html;
+	}
+
 	public Feed(int feed_idx, int user_idx, int schd_idx, String regdate, String title, String contents,
-			List<String> url, int heart, List<Reply> replys, int rating, int islike) {
+			List<String> url, int heart, List<Reply> replys, int rating, int islike, String html) {
 		super();
 		this.feed_idx = feed_idx;
 		this.user_idx = user_idx;
@@ -122,13 +131,16 @@ public class Feed implements Serializable {
 		this.replys = replys;
 		this.rating = rating;
 		this.islike = islike;
+		this.html = html;
 	}
 
 	@Override
 	public String toString() {
 		return "Feed [feed_idx=" + feed_idx + ", user_idx=" + user_idx + ", schd_idx=" + schd_idx + ", regdate="
 				+ regdate + ", title=" + title + ", contents=" + contents + ", url=" + url + ", heart=" + heart
-				+ ", replys=" + replys + ", rating=" + rating + ", islike=" + islike + "]";
+				+ ", replys=" + replys + ", rating=" + rating + ", islike=" + islike + ", html=" + html + "]";
 	}
+
+	
 
 }

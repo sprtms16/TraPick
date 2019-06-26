@@ -25,6 +25,7 @@
 				<td>Schedule/country</td> 
 				<td>Schedule/city</td>
 				<td>Recommend/itemList</td>
+				<td>feed/mypageFormAction</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -37,6 +38,7 @@
 				<td><button onclick="location.href = 'Schedule/main'">Schedule/main</button></td>
 				<td><button onclick="location.href = 'Schedule/country'">Schedule/country</button></td>
 				<td><button onclick="location.href = 'Schedule/city'">Schedule/city</button></td>
+				<td><button onclick="location.href = 'feed/mypageFormAction'">feed/mypageFormAction</button></td>
 				<!--<td><button onclick="location.href = 'Recommend/itemList'">Recommend/itemList</button></td>  -->
 			</tr>
 		</tbody>

@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="trapick.mypage.domain.LandMark">
+<mapper namespace="trapick.recommend.mapper.LandMarkMapper">
 	<cache />
+	<select id="landMarkList" parameterType="String" resultType="LandMark">
+		select l.land_idx, l.name, l.image "image", l.latitude, l.longitude, l.detail, l.city_idx, c.name "city_name", c.time_difference 
+		from landmark l, city c 
+		where l.city_idx = c.city_idx and c.name = #{city_name}
+	</select>
+	
+	<select id="cityList" parameterType="String" resultType="String">
+		select c.name from city c,country co where c.country_idx = co.country_idx and co.name = #{country_name}
+	</select>
+	
+	<insert id="saveSchedule" parameterType="String">
+		insert into SCHEDULE_SF values(schedule_sh_sq.nextval,'여행일정1',1,#{html})
+	</insert>
 
 </mapper>

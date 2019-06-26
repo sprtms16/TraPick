@@ -1,10 +1,8 @@
-package trapick.feed.controller;
+package trapick.feed.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import trapick.feed.action.Action;
-import trapick.feed.action.ActionForward;
 import trapick.feed.domain.Feed;
 import trapick.feed.service.FeedService;
 

@@ -181,4 +181,40 @@ public class FeedDao {
 		return re;
 	}
 
+	public List<Feed> selectMyFeedList(int user_idx) {
+		// TODO Auto-generated method stub
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		List<Feed> list = null;
+		try {
+			list = sqlSession.getMapper(FeedMapper.class).selectMyFeedList(user_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public List<String> selectFeedUrl(int feed_idx) {
+		// TODO Auto-generated method stub
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		List<String> list = null;
+		try {
+			list = sqlSession.getMapper(FeedMapper.class).selectFeedUrl(feed_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public List<Feed> selectMySchdList(int user_idx) {
+		// TODO Auto-generated method stub
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		List<Feed> list = null;
+		try {
+			list = sqlSession.getMapper(FeedMapper.class).selectMySchdList(user_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 }

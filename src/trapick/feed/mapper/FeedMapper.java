@@ -30,5 +30,11 @@ public interface FeedMapper {
 
 	List<Feed> hashtagList(int feed_idx);
 
+	List<Feed> selectMyFeedList(int user_idx);
+
+	List<String> selectFeedUrl(int feed_idx);
+
+	List<Feed> selectMySchdList(int user_idx);
+
 
 }
