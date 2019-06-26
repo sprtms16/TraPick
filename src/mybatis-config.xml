@@ -43,7 +43,7 @@
 		<mapper resource="trapick/recommend/mapper/LandMark.xml" /> 
 		<mapper resource="trapick/schedule/mapper/Schedule.xml" />
  		<mapper resource="trapick/schedule/mapper/SelectedItem.xml" />
-		<mapper resource="trapick/schedule/mapper/SelectedItem.xml" /> 
+	
 	</mappers>
 
 </configuration>
