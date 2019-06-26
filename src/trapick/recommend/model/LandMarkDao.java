@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -78,11 +79,11 @@ public class LandMarkDao {
 		return list;
 	}
 
-	public void saveSchedule(String html) {
+	public void saveSchedule(Map<String, String> map) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		int re = -1;
 		try {
-			re = sqlSession.insert("trapick.recommend.mapper.LandMarkMapper.saveSchedule", html);
+			re = sqlSession.insert("trapick.recommend.mapper.LandMarkMapper.saveSchedule", map);
 			if (re > 0) {
 				sqlSession.commit();
 			} else {
