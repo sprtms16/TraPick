@@ -47,7 +47,7 @@
 		regdate desc
 	</select>
 
-	<select id="selectMySchdList" resultType="Schedule"
+	<select id="selectMySchdList" resultType="Feed"
 		parameterType="int">
 		select * from schedule_sf where user_idx = #{user_idx}
 		order by SCHD_IDX desc
