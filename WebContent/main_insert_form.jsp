@@ -54,12 +54,14 @@
 						$('#target2').append("<option value =" + availableTags2[i] + ">" + availableTags2[i] + "</opeion>");
 						}
 					});
+
+					
 				});
 
 				$.getJSON('country_iso?country_name=' + $(this).val(), function(data) {
 					$.getJSON("https://quotation-api-cdn.dunamu.com/v1/forex/recent?codes=FRX.KRW" + data.iso, function(d) {
 							$.each(	d,function(index,i) {
-								$('#target3').text(i.currencyName + " : " + i.currencyUnit + " || " + "한국 돈 : " + i.openingPrice	 + "원");
+								$('#target3').text(i.currencyName + " : " + i.currencyUnit + " || " + "환율 : " + i.openingPrice	 + "원");
 							});
 					});
 				});
@@ -73,7 +75,7 @@
 
 		$("#today").text(new Date().toLocaleDateString());
 		$.datepicker.setDefaults($.datepicker.regional['ko']);
-
+		
 		$('#start_time').datepicker({
 			showOn : "both",
 			buttonImage : "../image/calander.png",
@@ -180,6 +182,7 @@
 </head>
 <body>
 	<form action="../Recommend/itemList" method="post">
+		<p id="main_title">TraPick</p>
 		<div id="container">
 			<div id="contents">
 				<input id="target" type="text" name="country_name">

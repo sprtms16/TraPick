@@ -1,4 +1,11 @@
 @charset "UTF-8";
+#main_title {
+	font-size: 50px;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 70px;
+	font-family: Fantasy;
+}
 
 #container {/* 전체div */
 	width: 100%;
@@ -9,7 +16,7 @@
 	border-radius: 12px;
 	font-size: 16px;
 	resize: both;
-	margin-top: 20%;	
+	margin-top: 100px;
 }
 
 body {
