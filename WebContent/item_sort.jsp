@@ -96,38 +96,48 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 <script type="text/javascript">
 //호텔 , 음식점 스크립트
-$(function() {
-   
-   $('#restList').hide();
-   $('#hotelList').hide();
-});
-   
-$(function() {
-   
-   $('#tab-2').click(function() {
-      $('#restList').show();
-      $('#hotelList').hide();
-      $('#itemList').hide();
-   });
-});
-
-$(function() {
-   
-   $('#tab-3').click(function() {
-      $('#hotelList').show();
-      $('#itemList').hide();
+   $(function() {
       $('#restList').hide();
-   });
-});
-
-$(function() {
-   
-   $('#tab-1').click(function() {
-      $('#itemList').show();
       $('#hotelList').hide();
-      $('#restList').hide();
+      $('#tab-1').addClass('selected');
    });
-});
+
+   $(function() {
+
+      $('#tab-2').click(function() {
+         $('#restList').show();
+         $('#hotelList').hide();
+         $('#itemList').hide();
+         $('#tab-1').removeClass('selected');
+         $('#tab-2').addClass('selected');
+         $('#tab-3').removeClass('selected');
+
+      });
+   });
+
+   $(function() {
+
+      $('#tab-3').click(function() {
+         $('#hotelList').show();
+         $('#itemList').hide();
+         $('#restList').hide();
+         $('#tab-1').removeClass('selected');
+         $('#tab-2').removeClass('selected');
+         $('#tab-3').addClass('selected');
+      });
+   });
+
+   $(function() {
+
+      $('#tab-1').click(function() {
+         $('#itemList').show();
+         $('#hotelList').hide();
+         $('#restList').hide();
+         $('#tab-1').addClass('selected');
+         $('#tab-2').removeClass('selected');
+         $('#tab-3').removeClass('selected');
+      });
+   });
 
 //호텔 음식점 스크립트 끝
 
@@ -203,13 +213,17 @@ $(function() {
             data :{city_name : $('#city option:selected').val()} ,
             success : function(data){
                
-               $('#landMarkList').empty();
+               $('#landmarkDiv').empty();
                $.each(data, function(index, item){
-                  var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
+                  /* var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
                   +item.image+'></div><div class="list_detail"><div id = "name" class="row">'
                   +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
+                  +item.detail+'</div></div></div>'; */
+                  var text = '<div class="row drag"><div class="list_thumb"><img src='
+                  +item.image+' class ="img"></div><div class="list_detail" id="landDetail"><div class="name" id="name">'
+                  +item.name+'</div><div   class="detail"  id="detail">'
                   +item.detail+'</div></div></div>';
-                  $('#landMarkList').append(text);
+                  $('#landmarkDiv').append(text);
                })
                
                $('.drag').draggable({
@@ -239,7 +253,7 @@ $(function() {
                $('#itemList').empty();
                $.each(data, function(index, item){
                      var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
-                         +item.image+'></div><div class="list_detail"><div id = "name" class="row">'
+                         +item.img+'></div><div class="list_detail"><div id = "name" class="row">'
                          +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
                          +item.detail+'<div  id="price" class="row">'
                          +item.price+'</div></div></div>';
@@ -273,7 +287,7 @@ $(function() {
                  $('#restList').empty();
                    $.each(data, function(index, item){
                 	   var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
-                           +item.image+'></div><div class="list_detail"><div id = "name" class="row">'
+                           +item.img+'></div><div class="list_detail"><div id = "name" class="row">'
                            +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
                            +item.detail+'</div></div></div>';
                       $('#restList').append(text);
@@ -305,7 +319,7 @@ $(function() {
               $('#hotelList').empty();
                 $.each(data, function(index, item){
                 	var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
-                        +item.image+'></div><div class="list_detail"><div id = "name" class="row">'
+                        +item.img+'></div><div class="list_detail"><div id = "name" class="row">'
                         +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
                         +item.detail+'<div  id="price" class="row">'
                         +item.price+'</div></div></div>';
@@ -333,139 +347,156 @@ $(function() {
    })
 
 </script>
+<style type="text/css">
+table td {
+   height: 100px;
+   width: 100px;
+}
+
+.drag {
+   width: 200px;
+   height: 200px;
+}
+</style>
 
 <title>여행상품</title>
 </head>
 <body>
-
-
+   <p id="subject">Travel Scheduler</p>
+   <div  id="asdf">
+      <select id="city" name="city_name">
+         <c:forEach var="cityList" items="${cityList }">
+            <option value="${cityList }">${cityList }</option>
+         </c:forEach>
+      </select>
+      <button id="city_search">검색</button>
+   </div>
    <div class="container">
+
       <div class="row">
          <div class="col-6">
             <!-- Temp_Scheduler -->
-            <form action="????????" id="scheduleTable">
-               <p>여행 일정표</p>
-               <div id = "mySheduleTable">
-                  <table border="1">
+            <form action="#" id="scheduleTable">
+               <div>
+                  <table id="mySheduleTable" border=2>
                      <tr>
                         <th>일정</th>
-                        <th>1일차</th>
-                        <th>2일차</th>
-                        <th>3일차</th>
-                        <th>4일차</th>
-                        <th>5일차</th>
+                        <th>1 일차</th>
+                        <th>2 일차</th>
+                        <th>3 일차</th>
+                        <th>4 일차</th>
+                        <th>5 일차</th>
                      </tr>
                      <tr>
-                        <td>06 ~ 09</td>
-                        <td>이름 </td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
+                        <td class="time">06:00<br>
+                        <br>&nbsp;&nbsp; ~ 09:00
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                      </tr>
                      <tr>
-                        <td>09 ~ 12</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
+                        <td class="time">09:00<br>
+                        <br>&nbsp;&nbsp; ~ 12:00
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                      </tr>
                      <tr>
-                        <td>12 ~ 15</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
+                        <td class="time">12:00<br>
+                        <br>&nbsp;&nbsp; ~ 15:00
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                      </tr>
                      <tr>
-                        <td>15 ~ 18</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
+                        <td class="time">15:00<br>
+                        <br>&nbsp;&nbsp; ~ 18:00
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                      </tr>
                      <tr>
-                        <td>18 ~ 21</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
+                        <td class="time">18:00<br>
+                        <br>&nbsp;&nbsp; ~ 21:00
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                      </tr>
                      <tr>
-                        <td>21 ~ 24</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
-                        <td>빈칸</td>
+                        <td class="time">21:00<br>
+                        <br>&nbsp;&nbsp; ~ 24:00
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                      </tr>
                   </table>
-                </div>
-            </form>
-
-
-
-            <form action="searchCity" id="searchCity">
-               도시 검색 : <input type = "text" name = "search_City">
-               <input type = "submit" value="검색">
-            </form>
-         <select id = "city" name = "city_name">
-            <c:forEach var="cityList" items="${cityList }">
-               <option value = "${cityList }">${cityList }</option>
-            </c:forEach>
-         </select>
-         <button id = "city_search">검색</button>
-            <form action="sortList" id="sortButton">
-               <button value="price" name="price">가격 순</button>
-               <button value="sales" name="sales">판매량 순</button>
-               <button value="hits" name="hits">인기 순</button>
-               <button value="dist" name="dist" onclick="showPopup();">거리순</button>
-               <input type="hidden" name="country_name" value="<%=request.getParameter("country_name")%>">
-               <input type="hidden" name="city_name" value="<%=request.getParameter("city_name")%>">
-            </form>
-            <div id="popUp">
-               <form action="sortDist">
-                  위치 : <input type="text" name="current" value="">
-                  <button value="distance" name="distance">확인</button>
-                  <input type="hidden" name="country_name"
-                     value="<%=request.getParameter("country_name")%>"> <input
-                     type="hidden" name="city_name"
-                     value="<%=request.getParameter("city_name")%>">
-               </form>
-            </div>
-            <button id = "save">일정 저장</button>
-         </div>
-
-
-         <div class="col-3">
-            <div id ="landMarkList">
-               <c:forEach var="landMarkList" items="${landMarkList }">
-               <div class="row drag" >
-                  <div class="list_thumb" >
-                     <img class="img" src=${landMarkList.image }>
-                  </div>
-                  <div class="list_detail">
-                     <div id = "name" class="row">${landMarkList.name }</div>
-                     <div  style = "display : none"  id ="detail" class="row">${landMarkList.detail }</div>
-           		 </div>
                </div>
-               </c:forEach>
-               
+            </form>
+            <br>
+            <button id="save" class="btn btn-secondary btn-lg">일정 저장</button>
+            <br>
+         </div>
+         <div class="col-3" id="city_List">
+            <div id="landMarkList">
+               <ul>
+                  <li><a id="land">관광지</a></li>
+               </ul>
+               <div id="landmarkDiv">
+                  <c:forEach var="landMarkList" items="${landMarkList }">
+                     <div class="row drag" >
+                        <div class="list_thumb">
+                           <img src=${landMarkList.image } class ="img" >
+                        </div>
+                        <div class="list_detail"
+                           id="landDetail" >
+                           <div class="name" id="name" >${landMarkList.name}</div>
+                           <div class="detail"  id="detail" >${landMarkList.detail }</div>
+                        </div>
+                     </div>
+                  </c:forEach>
+               </div>
             </div>
          </div>
          <!-- 음식점 숙박 -->
-               <!-- 음식점 숙박 -->
          <div class="col-3">
+            <form action="sortList" id="sortButton">
+               <button value="price" name="price" class="btn btn-primary">가격
+                  순</button>
+               <button value="sales" name="sales" class="btn btn-primary">판매량
+                  순</button>
+               <button value="hits" name="hits" class="btn btn-primary">인기
+                  순</button>
+               <button value="dist" name="dist" onclick="showPopup();"
+                  class="btn btn-primary">거리순</button>
+               <input type="hidden" name="country_name"
+                  value="<%=request.getParameter("country_name")%>"> <input
+                  type="hidden" name="city_name"
+                  value="<%=request.getParameter("city_name")%>">
+            </form>
 
             <div id="tabs">
                <ul>
-                  <li><a href="#tabs-1" id="tab-1">여행 상품</a></li>
-                  <li><a href="#tabs-2" id="tab-2">카페 음식점</a></li>
-                  <li><a href="#tabs-3" id="tab-3">숙박</a></li>
+                  <li><a href="#" id="tab-1">상품</a></li>
+                  <li><a href="#" id="tab-2">음식</a></li>
+                  <li><a href="#" id="tab-3">숙박</a></li>
                </ul>
                <div id="tabs-1">
                   <div id="itemList">
@@ -473,7 +504,7 @@ $(function() {
                         <div class="row drag" id="list_thum">
                            <div>
                               <div class="list_thumb">
-                                 <img class="img" src=${list.img }>
+                                 <img src=${list.img } class ="img">
                               </div>
                            </div>
                            <div class="list_detail">
@@ -491,7 +522,7 @@ $(function() {
                         <div class="row drag" id="list_thum">
                            <div>
                               <div class="list_thumb">
-                                 <img class="img" src=${list.img }>
+                                 <img src=${list.img } class ="img">
                               </div>
                            </div>
                            <div class="list_detail">
@@ -508,7 +539,7 @@ $(function() {
                         <div class="row drag" id="list_thum">
                            <div>
                               <div class="list_thumb">
-                                 <img class="img" src=${list.img }>
+                                 <img src=${list.img } class ="img">
                               </div>
                            </div>
                            <div class="list_detail">
@@ -525,7 +556,7 @@ $(function() {
    </div>
 
    <div class="row">
-      <div id="map-canvas" style="width: 60%; height: 340px" title="지도"
+      <div id="map-canvas" style="width: 40%; height: 340px" title="지도"
          id="Map"></div>
    </div>
 </body>

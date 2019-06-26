@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import trapick.schedule.action.Action;
 import trapick.schedule.action.ActionForward;
+import trapick.schedule.action.CityEnameListAction;
 import trapick.schedule.action.CityListAction;
 import trapick.schedule.action.CountryIsoListAction;
 import trapick.schedule.action.CountryListAction;
@@ -19,54 +20,56 @@ import trapick.schedule.action.getStartDateAction;
 
 @WebServlet("/Schedule/*")
 public class ScheduleController extends HttpServlet {
-   private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-   public ScheduleController() {
-      super();
-   }
+	public ScheduleController() {
+		super();
+	}
 
-   public void doProcess(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
+	public void doProcess(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-      String requestURL = request.getRequestURI();
-      String contextPath = request.getContextPath();
-      String command = requestURL.substring(contextPath.length() + 1);
+		String requestURL = request.getRequestURI();
+		String contextPath = request.getContextPath();
+		String command = requestURL.substring(contextPath.length() + 1);
 
-      Action action = null;
-      ActionForward forward = null;
-      System.out.println(command);
-      if (command.equals("Schedule/main")) {
-         action = new SelectCountryAction();
-      } else if (command.equals("Schedule/country")) {
-         action = new CountryListAction();
-      } else if (command.equals("Schedule/city")) {
-         action = new CityListAction();
-      } else if (command.equals("Schedule/country_iso")) {
-         action = new CountryIsoListAction();
-      }
-      try {
-         forward = action.execute(request, response);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      if (forward != null) {
-         if (forward.isRedirect()) {
-            response.sendRedirect(forward.getPath());
-         } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getPath());
-            dispatcher.forward(request, response);
-         }
-      }
-   }
+		Action action = null;
+		ActionForward forward = null;
+		System.out.println(command);
+		if (command.equals("Schedule/main")) {
+			action = new SelectCountryAction();
+		} else if (command.equals("Schedule/country")) {
+			action = new CountryListAction();
+		} else if (command.equals("Schedule/city")) {
+			action = new CityListAction();
+		} else if (command.equals("Schedule/country_iso")) {
+			action = new CountryIsoListAction();
+		}else if (command.equals("Schedule/city_Ename")) {
+			action = new CityEnameListAction();
+		}
+		try {
+			forward = action.execute(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (forward != null) {
+			if (forward.isRedirect()) {
+				response.sendRedirect(forward.getPath());
+			} else {
+				RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getPath());
+				dispatcher.forward(request, response);
+			}
+		}
+	}
 
-   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      doProcess(request, response);
-   }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doProcess(request, response);
+	}
 
-   protected void doPost(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      doProcess(request, response);
-   }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doProcess(request, response);
+	}
 
 }

@@ -17,6 +17,7 @@ import trapick.schedule.domain.Country;
 import trapick.schedule.mapper.ScheduleMapper;
 
 public class ScheduleDao {
+	private static final String City_Ename = null;
 	private static ScheduleDao dao = new ScheduleDao();
 
 	public static ScheduleDao getInstance() {
@@ -84,7 +85,7 @@ public class ScheduleDao {
 
 	public String startDate(String idx) {
 		// TODO Auto-generated method stub
-		
+
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		String date = null;
 		try {
@@ -137,6 +138,22 @@ public class ScheduleDao {
 			}
 		}
 		return iso;
+	}
+
+	public String selectCityEname(String city_Ename) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		String ename = null;
+		try {
+			ename = sqlSession.getMapper(ScheduleMapper.class).selectCityEname(city_Ename);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+			/* System.out.println("dao:" + ename + " param city_Ename:" + city_Ename); */
+		}
+		return ename;
 	}
 
 }
