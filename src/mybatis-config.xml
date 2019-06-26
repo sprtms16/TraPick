@@ -35,8 +35,9 @@
 	</environments>
 
 	<mappers>
- 		<!-- <mapper resource="trapick/feed/mapper/Feed.xml" /> -->
+ 		<mapper resource="trapick/feed/mapper/Feed.xml" />
 		<mapper resource="trapick/feed/mapper/Reply.xml" />
+		<mapper resource="trapick/feed/mapper/Feed.xml" />
 		<mapper resource="trapick/mypage/mapper/User.xml" />
 		<mapper resource="trapick/recommend/mapper/Item.xml" />
 		<mapper resource="trapick/recommend/mapper/LandMark.xml" /> 

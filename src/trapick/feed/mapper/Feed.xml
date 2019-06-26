@@ -2,18 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="trapick.feed.mapper.FeedMapper">
-   <cache />
-
-   <insert id="insertFeed" parameterType="Feed">
-      insert into feed
-      values(feed_idx.nextval, sysdate,#{title},0,#{contents},1,1)
-   </insert>
+	<cache />
 
 	<insert id="insertFeed" parameterType="Feed">
 		<!-- insert into feed values(feed_idx.nextval, sysdate,#{title},0,#{contents},1,1) -->
 		INSERT ALL into feed
 		values(feed_idx.nextval,
-		sysdate,#{title},0,#{contents},#{user_idx},1)
+		sysdate,#{title},0,#{contents},#{user_idx},#{schd_idx})
 		<if test="url != null">
 			<foreach collection="url" item="item" separator=" "
 				close="SELECT * FROM DUAL">
@@ -24,13 +19,17 @@
 	</insert>
 	<select id="feedList" resultType="Feed" parameterType="map">
 		select
-		f.*, nvl2(h.user_idx,1,0) as islike, (select COUNT(*) from
-		feed_heart
-		where feed_heart.FEED_IDX = f.FEED_IDX)as heart from feed f
-		left JOIN
-		FEED_HEART h
-		on f.feed_idx = h.feed_idx and h.user_idx =
-		#{user_idx}
+		f.*, 
+    nvl2(h.user_idx,1,0) as islike, 
+    (select COUNT(*) from feed_heart where feed_heart.FEED_IDX = f.FEED_IDX) as heart,
+    html 
+    from feed f 
+    left JOIN FEED_HEART h 
+		on 
+    f.feed_idx = h.feed_idx and h.user_idx = #{user_idx}
+    left join schedule_sf s
+    on
+    f.schd_idx = s.schd_idx
 		<where>
 			<if test="keyword != null">
 				REGEXP_LIKE(replace(f.contents,' ',''), #{keyword}) OR
@@ -46,6 +45,10 @@
 		order by
 		regdate desc
 	</select>
+	
+	<select id="selectMySchdList" resultType="Schedule" parameterType="int">
+		select * from schedule_sf where user_idx = #{user_idx} order by SCHD_IDX desc
+	</select>
 
 	<select id="selectFeedUrl" resultType="String"
 		parameterType="int">
@@ -59,49 +62,49 @@
 	</select>
 
 
-   <select id="selectFeedHeartCount" parameterType="int"
-      resultType="int">
-      select COUNT(*)
-      from feed_heart
-      where feed_idx = #{feed_idx}
-   </select>
+	<select id="selectFeedHeartCount" parameterType="int"
+		resultType="int">
+		select COUNT(*)
+		from feed_heart
+		where feed_idx = #{feed_idx}
+	</select>
 
-   <select id="selectFeedHeartCheck" parameterType="Heart"
-      resultType="int">
-      select COUNT(*) from feed_heart
-      where user_idx = #{user_idx}
-      and feed_idx = #{feed_idx}
-   </select>
+	<select id="selectFeedHeartCheck" parameterType="Heart"
+		resultType="int">
+		select COUNT(*) from feed_heart
+		where user_idx = #{user_idx}
+		and feed_idx = #{feed_idx}
+	</select>
 
-   <delete id="deleteFeedHeart" parameterType="Heart">
-      delete from
-      feed_heart where feed_idx = #{feed_idx} and user_idx=#{user_idx}
-   </delete>
+	<delete id="deleteFeedHeart" parameterType="Heart">
+		delete from
+		feed_heart where feed_idx = #{feed_idx} and user_idx=#{user_idx}
+	</delete>
 
-   <insert id="insertFeedHeart" parameterType="Heart">
-      insert into
-      feed_heart
-      VALUES(
-      #{user_idx},
-      #{feed_idx})
-   </insert>
+	<insert id="insertFeedHeart" parameterType="Heart">
+		insert into
+		feed_heart
+		VALUES(
+		#{user_idx},
+		#{feed_idx})
+	</insert>
 
-   <delete id="deleteFeed" parameterType="int">
-      delete from feed where
-      feed_idx = #{feed_idx}
-   </delete>
+	<delete id="deleteFeed" parameterType="int">
+		delete from feed where
+		feed_idx = #{feed_idx}
+	</delete>
 
-   <select id="updateFeed" parameterType="int" resultType="Feed">
-      select *
-      from feed where feed_idx = #{feed_idx}
-   </select>
+	<select id="updateFeed" parameterType="int" resultType="Feed">
+		select *
+		from feed where feed_idx = #{feed_idx}
+	</select>
 
-   <update id="updateFeedAction" parameterType="Feed">
-      update feed set
-      title = #{title}, contents = #{contents} where feed_idx =
-      #{feed_idx}
+	<update id="updateFeedAction" parameterType="Feed">
+		update feed set
+		title = #{title}, contents = #{contents} where feed_idx =
+		#{feed_idx}
 
-   </update>
+	</update>
 
 
 
