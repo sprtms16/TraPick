@@ -18,7 +18,21 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="../style/css/feedList.css" />
+<link rel="stylesheet" type="text/css" href="../style/css/scheduler.css" />
 <script type="text/javascript">
+	function pop($selector) {
+		var url = ""; //팝업창 페이지 URL
+		var winWidth = 700;
+		var winHeight = 600;
+		var popupOption = "width=" + winWidth + ", height=" + winHeight; //팝업창 옵션(optoin)
+		var detail = $selector.parent().find('#detail').text();
+		var name = $selector.parent().find('#name').text();
+		var price = $selector.parent().find('#price').text();
+		var img = $selector.parent().find('img').attr('src');
+		var str = '<img src = "'+img+'"><br>이름 : ' + name + '<br>상세설명 : '
+				+ detail + '<br>가격 : ' + price;
+		window.open(url, "", popupOption).document.write(str);
+	}
 	function getQuerystring(paramName) {
 		var _tempUrl = window.location.search.substring(1);
 		var _tempArray = _tempUrl.split('&');
@@ -127,8 +141,15 @@
 								'object-fit' : 'contain'
 							});
 					$('#exampleModal').find('.modal-content').html($img);
+					$('.modal-content').find('.detailbt').click(function() {
+						pop($(this));
+					});
 					$('#exampleModal').modal('toggle');
 				});
+
+		$('.detailbt').click(function() {
+			pop($(this));
+		});
 	});
 
 	jQuery.event.add(window, "load", function() { //이미지가 모두 실행된 후 함수 실행

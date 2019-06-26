@@ -19,17 +19,18 @@
 	</insert>
 	<select id="feedList" resultType="Feed" parameterType="map">
 		select
-		f.*, 
-    nvl2(h.user_idx,1,0) as islike, 
-    (select COUNT(*) from feed_heart where feed_heart.FEED_IDX = f.FEED_IDX) as heart,
-    html 
-    from feed f 
-    left JOIN FEED_HEART h 
-		on 
-    f.feed_idx = h.feed_idx and h.user_idx = #{user_idx}
-    left join schedule_sf s
-    on
-    f.schd_idx = s.schd_idx
+		f.*,
+		nvl2(h.user_idx,1,0) as islike,
+		(select COUNT(*) from feed_heart where feed_heart.FEED_IDX = f.FEED_IDX) as
+		heart,
+		html
+		from feed f
+		left JOIN FEED_HEART h
+		on
+		f.feed_idx = h.feed_idx and h.user_idx = #{user_idx}
+		left join schedule_sf s
+		on
+		f.schd_idx = s.schd_idx
 		<where>
 			<if test="keyword != null">
 				REGEXP_LIKE(replace(f.contents,' ',''), #{keyword}) OR
@@ -45,9 +46,11 @@
 		order by
 		regdate desc
 	</select>
-	
-	<select id="selectMySchdList" resultType="Schedule" parameterType="int">
-		select * from schedule_sf where user_idx = #{user_idx} order by SCHD_IDX desc
+
+	<select id="selectMySchdList" resultType="Schedule"
+		parameterType="int">
+		select * from schedule_sf where user_idx = #{user_idx}
+		order by SCHD_IDX desc
 	</select>
 
 	<select id="selectFeedUrl" resultType="String"

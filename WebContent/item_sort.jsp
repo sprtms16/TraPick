@@ -197,9 +197,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
       
       //일정 저장
       $('#save').on("click", function(){
-         var htmlSource = $('#mySheduleTable').html();
+         var htmlSource = $('#mySheduleTable').parent().html();
          $.post('saveAjax',{html : htmlSource});
-         location.href = '/TrePick/index.jsp';
+         location.href = '/TraPick/feed/mypageFormAction';
          return false;
       })
       
