@@ -23,6 +23,13 @@
    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
    crossorigin="anonymous">
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
+=======
+<<<<<<< HEAD
+<link rel="stylesheet" href="/resources/demos/style.css">
+=======
+>>>>>>> branch 'master' of https://github.com/sprtms16/TrePick.git
+>>>>>>> 71a09ec pull jb
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- <script type="text/javascript"
    src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
@@ -98,6 +105,20 @@ google.maps.event.addDomListener(window, 'load', initialize);
 //호텔 , 음식점 스크립트
    $(function() {
       $('#restList').hide();
+
+   $('#hotelList').hide();
+});
+   
+$(function() {
+	$('#tab-1').click(function() {
+	      $('#itemList').show();
+	      $('#hotelList').hide();
+	      $('#restList').hide();
+	   });
+	
+   $('#tab-2').click(function() {
+      $('#restList').show();
+>>>>>>> 71a09ec pull jb
       $('#hotelList').hide();
       $('#tab-1').addClass('selected');
    });
@@ -141,9 +162,123 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 //호텔 음식점 스크립트 끝
 
+=======
+   $(function() {
+      $('#restList').hide();
+      $('#hotelList').hide();
+      $('#tab-1').addClass('selected');
+   });
+
+   $(function() {
+
+      $('#tab-2').click(function() {
+         $('#restList').show();
+         $('#hotelList').hide();
+         $('#itemList').hide();
+         $('#tab-1').removeClass('selected');
+         $('#tab-2').addClass('selected');
+         $('#tab-3').removeClass('selected');
+
+      });
+   });
+
+   $(function() {
+
+      $('#tab-3').click(function() {
+         $('#hotelList').show();
+         $('#itemList').hide();
+         $('#restList').hide();
+         $('#tab-1').removeClass('selected');
+         $('#tab-2').removeClass('selected');
+         $('#tab-3').addClass('selected');
+      });
+   });
+
+   $(function() {
+
+      $('#tab-1').click(function() {
+         $('#itemList').show();
+         $('#hotelList').hide();
+         $('#restList').hide();
+         $('#tab-1').addClass('selected');
+         $('#tab-2').removeClass('selected');
+         $('#tab-3').removeClass('selected');
+      });
+   });
+
+//호텔 음식점 스크립트 끝
+>>>>>>> branch 'master' of https://github.com/sprtms16/TrePick.git
 
    $(function(){
       
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
+	   
+      function pop($selector){
+         var url= "";    //팝업창 페이지 URL
+          var winWidth = 700;
+           var winHeight = 600;
+           var popupOption= "width="+winWidth+", height="+winHeight;    //팝업창 옵션(optoin)
+           var detail = $selector.parent().find('#detail').text();
+           var name = $selector.parent().find('#name').text();
+           var price = $selector.parent().find('#price').text();
+           var img = $selector.parent().find('img').attr('src');
+           var str = '<img src = "'+img+'"><br>이름 : '+name+'<br>상세설명 : '+detail+'<br>가격 : '+price;
+          window.open(url,"",popupOption).document.write(str);
+      }
+=======
+<<<<<<< HEAD
+>>>>>>> 71a09ec pull jb
+      
+      function event(){
+         $(".delete_schedule").click(function(){
+                 $(this).parent().empty();
+              })
+              $('.detailbt').click(function(){
+                 pop($(this));
+            })
+      }
+      
+      
+      var html = "";
+
+      
+       $('.drag').draggable({
+             helper: 'clone',
+             opacity: 0.5,
+             revert: true,
+             start : function(e,ui){
+                event();
+              html += '<button type="button" class="delete_schedule btn btn-default liveButton">x</button>';
+              html += '<input type ="button" class = "detailbt liveInput" value ="상세보기">';
+                html += $(this).html();
+             },
+             stop : function(e,ui){
+                event();
+             }
+           }); 
+        
+        $('table td').droppable({
+             accept: "div",
+             drop: function(event, ui) {
+                $(this).empty();
+            $(this).append(html);
+            html = "";
+             }
+         });
+      
+      //일정 저장
+      $('#save').on("click", function(){
+         var htmlSource = $('#mySheduleTable').html();
+         $.post('saveAjax',{html : htmlSource});
+         location.href = '/TrePick/index.jsp';
+         return false;
+      })
+      
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
+      //도시선택시 ajax 구동
+=======
+      
+=======
 	   
       function pop($selector){
          var url= "";    //팝업창 페이지 URL
@@ -204,6 +339,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
       })
       
       //도시선택시 ajax 구동
+>>>>>>> branch 'master' of https://github.com/sprtms16/TrePick.git
+>>>>>>> 71a09ec pull jb
       $('#city_search').on("click",function(){
          //랜드마크 ajax
          $.ajax({
@@ -215,6 +352,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                
                $('#landmarkDiv').empty();
                $.each(data, function(index, item){
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
                   /* var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
                   +item.image+'></div><div class="list_detail"><div id = "name" class="row">'
                   +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
@@ -224,6 +362,22 @@ google.maps.event.addDomListener(window, 'load', initialize);
                   +item.name+'</div><div   class="detail"  id="detail">'
                   +item.detail+'</div></div></div>';
                   $('#landmarkDiv').append(text);
+=======
+<<<<<<< HEAD
+                  var text = '<div class = "drag"><img src = "'+item.image+'"> <span>'+item.name+'</span></div>';
+                  $('#landMarkList').append(text);
+=======
+                  /* var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
+                  +item.image+'></div><div class="list_detail"><div id = "name" class="row">'
+                  +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
+                  +item.detail+'</div></div></div>'; */
+                  var text = '<div class="row drag"><div class="list_thumb"><img src='
+                  +item.image+' class ="img"></div><div class="list_detail" id="landDetail"><div class="name" id="name">'
+                  +item.name+'</div><div   class="detail"  id="detail">'
+                  +item.detail+'</div></div></div>';
+                  $('#landmarkDiv').append(text);
+>>>>>>> branch 'master' of https://github.com/sprtms16/TrePick.git
+>>>>>>> 71a09ec pull jb
                })
                
                $('.drag').draggable({
@@ -231,6 +385,28 @@ google.maps.event.addDomListener(window, 'load', initialize);
                       opacity: 0.5,
                       revert: true,
                       start : function(e,ui){
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
+                         event();
+                         html += '<button type="button" class="delete_schedule btn btn-default liveButton">x</button>';
+                         html += '<input type ="button" class = "detailbt liveInput" value ="상세보기">';
+=======
+<<<<<<< HEAD
+                         $(".delete_schedule").click(function(){
+                             $(this).parent().empty();
+                          })
+                       html += '<button type="button" class="delete_schedule btn btn-default>x</button>';
+>>>>>>> 71a09ec pull jb
+                         html += $(this).html();
+                      },
+                      stop : function(e,ui){
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
+                         event();
+=======
+                        $(".delete_schedule").click(function(){
+                               $(this).parent().empty();
+                            })
+                            
+=======
                          event();
                          html += '<button type="button" class="delete_schedule btn btn-default liveButton">x</button>';
                          html += '<input type ="button" class = "detailbt liveInput" value ="상세보기">';
@@ -238,6 +414,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
                       },
                       stop : function(e,ui){
                          event();
+>>>>>>> branch 'master' of https://github.com/sprtms16/TrePick.git
+>>>>>>> 71a09ec pull jb
                       }
                     }); 
             }
@@ -252,15 +430,87 @@ google.maps.event.addDomListener(window, 'load', initialize);
                
                $('#itemList').empty();
                $.each(data, function(index, item){
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
                      var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
                          +item.img+'></div><div class="list_detail"><div id = "name" class="row">'
                          +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
                          +item.detail+'<div  id="price" class="row">'
                          +item.price+'</div></div></div>';
+=======
+<<<<<<< HEAD
+                  var text = '<div class = "drag"><img src = "'+item.img+'"> <span>'+item.name+'</span></div>';
+=======
+                     var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
+                         +item.img+'></div><div class="list_detail"><div id = "name" class="row">'
+                         +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
+                         +item.detail+'<div  id="price" class="row">'
+                         +item.price+'</div></div></div>';
+>>>>>>> branch 'master' of https://github.com/sprtms16/TrePick.git
+>>>>>>> 71a09ec pull jb
                   $('#itemList').append(text);
                })
                
                $('.drag').draggable({
+                      helper: 'clone',
+                      opacity: 0.5,
+                      revert: true,
+                      start : function(e,ui){
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
+                         event();
+                         html += '<button type="button" class="delete_schedule btn btn-default liveButton">x</button>';
+                         html += '<input type ="button" class = "detailbt liveInput" value ="상세보기">';
+=======
+<<<<<<< HEAD
+                         $(".delete_schedule").click(function(){
+                             $(this).parent().empty();
+                          })
+                       html += '<button type="button" class="delete_schedule btn btn-default">x</button>';
+>>>>>>> 71a09ec pull jb
+                         html += $(this).html();
+                      },
+                      stop : function(e,ui){
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
+                         event();
+=======
+                        $(".delete_schedule").click(function(){
+                               $(this).parent().empty();
+                            })
+                            
+=======
+                         event();
+                         html += '<button type="button" class="delete_schedule btn btn-default liveButton">x</button>';
+                         html += '<input type ="button" class = "detailbt liveInput" value ="상세보기">';
+                         html += $(this).html();
+                      },
+                      stop : function(e,ui){
+                         event();
+>>>>>>> branch 'master' of https://github.com/sprtms16/TrePick.git
+>>>>>>> 71a09ec pull jb
+                      }
+                    }); 
+            }
+         })
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
+         //식당 ajax
+=======
+<<<<<<< HEAD
+>>>>>>> 71a09ec pull jb
+          $.ajax({
+              url : 'restAjax',
+              type : 'post',
+              dataType : 'json',
+              data :{city_name : $('#city option:selected').val()} ,
+              success : function(data){
+                 
+                 $('#restList').empty();
+                   $.each(data, function(index, item){
+                	   var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
+                           +item.img+'></div><div class="list_detail"><div id = "name" class="row">'
+                           +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
+                           +item.detail+'</div></div></div>';
+                      $('#restList').append(text);
+                   }) 
+                   $('.drag').draggable({
                       helper: 'clone',
                       opacity: 0.5,
                       revert: true,
@@ -274,8 +524,45 @@ google.maps.event.addDomListener(window, 'load', initialize);
                          event();
                       }
                     }); 
-            }
-         })
+              }
+        })
+        //숙박 ajax
+       $.ajax({
+          url : 'hotelAjax',
+          type : 'post',
+          dataType : 'json',
+          data :{city_name : $('#city option:selected').val()} ,
+          success : function(data){
+              
+              $('#hotelList').empty();
+                $.each(data, function(index, item){
+                	var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
+                        +item.img+'></div><div class="list_detail"><div id = "name" class="row">'
+                        +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
+                        +item.detail+'<div  id="price" class="row">'
+                        +item.price+'</div></div></div>';
+                   $('#hotelList').append(text);
+                   console.log(text);
+                }) 
+                $('.drag').draggable({
+                   helper: 'clone',
+                   opacity: 0.5,
+                   revert: true,
+                   start : function(e,ui){
+                      event();
+                      html += '<button type="button" class="delete_schedule btn btn-default liveButton">x</button>';
+                      html += '<input type ="button" class = "detailbt liveInput" value ="상세보기">';
+                      html += $(this).html();
+                   },
+                   stop : function(e,ui){
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
+                      event();
+=======
+                     $(".delete_schedule").click(function(){
+                            $(this).parent().empty();
+                         })
+                         
+=======
          //식당 ajax
           $.ajax({
               url : 'restAjax',
@@ -338,6 +625,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
                    },
                    stop : function(e,ui){
                       event();
+>>>>>>> branch 'master' of https://github.com/sprtms16/TrePick.git
+>>>>>>> 71a09ec pull jb
                    }
                  }); 
            }
@@ -348,6 +637,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 </script>
 <style type="text/css">
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
 table td {
    height: 100px;
    width: 100px;
@@ -357,6 +647,28 @@ table td {
    width: 200px;
    height: 200px;
 }
+=======
+<<<<<<< HEAD
+   table td{
+      height: 100px;
+      width: 100px;
+   }
+   .drag{
+      width : 100px;
+      height: 100px;
+   }
+=======
+table td {
+   height: 100px;
+   width: 100px;
+}
+
+.drag {
+   width: 200px;
+   height: 200px;
+}
+>>>>>>> branch 'master' of https://github.com/sprtms16/TrePick.git
+>>>>>>> 71a09ec pull jb
 </style>
 
 <title>여행상품</title>
@@ -376,6 +688,121 @@ table td {
       <div class="row">
          <div class="col-6">
             <!-- Temp_Scheduler -->
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
+            <form action="#" id="scheduleTable">
+               <div>
+                  <table id="mySheduleTable" border=2>
+=======
+<<<<<<< HEAD
+            <form action="????????" id="scheduleTable">
+               <p>여행 일정표</p>
+               <div id = "mySheduleTable">
+                  <table border="1">
+>>>>>>> 71a09ec pull jb
+                     <tr>
+                        <th>일정</th>
+                        <th>1 일차</th>
+                        <th>2 일차</th>
+                        <th>3 일차</th>
+                        <th>4 일차</th>
+                        <th>5 일차</th>
+                     </tr>
+                     <tr>
+                        <td class="time">06:00<br>
+                        <br>&nbsp;&nbsp; ~ 09:00
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                     </tr>
+                     <tr>
+                        <td class="time">09:00<br>
+                        <br>&nbsp;&nbsp; ~ 12:00
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                     </tr>
+                     <tr>
+                        <td class="time">12:00<br>
+                        <br>&nbsp;&nbsp; ~ 15:00
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                     </tr>
+                     <tr>
+                        <td class="time">15:00<br>
+                        <br>&nbsp;&nbsp; ~ 18:00
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                     </tr>
+                     <tr>
+                        <td class="time">18:00<br>
+                        <br>&nbsp;&nbsp; ~ 21:00
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                     </tr>
+                     <tr>
+                        <td class="time">21:00<br>
+                        <br>&nbsp;&nbsp; ~ 24:00
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                     </tr>
+                  </table>
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
+=======
+                </div>
+            </form>
+
+
+
+            <form action="searchCity" id="searchCity">
+               도시 검색 : <input type = "text" name = "search_City">
+               <input type = "submit" value="검색">
+            </form>
+         <select id = "city" name = "city_name">
+            <c:forEach var="cityList" items="${cityList }">
+               <option value = "${cityList }">${cityList }</option>
+            </c:forEach>
+         </select>
+         <button id = "city_search">검색</button>
+            <form action="sortList" id="sortButton">
+               <button value="price" name="price">가격 순</button>
+               <button value="sales" name="sales">판매량 순</button>
+               <button value="hits" name="hits">인기 순</button>
+               <button value="dist" name="dist" onclick="showPopup();">거리순</button>
+               <input type="hidden" name="country_name" value="<%=request.getParameter("country_name")%>">
+               <input type="hidden" name="city_name" value="<%=request.getParameter("city_name")%>">
+            </form>
+            <div id="popUp">
+               <form action="sortDist">
+                  위치 : <input type="text" name="current" value="">
+                  <button value="distance" name="distance">확인</button>
+                  <input type="hidden" name="country_name"
+                     value="<%=request.getParameter("country_name")%>"> <input
+                     type="hidden" name="city_name"
+                     value="<%=request.getParameter("city_name")%>">
+               </form>
+=======
             <form action="#" id="scheduleTable">
                <div>
                   <table id="mySheduleTable" border=2>
@@ -473,6 +900,96 @@ table td {
                      </div>
                   </c:forEach>
                </div>
+>>>>>>> branch 'master' of https://github.com/sprtms16/TrePick.git
+            </div>
+            <button id = "save">일정 저장</button>
+         </div>
+         <!-- 음식점 숙박 -->
+         <div class="col-3">
+<<<<<<< HEAD
+            <h3>관광 명소</h3>
+            <div id ="landMarkList">
+               <c:forEach var="landMarkList" items="${landMarkList }">
+               <div class="row drag">
+                  <div class="col-4">
+                     <img src=${landMarkList.image }>
+                  </div>
+                  <div class="col-8">
+                     <div class="row">${landMarkList.name }</div>
+                     <div class="row">${landMarkList.detail }</div>
+=======
+            <form action="sortList" id="sortButton">
+               <button value="price" name="price" class="btn btn-primary">가격
+                  순</button>
+               <button value="sales" name="sales" class="btn btn-primary">판매량
+                  순</button>
+               <button value="hits" name="hits" class="btn btn-primary">인기
+                  순</button>
+               <button value="dist" name="dist" onclick="showPopup();"
+                  class="btn btn-primary">거리순</button>
+               <input type="hidden" name="country_name"
+                  value="<%=request.getParameter("country_name")%>"> <input
+                  type="hidden" name="city_name"
+                  value="<%=request.getParameter("city_name")%>">
+            </form>
+
+            <div id="tabs">
+               <ul>
+                  <li><a href="#" id="tab-1">상품</a></li>
+                  <li><a href="#" id="tab-2">음식</a></li>
+                  <li><a href="#" id="tab-3">숙박</a></li>
+               </ul>
+               <div id="tabs-1">
+                  <div id="itemList">
+                     <c:forEach var="list" items="${list }">
+                        <div class="row drag" id="list_thum">
+                           <div>
+                              <div class="list_thumb">
+                                 <img src=${list.img } class ="img">
+                              </div>
+                           </div>
+                           <div class="list_detail">
+                              <div id="name" class="listName">${list.name }</div>
+                              <div style="display: none" id="detail" class="listDetail">${list.detail }</div>
+                              <div id="price" class="listPrice">${list.price }</div>
+                           </div>
+                        </div>
+                     </c:forEach>
+>>>>>>> branch 'master' of https://github.com/sprtms16/TrePick.git
+                  </div>
+
+>>>>>>> 71a09ec pull jb
+               </div>
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
+            </form>
+            <br>
+            <button id="save" class="btn btn-secondary btn-lg">일정 저장</button>
+            <br>
+         </div>
+         <div class="col-3" id="city_List">
+            <div id="landMarkList">
+               <ul>
+                  <li><a id="land">관광지</a></li>
+               </ul>
+               <div id="landmarkDiv">
+                  <c:forEach var="landMarkList" items="${landMarkList }">
+                     <div class="row drag" >
+                        <div class="list_thumb">
+                           <img src=${landMarkList.image } class ="img" >
+                        </div>
+                        <div class="list_detail"
+                           id="landDetail" >
+                           <div class="name" id="name" >${landMarkList.name}</div>
+                           <div class="detail"  id="detail" >${landMarkList.detail }</div>
+                        </div>
+                     </div>
+                  </c:forEach>
+               </div>
+=======
+<<<<<<< HEAD
+               </c:forEach>
+               
+>>>>>>> 71a09ec pull jb
             </div>
          </div>
          <!-- 음식점 숙박 -->
@@ -516,6 +1033,7 @@ table td {
                      </c:forEach>
                   </div>
                </div>
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
                <div id="tabs-2">
                   <div id="restList">
                      <c:forEach var="list" items="${list_Rest }">
@@ -552,6 +1070,49 @@ table td {
                </div>
             </div>
          </div>
+=======
+            </div>                   
+
+
+=======
+               <div id="tabs-2">
+                  <div id="restList">
+                     <c:forEach var="list" items="${list_Rest }">
+                        <div class="row drag" id="list_thum">
+                           <div>
+                              <div class="list_thumb">
+                                 <img src=${list.img } class ="img">
+                              </div>
+                           </div>
+                           <div class="list_detail">
+                              <div id="name" class="listName">${list.name }</div>
+                              <div style="display: none" id="detail" class="listDetail">${list.detail }</div>
+                           </div>
+                        </div>
+                     </c:forEach>
+                  </div>
+               </div>
+               <div id="tabs-3">
+                  <div id="hotelList">
+                     <c:forEach var="list" items="${list_Hotel }">
+                        <div class="row drag" id="list_thum">
+                           <div>
+                              <div class="list_thumb">
+                                 <img src=${list.img } class ="img">
+                              </div>
+                           </div>
+                           <div class="list_detail">
+                              <div id="name" class="listName">${list.name }</div>
+                              <div style="display: none" id="detail" class="listDetail">${list.detail }</div>
+                           </div>
+                        </div>
+                     </c:forEach>
+                  </div>
+               </div>
+            </div>
+         </div>
+>>>>>>> branch 'master' of https://github.com/sprtms16/TrePick.git
+>>>>>>> 71a09ec pull jb
       </div>
    </div>
 
