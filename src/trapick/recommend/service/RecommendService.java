@@ -1,6 +1,8 @@
 package trapick.recommend.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -74,9 +76,17 @@ public class RecommendService {
    public void saveScheduleService(HttpServletRequest request)throws Exception{
 	   request.setCharacterEncoding("utf-8");
 	   String html = request.getParameter("html");
+	   String title = request.getParameter("title");
+	   System.out.println("老沥积己单捞磐:");
 	   System.out.println(html);
+	   System.out.println(title);
+	   HashMap<String, String> map = new HashMap<String, String>();
+	   map.put("html", html);
+	   map.put("title", title);
+	   
+	   
 
-	   dao.saveSchedule(html);
+	   dao.saveSchedule(map);
    }
 
    public List<Restaurant> listRestaurantService(HttpServletRequest request) {

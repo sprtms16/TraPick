@@ -197,10 +197,12 @@ google.maps.event.addDomListener(window, 'load', initialize);
       
       //일정 저장
       $('#save').on("click", function(){
-         var htmlSource = $('#mySheduleTable').html();
-         $.post('saveAjax',{html : htmlSource});
-         location.href = '/TrePick/index.jsp';
-         return false;
+         var htmlSource = $('#mySheduleTable').parent().html();
+         var titlename = $('#title').val();
+         console.log(htmlSource);
+         console.log(titlename);
+         $.post('saveAjax',{html : htmlSource, title : titlename});
+         location.href = '/TrePick/com.jsp';
       })
       
       //도시선택시 ajax 구동
@@ -451,6 +453,8 @@ table td {
                </div>
             </form>
             <br>
+            <label>일정제목</label>
+            <input type = "text" id = "title">
             <button id="save" class="btn btn-secondary btn-lg">일정 저장</button>
             <br>
          </div>
