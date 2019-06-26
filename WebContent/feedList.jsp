@@ -7,19 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>Insert title here</title>
-<!-- 
-<link rel="stylesheet"
-   href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
-<link rel="stylesheet"
-   href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script
-   src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<script
-   src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script
-   src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
-
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
 
@@ -116,20 +103,6 @@
 			});
 			return false;
 		});
-
-		/* var content = document.getElementById('hashTags').innerHTML;
-		var splitedArray = content.split(' ');
-		var linkedContent = '';
-		for(var word in splitedArray)
-		{
-		  word = splitedArray[word];
-		   if(word.indexOf('#') == 0)
-		   {
-		      word = '<a href=\'링크\'>'+word+'</a>';
-		   }
-		   linkedContent += word+' ';
-		}
-		 */
 		$.each($('.hashtag'), function(index, data) {
 			var content = $(data).text();
 			var splitedArray = content.split(' ');
@@ -145,7 +118,6 @@
 			}
 			$(data).html(linkedContent);
 		});
-
 		$('.carousel-item').click(
 				function(e) {
 					var $img = $(this).children().clone().removeAttr("style")
@@ -199,21 +171,10 @@
 			</div>
 		</div>
 	</div>
-
-
-
-
-
 	<div class="container-fluid">
-		<!-- 
-      style="margin-left: 360px; inline-block; text-align: center;" -->
 		<c:forEach var="feed" items="${feedList}">
 			<div id="target${feed.feed_idx }" class="mt-5">
 				<div class="card text-center">
-					<!-- <img class="card-img-top"
-                  src="https://picsum.photos/1900/1080?image=235"
-                  alt="Card image cap"> -->
-
 					<div id="carouselExampleControls${feed.feed_idx }"
 						class="carousel slide" data-ride="carousel">
 						<div class="carousel-inner">
@@ -225,10 +186,7 @@
 									style="width: 100%; height: 500px; overflow: hidden; position: relative;">
 									<img src="../upload/${img }" class="d-block w-100"
 										style="position: absolute; left: 50%; top: 50%; width: 100%; height: auto; -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
-									<!-- style="width: auto; height: 500px;" -->
 								</div>
-
-
 							</c:forEach>
 							<a class="carousel-control-prev"
 								href="#carouselExampleControls${feed.feed_idx }" role="button"
@@ -299,11 +257,6 @@
 										</a>
 									</div>
 								</c:forEach>
-								<!--    <iframe
-                           src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d11880.492291371422!2d12.4922309!3d41.8902102!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x28f1c82e908503c4!2sColosseo!5e0!3m2!1sit!2sit!4v1524815927977"
-                           width="100%" height="200" frameborder="0" style="border: 0"
-                           allowfullscreen></iframe> -->
-
 							</div>
 						</div>
 					</div>
