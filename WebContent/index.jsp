@@ -22,7 +22,7 @@
 				<td>feed/updateForm</td>
 				<td>feed/insertActionReply</td>
 				<td>Schedule/main</td>
-				<td>Schedule/country</td>
+				<td>Schedule/country</td> 
 				<td>Schedule/city</td>
 				<td>Recommend/itemList</td>
 				<td>feed/mypageFormAction</td>

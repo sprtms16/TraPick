@@ -9,6 +9,7 @@ public class ItemListAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		request.setAttribute("list", RecommendService.getInstance().ItemListService(request, response));
 		request.setAttribute("cityList", RecommendService.getInstance().cityListService(request));
 		request.setAttribute("landMarkList", RecommendService.getInstance().landMarkListService(request));

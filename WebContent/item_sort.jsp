@@ -103,9 +103,14 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 <script type="text/javascript">
 //호텔 , 음식점 스크립트
+<<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
    $(function() {
       $('#restList').hide();
-
+=======
+<<<<<<< HEAD
+$(function() {
+   
+   $('#restList').hide();
    $('#hotelList').hide();
 });
    

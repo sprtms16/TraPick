@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <<<<<<< Upstream, based on branch 'master' of https://github.com/sprtms16/TrePick.git
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
@@ -206,6 +207,8 @@
    </form>
 </body>
 =======
+=======
+>>>>>>> branch 'jb' of https://github.com/sprtms16/TrePick.git
 <<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -621,5 +624,8 @@
    </form>
 </body>
 >>>>>>> branch 'master' of https://github.com/sprtms16/TrePick.git
+<<<<<<< HEAD
 >>>>>>> 71a09ec pull jb
+=======
+>>>>>>> branch 'jb' of https://github.com/sprtms16/TrePick.git
 </html>
