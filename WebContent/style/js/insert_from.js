@@ -80,8 +80,10 @@ function fileDropDown(){
             // 파일 사이즈(단위 :MB)
             var fileSize = files[i].size / 1024 / 1024;
             
-            if($.inArray(ext, ['exe', 'bat', 'sh', 'java', 'jsp', 'html', 'js', 'css', 'xml']) >= 0){
-                // 확장자 체크
+// if($.inArray(ext, ['exe', 'bat', 'sh', 'java', 'jsp', 'html', 'js', 'css',
+// 'xml']) >= 0){
+            if($.inArray(ext, ['bmp','rle','dib','jpeg','jpg','gif','png','tiff','tif','raw','BMP','RLE','DID','JPEG','JPG','GIF','PNG','TIFF','TIF','RAW']) == 0){
+            	// 확장자 체크
                 alert("등록 불가 확장자");
                 break;
             }else if(fileSize > uploadSize){
