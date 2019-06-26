@@ -8,9 +8,9 @@ public class Restaurant {
 	private String latitude;
 	private String longitude;
 	private double dist;
-	
+
 	public Restaurant() {
-		
+
 	}
 
 	public Restaurant(String name, String detail, String img, String latitude, String longitude, double dist) {
@@ -77,6 +77,4 @@ public class Restaurant {
 				+ ", longitude=" + longitude + ", dist=" + dist + "]";
 	}
 
-	
-	
 }

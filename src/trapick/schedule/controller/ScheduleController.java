@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import trapick.recommend.action.ItemListAction;
 import trapick.schedule.action.Action;
 import trapick.schedule.action.ActionForward;
 import trapick.schedule.action.CityEnameListAction;
@@ -35,7 +34,6 @@ public class ScheduleController extends HttpServlet {
 
 		Action action = null;
 		ActionForward forward = null;
-		
 		System.out.println(command);
 		if (command.equals("Schedule/main")) {
 			action = new SelectCountryAction();
@@ -45,10 +43,9 @@ public class ScheduleController extends HttpServlet {
 			action = new CityListAction();
 		} else if (command.equals("Schedule/country_iso")) {
 			action = new CountryIsoListAction();
-		}else if (command.equals("Schedule/city_Ename")) {
+		} else if (command.equals("Schedule/city_Ename")) {
 			action = new CityEnameListAction();
 		}
-		
 		try {
 			forward = action.execute(request, response);
 		} catch (Exception e) {

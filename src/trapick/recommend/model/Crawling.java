@@ -17,695 +17,779 @@ import trapick.recommend.domain.Restaurant;
 
 public class Crawling {
 
-	private static Crawling crawling = new Crawling();
+   private static Crawling crawling = new Crawling();
 
-	public static Crawling getInstance() {
-		return crawling;
-	}
+   public static Crawling getInstance() {
+      return crawling;
+   }
 
-	public List<Item> Getcrawling(String country_name, String city_name) {
+   public List<Item> Getcrawling(String country_name, String city_name) {
 
-		List<Item> list = new ArrayList<>();
-		Item item;
+      List<Item> list = new ArrayList<>();
+      Item item;
 
-		int item_idx = 0;
-		String name = null;
-		String latitude = "0";
-		String longitude = "0";
-		String detail;
-		int time_defference = 0; // 받아야됨
-		int price;
-		String img;
-		int sales = 0; // 판매량
-		int hits = 0; // 인기
-		double dist = 0;
+      int item_idx = 0;
+      String name = null;
+      String latitude = "0";
+      String longitude = "0";
+      String detail;
+      int time_defference = 0; // 받아야됨
+      int price;
+      String img;
+      int sales = 0; // 판매량
+      int hits = 0; // 인기
+      double dist = 0;
 
-		String input = city_name + "+입장권";
-		String lat = null;
-		String lng = null;
+      String input = city_name + "+입장권";
+      String lat = null;
+      String lng = null;
 
-		try {
-			String url_naver = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=";
-			String url_daum = "https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&q=";
-			url_naver += input;
-			url_daum += input;
-			Document doc_naver = Jsoup.connect(url_naver).get();
-			Document doc_daum = Jsoup.connect(url_daum).get();
+      try {
+         String url_naver = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=";
+         String url_daum = "https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&q=";
+         url_naver += input;
+         url_daum += input;
+         Document doc_naver = Jsoup.connect(url_naver).get();
+         Document doc_daum = Jsoup.connect(url_daum).get();
 
-			Elements hotdeal_naver = doc_naver.select("._page_group ul");
-			Elements deal_naver = hotdeal_naver.select("li");
+         Elements hotdeal_naver = doc_naver.select("._page_group ul");
+         Elements deal_naver = hotdeal_naver.select("li");
 
-			Elements hotdeal_daum = doc_daum.select(".cont_shop ul");
-			Elements deal_daum = hotdeal_daum.select("li");
+         Elements hotdeal_daum = doc_daum.select(".cont_shop ul");
+         Elements deal_daum = hotdeal_daum.select("li");
 
-			// naver
-			for (Element el : deal_naver) {
+         // naver
+         for (Element el : deal_naver) {
 
-				// idx
-				item_idx += 1;
-				// name
-				name = el.select(".detail_area").select(".tit").select("a").attr("title");
-				// detail > 여행사로 함
-				detail = el.select(".detail_area").select(".mall_area").select("a").text();
-				// price
-				String temp = el.select(".detail_area").select(".price_num").text().replace(",", "");
-				temp = temp.replace("원", "");
-				price = Integer.parseInt(temp);
-				// img
-				img = el.select(".thumb_area").select("img").attr("src");
-				// sales
-				String sales_temp = el.select(".detail").select(".txt_review").select("em").text().replace(" ", "");
+            // idx
+            item_idx += 1;
+            // name
+            name = el.select(".detail_area").select(".tit").select("a").attr("title");
+            // detail > 여행사로 함
+            detail = el.select(".detail_area").select(".mall_area").select("a").text();
+            // price
+            String temp = el.select(".detail_area").select(".price_num").text().replace(",", "");
+            temp = temp.replace("원", "");
+            price = Integer.parseInt(temp);
+            // img
+            img = el.select(".thumb_area").select("img").attr("src");
+            // sales
+            String sales_temp = el.select(".detail").select(".txt_review").select("em").text().replace(" ", "");
 
-				if (sales_temp.length() < 1) {
-					sales = 0;
-				} else {
-					sales = Integer.parseInt(sales_temp);
+            if (sales_temp.length() < 1) {
+               sales = 0;
+            } else {
+               sales = Integer.parseInt(sales_temp);
 
-				}
+            }
 
-				if (sales == 0) {
-					sales = (int) (Math.random() * 76) + 1;
-				}
+            if (sales == 0) {
+               sales = (int) (Math.random() * 76) + 1;
+            }
 
-				// latitude, longitude
-				String url_rocation = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + name
-						+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+            // latitude, longitude
+            String url_rocation = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + name
+                  + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-				Document doc_rocation = Jsoup.connect(url_rocation).get();
+            Document doc_rocation = Jsoup.connect(url_rocation).get();
 
-				lat = doc_rocation.select("location").select("lat").text();
-				lng = doc_rocation.select("location").select("lng").text();
+            lat = doc_rocation.select("location").select("lat").text();
+            lng = doc_rocation.select("location").select("lng").text();
 
-				if (lat.length() < 10) {
-					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
-							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+            if (lat.length() < 10) {
+               String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+                     + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-					Document doc_temp = Jsoup.connect(url_temp).get();
+               Document doc_temp = Jsoup.connect(url_temp).get();
 
-					lat = doc_temp.select("location").select("lat").text();
-				}
+               lat = doc_temp.select("location").select("lat").text();
+            }
 
-				if (lng.length() < 10) {
-					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
-							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+            if (lng.length() < 10) {
+               String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+                     + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-					Document doc_temp = Jsoup.connect(url_temp).get();
+               Document doc_temp = Jsoup.connect(url_temp).get();
 
-					lng = doc_temp.select("location").select("lng").text();
-				}
+               lng = doc_temp.select("location").select("lng").text();
+            }
 
-				if (lat.length() > 15) {
-					lat = lat.substring(lat.lastIndexOf(" ") + 1);
-				}
+            if (lat.length() > 15) {
+               lat = lat.substring(lat.lastIndexOf(" ") + 1);
+            }
 
-				if (lng.length() > 15) {
-					lng = lng.substring(lng.lastIndexOf(" ") + 1);
-				}
+            if (lng.length() > 15) {
+               lng = lng.substring(lng.lastIndexOf(" ") + 1);
+            }
 
-				latitude = lat;
-				longitude = lng;
+            latitude = lat;
+            longitude = lng;
 
-				item = new Item(item_idx, name, latitude, longitude, detail, city_name, time_defference, country_name,
-						price, img, sales, hits, dist);
-				list.add(item);
+            item = new Item(item_idx, name, latitude, longitude, detail, city_name, time_defference, country_name,
+                  price, img, sales, hits, dist);
+            list.add(item);
 
-			}
-			// daum
-			for (Element da : deal_daum) {
+         }
+         // daum
+         for (Element da : deal_daum) {
 
-				// idx
-				item_idx += 1;
-				// name
-				name = da.select(".wrap_cont").select(".wrap_tit").select("strong").text();
-				// detail > 여행사로 함
-				detail = da.select(".wrap_cont").select(".dl_comm").select(".cont").text().replaceAll("[0-9]", "");
-				// price
-				String temp = da.select(".wrap_cont").select(".txt_price").text().replace(",", "");
-				temp = temp.replace("원", "");
-				price = Integer.parseInt(temp);
-				// img
-				img = da.select(".wrap_thumb").select("img").attr("src");
-				// sales
-				String sales_temp = da.select(".wrap_cont").select(".dl_comm").select(".cont").text()
-						.replaceAll("[^0-9]", "");
-				if (sales_temp.length() < 1) {
-					sales = 0;
-				} else {
-					sales = Integer.parseInt(sales_temp);
-				}
+            // idx
+            item_idx += 1;
+            // name
+            name = da.select(".wrap_cont").select(".wrap_tit").select("strong").text();
+            // detail > 여행사로 함
+            detail = da.select(".wrap_cont").select(".dl_comm").select(".cont").text().replaceAll("[0-9]", "");
+            // price
+            String temp = da.select(".wrap_cont").select(".txt_price").text().replace(",", "");
+            temp = temp.replace("원", "");
+            price = Integer.parseInt(temp);
+            // img
+            img = da.select(".wrap_thumb").select("img").attr("src");
+            // sales
+            String sales_temp = da.select(".wrap_cont").select(".dl_comm").select(".cont").text()
+                  .replaceAll("[^0-9]", "");
+            if (sales_temp.length() < 1) {
+               sales = 0;
+            } else {
+               sales = Integer.parseInt(sales_temp);
+            }
 
-				// latitude, longitude
-				String url_location = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + name
-						+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+            // latitude, longitude
+            String url_location = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + name
+                  + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-				Document doc_location = Jsoup.connect(url_location).get();
+            Document doc_location = Jsoup.connect(url_location).get();
 
-				lat = doc_location.select("location").select("lat").text();
-				lng = doc_location.select("location").select("lng").text();
+            lat = doc_location.select("location").select("lat").text();
+            lng = doc_location.select("location").select("lng").text();
 
-				if (lat.length() < 10) {
-					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
-							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+            if (lat.length() < 10) {
+               String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+                     + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-					Document doc_temp = Jsoup.connect(url_temp).get();
+               Document doc_temp = Jsoup.connect(url_temp).get();
 
-					lat = doc_temp.select("location").select("lat").text();
-				}
+               lat = doc_temp.select("location").select("lat").text();
+            }
 
-				if (lng.length() < 10) {
-					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
-							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+            if (lng.length() < 10) {
+               String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+                     + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-					Document doc_temp = Jsoup.connect(url_temp).get();
+               Document doc_temp = Jsoup.connect(url_temp).get();
 
-					lng = doc_temp.select("location").select("lng").text();
-				}
+               lng = doc_temp.select("location").select("lng").text();
+            }
 
-				if (lat.length() > 15) {
-					lat = lat.substring(lat.lastIndexOf(" ") + 1);
-				}
+            if (lat.length() > 15) {
+               lat = lat.substring(lat.lastIndexOf(" ") + 1);
+            }
 
-				if (lng.length() > 15) {
-					lng = lng.substring(lng.lastIndexOf(" ") + 1);
-				}
+            if (lng.length() > 15) {
+               lng = lng.substring(lng.lastIndexOf(" ") + 1);
+            }
 
-				latitude = lat;
-				longitude = lng;
+            latitude = lat;
+            longitude = lng;
 
-				item = new Item(item_idx, name, latitude, longitude, detail, city_name, time_defference, country_name,
-						price, img, sales, hits, dist);
+            item = new Item(item_idx, name, latitude, longitude, detail, city_name, time_defference, country_name,
+                  price, img, sales, hits, dist);
 
-				list.add(item);
+            list.add(item);
 
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return list;
+         }
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+      return list;
 
-	}
+   }
 
 //   가격순 정렬
-	public List<Item> priceSort(List<Item> list) {
-		Collections.sort(list, new Comparator<Item>() {
-			@Override
-			public int compare(Item o1, Item o2) {
-				if (o1.getPrice() < o2.getPrice()) {
-					return -1;
-				} else if (o1.getPrice() > o2.getPrice()) {
-					return 1;
-				}
-				return 0;
-			}
-		});
+   public List<Item> priceSort(List<Item> list) {
+      Collections.sort(list, new Comparator<Item>() {
+         @Override
+         public int compare(Item o1, Item o2) {
+            if (o1.getPrice() < o2.getPrice()) {
+               return -1;
+            } else if (o1.getPrice() > o2.getPrice()) {
+               return 1;
+            }
+            return 0;
+         }
+      });
 //      for (Item item : list) {
 //         System.out.println(item);
 //      }
-		return list;
-	}
+      return list;
+   }
 
 //   판매량순 정렬
-	public List<Item> salesSort(List<Item> list) {
-		Collections.sort(list, new Comparator<Item>() {
-			@Override
-			public int compare(Item o1, Item o2) {
-				if (o1.getSales() > o2.getSales()) {
-					return -1;
-				} else if (o1.getSales() < o2.getSales()) {
-					return 1;
-				}
-				return 0;
-			}
-		});
+   public List<Item> salesSort(List<Item> list) {
+      Collections.sort(list, new Comparator<Item>() {
+         @Override
+         public int compare(Item o1, Item o2) {
+            if (o1.getSales() > o2.getSales()) {
+               return -1;
+            } else if (o1.getSales() < o2.getSales()) {
+               return 1;
+            }
+            return 0;
+         }
+      });
 //      for (Item item : list) {
 //         System.out.println(item);
 //      }
-		return list;
-	}
+      return list;
+   }
 
 //    인기순 정렬
-	public List<Item> hitsSort(List<Item> list) {
-		Collections.sort(list, new Comparator<Item>() {
-			@Override
-			public int compare(Item o1, Item o2) {
-				if (o1.getHits() > o2.getHits()) {
-					return -1;
-				} else if (o1.getHits() < o2.getHits()) {
-					return 1;
-				}
-				return 0;
-			}
-		});
+   public List<Item> hitsSort(List<Item> list) {
+      Collections.sort(list, new Comparator<Item>() {
+         @Override
+         public int compare(Item o1, Item o2) {
+            if (o1.getHits() > o2.getHits()) {
+               return -1;
+            } else if (o1.getHits() < o2.getHits()) {
+               return 1;
+            }
+            return 0;
+         }
+      });
 //      for (Item item : list) {
 //         System.out.println(item);
 //      }
-		return list;
-	}
+      return list;
+   }
 
-	// 거리 순 정렬
-	public List<Item> distanceSort(String city_name, List<Item> list) {
+   // 거리 순 정렬
+   public List<Item> distanceSort(String city_name, List<Item> list) {
 
-		List<Item> sortList = new ArrayList<>();
-		List<Integer> indexList = new ArrayList<>();
-		List<Double> distList = new ArrayList<>();
+      List<Item> sortList = new ArrayList<>();
+      List<Integer> indexList = new ArrayList<>();
+      List<Double> distList = new ArrayList<>();
 
-		try {
+      try {
 
-			String url = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
-					+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
-			Document doc;
+         String url = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+               + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+         Document doc;
 
-			double arr_value[] = new double[15];
-			int arr_key[] = new int[15];
+         double arr_value[] = new double[15];
+         int arr_key[] = new int[15];
 
-			doc = Jsoup.connect(url).get();
+         doc = Jsoup.connect(url).get();
 
-			String latitude = doc.select("location").select("lat").text();
-			String longitude = doc.select("location").select("lng").text();
+         String latitude = doc.select("location").select("lat").text();
+         String longitude = doc.select("location").select("lng").text();
 
-			double lat1 = Double.valueOf(latitude);
-			double lon1 = Double.valueOf(longitude);
+         double lat1 = Double.valueOf(latitude);
+         double lon1 = Double.valueOf(longitude);
 
-			for (int i = 0; i < list.size(); i++) {
+         for (int i = 0; i < list.size(); i++) {
 
-				double dist = 0;
+            double dist = 0;
 
-				double lat2 = Double.valueOf(list.get(i).getLatitude());
-				double lon2 = Double.valueOf(list.get(i).getLongitude());
+            double lat2 = Double.valueOf(list.get(i).getLatitude());
+            double lon2 = Double.valueOf(list.get(i).getLongitude());
 
-				double theta = lon1 - lon2;
+            double theta = lon1 - lon2;
 
-				dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2))
-						+ Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+            dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2))
+                  + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
 
-				dist = Math.acos(dist);
+            dist = Math.acos(dist);
 
-				dist = rad2deg(dist);
+            dist = rad2deg(dist);
 
-				dist = dist * 60 * 1.1515;
+            dist = dist * 60 * 1.1515;
 
-				dist = dist * 1.609344; // kilometer
+            dist = dist * 1.609344; // kilometer
 
-				dist = Math.round((dist) * 10) / 10.0;
+            dist = Math.round((dist) * 10) / 10.0;
 
-				if (dist == 0) {
-					dist = 0.4;
-				}
+            if (dist == 0) {
+               dist = 0.4;
+            }
 
-				int item_idx = list.get(i).getItem_idx();
-				String name = list.get(i).getName();
-				String latitudeList = list.get(i).getLatitude();
-				String longitudeList = list.get(i).getLongitude();
-				String detail = list.get(i).getDetail();
-				int time_defference = list.get(i).getTime_defference(); // 받아야됨
-				int price = list.get(i).getPrice();
-				String img = list.get(i).getImg();
-				int sales = list.get(i).getSales(); // 판매량
-				int hits = list.get(i).getHits(); // 인기
-				String country_name = list.get(i).getCountry_name();
+            int item_idx = list.get(i).getItem_idx();
+            String name = list.get(i).getName();
+            String latitudeList = list.get(i).getLatitude();
+            String longitudeList = list.get(i).getLongitude();
+            String detail = list.get(i).getDetail();
+            int time_defference = list.get(i).getTime_defference(); // 받아야됨
+            int price = list.get(i).getPrice();
+            String img = list.get(i).getImg();
+            int sales = list.get(i).getSales(); // 판매량
+            int hits = list.get(i).getHits(); // 인기
+            String country_name = list.get(i).getCountry_name();
 
-				Item item = new Item(item_idx, name, latitudeList, longitudeList, detail, city_name, time_defference,
-						country_name, price, img, sales, hits, dist);
+            Item item = new Item(item_idx, name, latitudeList, longitudeList, detail, city_name, time_defference,
+                  country_name, price, img, sales, hits, dist);
 
-				sortList.add(item);
+            sortList.add(item);
 
-				arr_key[i] = i + 1;
-				arr_value[i] = dist;
-			}
+            arr_key[i] = i + 1;
+            arr_value[i] = dist;
+         }
 
-			for (int i = 0; i < arr_key.length - 1; i++) {
-				int temp_key = 0;
-				double temp_value = 0;
-				for (int j = i; j < arr_value.length; j++) {
-					if (arr_value[i] > arr_value[j]) {
+         for (int i = 0; i < arr_key.length - 1; i++) {
+            int temp_key = 0;
+            double temp_value = 0;
+            for (int j = i; j < arr_value.length; j++) {
+               if (arr_value[i] > arr_value[j]) {
 
-						temp_value = arr_value[j];
-						arr_value[j] = arr_value[i];
-						arr_value[i] = temp_value;
+                  temp_value = arr_value[j];
+                  arr_value[j] = arr_value[i];
+                  arr_value[i] = temp_value;
 
-						temp_key = arr_key[j];
-						arr_key[j] = arr_key[i];
-						arr_key[i] = temp_key;
-					}
-				}
-			}
+                  temp_key = arr_key[j];
+                  arr_key[j] = arr_key[i];
+                  arr_key[i] = temp_key;
+               }
+            }
+         }
 
-			for (int i = 0; i < arr_key.length; i++) {
-				for (int j = 0; j < list.size(); j++) {
-					if (arr_key[i] == list.get(j).getItem_idx()) {
-						// sortList.add(list.get(j));
-						indexList.add(arr_key[i]);
-						distList.add(arr_value[i]);
+         for (int i = 0; i < arr_key.length; i++) {
+            for (int j = 0; j < list.size(); j++) {
+               if (arr_key[i] == list.get(j).getItem_idx()) {
+                  // sortList.add(list.get(j));
+                  indexList.add(arr_key[i]);
+                  distList.add(arr_value[i]);
 
-					}
-				}
-			}
+               }
+            }
+         }
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return sortList;
-	}
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+      return sortList;
+   }
 
-	private static double deg2rad(double deg) {
-		return (deg * Math.PI / 180.0);
-	}
+   private static double deg2rad(double deg) {
+      return (deg * Math.PI / 180.0);
+   }
 
-	private static double rad2deg(double rad) {
-		return (rad * 180 / Math.PI);
-	}
+   private static double rad2deg(double rad) {
+      return (rad * 180 / Math.PI);
+   }
 
-	public List<Restaurant> crawlingNearRest(String city_name, String base_Point) {
+   public List<Restaurant> crawlingNearRest(String city_name) {
 
-		List<Restaurant> list = new ArrayList<>();
-		List<Restaurant> list_restaurant = new ArrayList<>();
-		List<Restaurant> list_rest = new ArrayList<>();
-		Restaurant restaurant;
+      List<Restaurant> list = new ArrayList<>();
 
-		String name = null;
-		String detail;
-		String img;
-		String latitude;
-		String longitude;
+      Restaurant restaurant;
 
-		String input = city_name + "맛집";
-		String lat;
-		String lng;
-		double dist = 0;
+      String name = null;
+      String detail;
+      String img;
+      String latitude;
+      String longitude;
 
-		try {
-			String url = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=";
-			url += input;
+      String input = city_name + "맛집";
+      String lat;
+      String lng;
+      double dist = 0;
 
-			Document doc = Jsoup.connect(url).get();
+      try {
+         String url = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=";
+         url += input;
 
-			Elements doc_el = doc.select(".list_top ul");
-			Elements doc_rest = doc_el.select("li");
+         Document doc = Jsoup.connect(url).get();
 
-			for (Element el : doc_rest) {
+         Elements doc_el = doc.select(".list_top ul");
+         Elements doc_rest = doc_el.select("li");
 
-				// name
-				name = el.select(".list_title").select("strong").text();
-				// detail
-				detail = el.select(".list_title").select(".list_cate").text();
-				// img
-				img = el.select(".list_thumb").select("img").attr("src");
+         for (Element el : doc_rest) {
 
-				String url_location = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name + name
-						+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+            // name
+            name = el.select(".list_title").select("strong").text();
+            // detail
+            detail = el.select(".list_title").select(".list_cate").text();
+            // img
+            img = el.select(".list_thumb").select("img").attr("src");
 
-				Document doc_loc = Jsoup.connect(url_location).get();
+            String url_location = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name + name
+                  + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-				lat = doc_loc.select("location").select("lat").text();
-				lng = doc_loc.select("location").select("lng").text();
+            Document doc_loc = Jsoup.connect(url_location).get();
 
-				if (lat.length() < 10) {
-					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
-							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+            lat = doc_loc.select("location").select("lat").text();
+            lng = doc_loc.select("location").select("lng").text();
 
-					Document doc_temp = Jsoup.connect(url_temp).get();
+            if (lat.length() < 10) {
+               String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+                     + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-					lat = doc_temp.select("location").select("lat").text();
-				}
+               Document doc_temp = Jsoup.connect(url_temp).get();
 
-				if (lng.length() < 10) {
-					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
-							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+               lat = doc_temp.select("location").select("lat").text();
+            }
 
-					Document doc_temp = Jsoup.connect(url_temp).get();
+            if (lng.length() < 10) {
+               String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+                     + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-					lng = doc_temp.select("location").select("lng").text();
-				}
+               Document doc_temp = Jsoup.connect(url_temp).get();
 
-				if (lat.length() > 15) {
-					lat = lat.substring(lat.lastIndexOf(" ") + 1);
-				}
+               lng = doc_temp.select("location").select("lng").text();
+            }
 
-				if (lng.length() > 15) {
-					lng = lng.substring(lng.lastIndexOf(" ") + 1);
-				}
+            if (lat.length() > 15) {
+               lat = lat.substring(lat.lastIndexOf(" ") + 1);
+            }
 
-				latitude = lat;
-				longitude = lng;
+            if (lng.length() > 15) {
+               lng = lng.substring(lng.lastIndexOf(" ") + 1);
+            }
 
-				restaurant = new Restaurant(name, detail, img, latitude, longitude, dist);
+            latitude = lat;
+            longitude = lng;
 
-				list.add(restaurant);
-			}
+            restaurant = new Restaurant(name, detail, img, latitude, longitude, dist);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            list.add(restaurant);
+         }
 
-		try {
-			String url = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + base_Point
-					+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
 
-			Document doc;
+      /*try {
+         String url = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + base_Point
+               + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-			doc = Jsoup.connect(url).get();
+         Document doc;
 
-			String latitude_1 = doc.select("location").select("lat").text();
-			String longitude_1 = doc.select("location").select("lng").text();
+         doc = Jsoup.connect(url).get();
 
-			double lat_1 = Double.valueOf(latitude_1);
-			double lon_1 = Double.valueOf(longitude_1);
+         String latitude_1 = doc.select("location").select("lat").text();
+         String longitude_1 = doc.select("location").select("lng").text();
 
-			for (int i = 0; i < list.size(); i++) {
+         double lat_1 = Double.valueOf(latitude_1);
+         double lon_1 = Double.valueOf(longitude_1);
 
-				double lat_2 = Double.valueOf(list.get(i).getLatitude());
-				double lon_2 = Double.valueOf(list.get(i).getLongitude());
+         for (int i = 0; i < list.size(); i++) {
 
-				double theta = lon_1 - lon_2;
+            double lat_2 = Double.valueOf(list.get(i).getLatitude());
+            double lon_2 = Double.valueOf(list.get(i).getLongitude());
 
-				dist = Math.sin(deg2rad(lat_1)) * Math.sin(deg2rad(lat_2))
-						+ Math.cos(deg2rad(lat_1)) * Math.cos(deg2rad(lat_2)) * Math.cos(deg2rad(theta));
+            double theta = lon_1 - lon_2;
 
-				dist = Math.acos(dist);
+            dist = Math.sin(deg2rad(lat_1)) * Math.sin(deg2rad(lat_2))
+                  + Math.cos(deg2rad(lat_1)) * Math.cos(deg2rad(lat_2)) * Math.cos(deg2rad(theta));
 
-				dist = rad2deg(dist);
+            dist = Math.acos(dist);
 
-				dist = dist * 60 * 1.1515;
+            dist = rad2deg(dist);
 
-				dist = dist * 1.609344; // kilometer
+            dist = dist * 60 * 1.1515;
 
-				dist = Math.round((dist) * 10) / 10.0;
+            dist = dist * 1.609344; // kilometer
 
-				if (dist == 0) {
-					dist = 0.4;
-				}
+            dist = Math.round((dist) * 10) / 10.0;
 
-				String name_list = list.get(i).getName();
-				String detail_list = list.get(i).getDetail();
-				String img_list = list.get(i).getImg();
-				String latitude_list = list.get(i).getLatitude();
-				String longitude_list = list.get(i).getLongitude();
+            if (dist == 0) {
+               dist = 0.4;
+            }
 
-				Restaurant restaurant2 = new Restaurant(name_list, detail_list, img_list, latitude_list, longitude_list,
-						dist);
+            String name_list = list.get(i).getName();
+            String detail_list = list.get(i).getDetail();
+            String img_list = list.get(i).getImg();
+            String latitude_list = list.get(i).getLatitude();
+            String longitude_list = list.get(i).getLongitude();
 
-				list_rest.add(restaurant2);
+            Restaurant restaurant2 = new Restaurant(name_list, detail_list, img_list, latitude_list, longitude_list,
+                  dist);
 
-			}
+            list_rest.add(restaurant2);
 
-			int min = 0;
+         }
 
-			for (int i = 0; i < list_rest.size(); i++) {
-				for (int j = i; j < list_rest.size(); j++) {
-					if (list_rest.get(i).getDist() > list_rest.get(j).getDist()) {
-						min = j;
-					} else {
-						min = i;
-					}
-				}
+         int min = 0;
 
-				String name_rest = list_rest.get(min).getName();
-				String detail_rest = list_rest.get(min).getDetail();
-				String img_rest = list_rest.get(min).getImg();
-				String latitude_rest = list_rest.get(min).getLatitude();
-				String longitude_rest = list_rest.get(min).getLongitude();
-				double dist_rest = list_rest.get(min).getDist();
+         for (int i = 0; i < list_rest.size(); i++) {
+            for (int j = i; j < list_rest.size(); j++) {
+               if (list_rest.get(i).getDist() > list_rest.get(j).getDist()) {
+                  min = j;
+               } else {
+                  min = i;
+               }
+            }
 
-				Restaurant restaurant2 = new Restaurant(name_rest, detail_rest, img_rest, latitude_rest, longitude_rest,
-						dist_rest);
-				
-				list_restaurant.add(restaurant2);
-				
-			}
-			System.out.println("크롤링"+list_restaurant);
+            String name_rest = list_rest.get(min).getName();
+            String detail_rest = list_rest.get(min).getDetail();
+            String img_rest = list_rest.get(min).getImg();
+            String latitude_rest = list_rest.get(min).getLatitude();
+            String longitude_rest = list_rest.get(min).getLongitude();
+            double dist_rest = list_rest.get(min).getDist();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list_restaurant;
-	}
+            Restaurant restaurant2 = new Restaurant(name_rest, detail_rest, img_rest, latitude_rest, longitude_rest,
+                  dist_rest);
+            
+            list_restaurant.add(restaurant2);
+            
+         }
+         System.out.println("크롤링"+list_restaurant);
 
-	public List<Hotel> crawlingNearHotel(String city_name) {
+      } catch (Exception e) {
+         e.printStackTrace();
+      }*/
+      return list;
+   }
 
-		List<Hotel> list = new ArrayList<>();
-		Hotel hotel;
+   public List<Hotel> crawlingNearHotel(String city_name) {
 
-		String name;
-		String detail;
-		String img;
-		String location;
-		String review;
-		String stars;
-		String latitude;
-		String longitude;
-		String price;
+      List<Hotel> list = new ArrayList<>();      
+      double dist = 0;
+      Hotel hotel;
 
-		String input_hotel = city_name + "호텔";
-		String input_guest = city_name + "게스트하우스";
-		String lat;
-		String lng;
+      String name;
+      String detail;
+      String img;
+      String location;
+      String review;
+      String stars;
+      String latitude;
+      String longitude;
+      String price;
 
-		try {
-			String url = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=";
+      String input_hotel = city_name + "호텔";
+      String input_guest = city_name + "게스트하우스";
+      String lat;
+      String lng;
 
-			String url_hotel = url + input_hotel;
-			String url_guest = url + input_guest;
+      try {
+         String url = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=";
 
-			Document doc_hotel = Jsoup.connect(url_hotel).get();
+         String url_hotel = url + input_hotel;
+         String url_guest = url + input_guest;
 
-			Elements doc_el = doc_hotel.select(".section_hotel_list ul");
-			Elements doc_hotelList = doc_el.select("li");
+         Document doc_hotel = Jsoup.connect(url_hotel).get();
 
-			Document doc_guest = Jsoup.connect(url_guest).get();
+         Elements doc_el = doc_hotel.select(".section_hotel_list ul");
+         Elements doc_hotelList = doc_el.select("li");
 
-			Elements doc_el_ = doc_guest.select(".section_hotel_list ul");
-			Elements doc_guestList = doc_el_.select("li");
+         Document doc_guest = Jsoup.connect(url_guest).get();
 
-			for (Element el : doc_hotelList) {
+         Elements doc_el_ = doc_guest.select(".section_hotel_list ul");
+         Elements doc_guestList = doc_el_.select("li");
 
-				// name
-				name = el.select(".info").select("strong").attr("title");
-				// detail
-				detail = el.select(".info").select(".review").select(".short_review").text();
-				// img
-				img = el.select(".img").select("img").attr("src");
-				// location
-				location = el.select(".info").select(".area").text();
-				// review
-				review = el.select(".info").select(".star_wrap").select(".num").text();
-				// stars
-				stars = el.select(".info").select(".rating_wrap").select(".grade").text();
-				// price
-				price = el.select(".sub_area").select(".price").text();
+         for (Element el : doc_hotelList) {
 
-				// location
-				String url_location = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name + name
-						+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+            // name
+            name = el.select(".info").select("strong").attr("title");
+            // detail
+            detail = el.select(".info").select(".review").select(".short_review").text();
+            // img
+            img = el.select(".img").select("img").attr("src");
+            // location
+            location = el.select(".info").select(".area").text();
+            // review
+            review = el.select(".info").select(".star_wrap").select(".num").text();
+            // stars
+            stars = el.select(".info").select(".rating_wrap").select(".grade").text();
+            // price
+            price = el.select(".sub_area").select(".price").text();
 
-				Document doc_loc = Jsoup.connect(url_location).get();
+            // location
+            String url_location = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name + name
+                  + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-				lat = doc_loc.select("location").select("lat").text();
-				lng = doc_loc.select("location").select("lng").text();
+            Document doc_loc = Jsoup.connect(url_location).get();
 
-				if (lat.length() < 10) {
-					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
-							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+            lat = doc_loc.select("location").select("lat").text();
+            lng = doc_loc.select("location").select("lng").text();
 
-					Document doc_temp = Jsoup.connect(url_temp).get();
+            if (lat.length() < 10) {
+               String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+                     + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-					lat = doc_temp.select("location").select("lat").text();
-				}
+               Document doc_temp = Jsoup.connect(url_temp).get();
 
-				if (lng.length() < 10) {
-					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
-							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+               lat = doc_temp.select("location").select("lat").text();
+            }
 
-					Document doc_temp = Jsoup.connect(url_temp).get();
+            if (lng.length() < 10) {
+               String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+                     + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-					lng = doc_temp.select("location").select("lng").text();
-				}
+               Document doc_temp = Jsoup.connect(url_temp).get();
 
-				if (lat.length() > 15) {
-					lat = lat.substring(lat.lastIndexOf(" ") + 1);
-				}
+               lng = doc_temp.select("location").select("lng").text();
+            }
 
-				if (lng.length() > 15) {
-					lng = lng.substring(lng.lastIndexOf(" ") + 1);
-				}
+            if (lat.length() > 15) {
+               lat = lat.substring(lat.lastIndexOf(" ") + 1);
+            }
 
-				latitude = lat;
-				longitude = lng;
+            if (lng.length() > 15) {
+               lng = lng.substring(lng.lastIndexOf(" ") + 1);
+            }
 
-				hotel = new Hotel(name, detail, img, location, review, latitude, longitude, stars, price);
+            latitude = lat;
+            longitude = lng;
 
-				if (name.length() > 2) {
-					list.add(hotel);
-				}
+            hotel = new Hotel(name, detail, img, location, review, latitude, longitude, stars, price,dist);
 
-			}
+            if (name.length() > 2) {
+               list.add(hotel);
+            }
 
-			for (Element el : doc_guestList) {
+         }
 
-				// name
-				name = el.select(".info").select("strong").attr("title");
-				// detail
-				detail = el.select(".info").select(".review").select(".short_review").text();
-				// img
-				img = el.select(".img").select("img").attr("src");
-				// location
-				location = el.select(".info").select(".area").text();
-				// review
-				review = el.select(".info").select(".star_wrap").select(".num").text();
-				// stars
-				stars = el.select(".info").select(".rating_wrap").select(".grade").text();
-				// price
-				price = el.select(".sub_area").select(".price").text();
+         for (Element el : doc_guestList) {
 
-				// location
-				String url_location = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name + name
-						+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+            // name
+            name = el.select(".info").select("strong").attr("title");
+            // detail
+            detail = el.select(".info").select(".review").select(".short_review").text();
+            // img
+            img = el.select(".img").select("img").attr("src");
+            // location
+            location = el.select(".info").select(".area").text();
+            // review
+            review = el.select(".info").select(".star_wrap").select(".num").text();
+            // stars
+            stars = el.select(".info").select(".rating_wrap").select(".grade").text();
+            // price
+            price = el.select(".sub_area").select(".price").text();
 
-				Document doc_loc = Jsoup.connect(url_location).get();
+            // location
+            String url_location = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name + name
+                  + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-				lat = doc_loc.select("location").select("lat").text();
-				lng = doc_loc.select("location").select("lng").text();
+            Document doc_loc = Jsoup.connect(url_location).get();
 
-				if (lat.length() < 10) {
-					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
-							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+            lat = doc_loc.select("location").select("lat").text();
+            lng = doc_loc.select("location").select("lng").text();
 
-					Document doc_temp = Jsoup.connect(url_temp).get();
+            if (lat.length() < 10) {
+               String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+                     + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-					lat = doc_temp.select("location").select("lat").text();
-				}
+               Document doc_temp = Jsoup.connect(url_temp).get();
 
-				if (lng.length() < 10) {
-					String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
-							+ "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+               lat = doc_temp.select("location").select("lat").text();
+            }
 
-					Document doc_temp = Jsoup.connect(url_temp).get();
+            if (lng.length() < 10) {
+               String url_temp = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + city_name
+                     + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
 
-					lng = doc_temp.select("location").select("lng").text();
-				}
+               Document doc_temp = Jsoup.connect(url_temp).get();
 
-				if (lat.length() > 15) {
-					lat = lat.substring(lat.lastIndexOf(" ") + 1);
-				}
+               lng = doc_temp.select("location").select("lng").text();
+            }
 
-				if (lng.length() > 15) {
-					lng = lng.substring(lng.lastIndexOf(" ") + 1);
-				}
+            if (lat.length() > 15) {
+               lat = lat.substring(lat.lastIndexOf(" ") + 1);
+            }
 
-				latitude = lat;
-				longitude = lng;
+            if (lng.length() > 15) {
+               lng = lng.substring(lng.lastIndexOf(" ") + 1);
+            }
 
-				hotel = new Hotel(name, detail, img, location, review, latitude, longitude, stars, price);
+            latitude = lat;
+            longitude = lng;
 
-				if (name.length() > 2) {
-					list.add(hotel);
-				}
+            hotel = new Hotel(name, detail, img, location, review, latitude, longitude, stars, price,dist);
 
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
+            if (name.length() > 2) {
+               list.add(hotel);
+            }
 
-	}
+         }
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      
+      /*try {
+         String url = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + base_Point
+               + "&key=AIzaSyC3G1qQMeFpartaXg_UguoBElqDEDYu3Rg";
+
+         Document doc;
+         
+         doc = Jsoup.connect(url).get();
+         
+         String latitude_1 = doc.select("location").select("lat").text();
+         String longitude_1 = doc.select("location").select("lng").text();
+
+         double lat_1 = Double.valueOf(latitude_1);
+         double lon_1 = Double.valueOf(longitude_1);
+
+         for (int i = 0; i < list.size(); i++) {
+
+            double lat_2 = Double.valueOf(list.get(i).getLatitude());
+            double lon_2 = Double.valueOf(list.get(i).getLongitude());
+
+            double theta = lon_1 - lon_2;
+
+            dist = Math.sin(deg2rad(lat_1)) * Math.sin(deg2rad(lat_2))
+                  + Math.cos(deg2rad(lat_1)) * Math.cos(deg2rad(lat_2)) * Math.cos(deg2rad(theta));
+
+            dist = Math.acos(dist);
+
+            dist = rad2deg(dist);
+
+            dist = dist * 60 * 1.1515;
+
+            dist = dist * 1.609344; // kilometer
+
+            dist = Math.round((dist) * 10) / 10.0;
+
+            if (dist == 0) {
+               dist = 0.4;
+            }
+            
+            String name_hotel = list.get(i).getName();
+            String detail_hotel = list.get(i).getDetail();
+            String img_hotel = list.get(i).getImg();
+            String location_hotel = list.get(i).getLocation();
+            String review_hotel = list.get(i).getReview();
+            String stars_hotel = list.get(i).getStars();
+            String latitude_hotel = list.get(i).getLatitude();
+            String longitude_hotel = list.get(i).getLongitude();
+            String price_hotel = list.get(i).getPrice();
+
+            Hotel hotel2 = new Hotel(name_hotel, detail_hotel, img_hotel, location_hotel, review_hotel, latitude_hotel, longitude_hotel, stars_hotel, price_hotel, dist);
+            
+            list_hotel.add(hotel2);
+      
+         }
+         
+         int min = 0;
+         
+         for(int i=0; i<list_hotel.size();i++) {
+            for(int j=0; j<list_hotel.size();j++) {
+               if(list_hotel.get(i).getDist() > list_hotel.get(j).getDist()) {
+                  min = j;
+               }else {
+                  min = i;
+               }
+            }
+            
+            String name_hotel = list.get(min).getName();
+            String detail_hotel = list.get(min).getDetail();
+            String img_hotel = list.get(min).getImg();
+            String location_hotel = list.get(min).getLocation();
+            String review_hotel = list.get(min).getReview();
+            String stars_hotel = list.get(min).getStars();
+            String latitude_hotel = list.get(min).getLatitude();
+            String longitude_hotel = list.get(min).getLongitude();
+            String price_hotel = list.get(min).getPrice();
+            double dist_hotel = list.get(min).getDist();
+            
+            Hotel hotel2 = new Hotel(name_hotel, detail_hotel, img_hotel, location_hotel, review_hotel, latitude_hotel, longitude_hotel, stars_hotel, price_hotel, dist_hotel);
+            
+            list_hotel2.add(hotel2);
+            
+         }
+      }catch (Exception e) {
+         e.printStackTrace();
+      }*/
+      return list;
+   }
 
 }
