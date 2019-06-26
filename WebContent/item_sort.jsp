@@ -144,7 +144,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
    $(function(){
       
-	   
+      
       function pop($selector){
          var url= "";    //팝업창 페이지 URL
           var winWidth = 700;
@@ -288,7 +288,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                  
                  $('#restList').empty();
                    $.each(data, function(index, item){
-                	   var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
+                      var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
                            +item.img+'></div><div class="list_detail"><div id = "name" class="row">'
                            +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
                            +item.detail+'</div></div></div>';
@@ -320,7 +320,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
               
               $('#hotelList').empty();
                 $.each(data, function(index, item){
-                	var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
+                   var text = '<div class="row drag" ><div class="list_thumb" ><img class="img" src='
                         +item.img+'></div><div class="list_detail"><div id = "name" class="row">'
                         +item.name+'</div><div  style = "display : none"  id ="detail" class="row">'
                         +item.detail+'<div  id="price" class="row">'
